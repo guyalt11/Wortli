@@ -333,9 +333,10 @@ const Settings = () => {
                                             />
                                             <div className="flex items-center gap-3 flex-1">
                                                 <div className="flex gap-1" data-theme={theme.value}>
-                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--light)' }} />
                                                     <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--primary)' }} />
                                                     <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--secondary)' }} />
+                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--tertiary)' }} />
+                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--background)' }} />
                                                 </div>
                                                 <div>
                                                     <div className="font-medium">{theme.label}</div>
@@ -352,9 +353,9 @@ const Settings = () => {
                                     <p className="text-sm text-tertiary-foreground">Show only lists with words ready for review by default</p>
                                 </div>
                                 <Button
-                                    variant="outline"
                                     size="sm"
                                     onClick={handleHideEmptyListsToggle}
+                                    variant={preferences?.hideEmptyLists ? "default" : "outline"}
                                 >
                                     {preferences?.hideEmptyLists ? 'Enabled' : 'Disabled'}
                                 </Button>
