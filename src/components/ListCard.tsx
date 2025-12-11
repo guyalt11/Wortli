@@ -1,11 +1,8 @@
-import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { VocabList } from "@/types/vocabulary";
-import { Edit, Trash2, Share2, Pin } from "lucide-react";
-import ListActions from "@/components/ListActions";
+import { Pin } from "lucide-react";
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import FlagIcon from '@/components/FlagIcon';
 import { RightArrow } from '@/components/Icon';
@@ -13,16 +10,11 @@ import { RightArrow } from '@/components/Icon';
 interface ListCardProps {
   list: VocabList;
   onSelect: (id: string) => void;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
-  onPractice: (id: string, direction: string) => void;
-  onExport: (id: string, format: 'json') => void;
-  onImport: (file: File) => Promise<void>;
   onShareToggle: (id: string, share: boolean) => void;
   onPinToggle: (id: string, pinned: boolean) => void;
 }
 
-const ListCard = ({ list, onSelect, onEdit, onDelete, onPractice, onExport, onImport, onShareToggle, onPinToggle }: ListCardProps) => {
+const ListCard = ({ list, onSelect, onShareToggle, onPinToggle }: ListCardProps) => {
   const { goToPractice } = useAppNavigation();
   // Count words due for practice in each direction
   const now = new Date();
@@ -38,13 +30,6 @@ const ListCard = ({ list, onSelect, onEdit, onDelete, onPractice, onExport, onIm
 
   const totalDueCount = translateFromCount + translateToCount;
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      onImport(file);
-    }
-  };
-
   return (
     <Card className="h-full flex flex-col bg-primary">
       {/*<Card className="h-full flex flex-col" style={{ background: 'linear-gradient(135deg, rgba(8, 35, 38, 1) 0%, rgba(21, 76, 82, 1) 100%)' }}>*/}
@@ -54,42 +39,21 @@ const ListCard = ({ list, onSelect, onEdit, onDelete, onPractice, onExport, onIm
             <CardTitle className="text-lg text-left flex-1">
               {list.name}
             </CardTitle>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={`h-8 w-8 flex-shrink-0 sm:hidden ${list.pinned ? 'text-yellow-500' : ''}`}
-              onClick={() => onPinToggle(list.id, !list.pinned)}
-              title={list.pinned ? 'Unpin list' : 'Pin list'}
-            >
-              <Pin className={`h-4 w-4 ${list.pinned ? 'fill-current' : ''}`} />
-            </Button>
-          </div>
-          <div className="flex items-center gap-1 w-full sm:w-auto justify-start">
-            <div className="flex flex-row-reverse sm:flex-row gap-1">
-              <Button variant="ghost" size="icon" className="text-destructive h-8 w-8" onClick={() => onDelete(list.id)}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onEdit(list.id)}>
-                <Edit className="h-4 w-4" />
-              </Button>
-              <ListActions listId={list.id} onExport={onExport} onImport={onImport} />
-              <div className="flex items-center gap-2 px-2 py-1 rounded-md backdrop-blur bg-white/10">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-share-fill" viewBox="0 0 16 16">
-                  <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
-                </svg>
-                <Switch
-                  id={`share-${list.id}`}
-                  checked={list.share || false}
-                  onCheckedChange={(checked) => onShareToggle(list.id, checked)}
-                  className="data-[state=unchecked]:bg-secondary"
-
-                />
-              </div>
+            <div className="flex items-center gap-2 px-2 py-1 rounded-md backdrop-blur bg-white/10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-share-fill" viewBox="0 0 16 16">
+                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
+              </svg>
+              <Switch
+                id={`share-${list.id}`}
+                checked={list.share || false}
+                onCheckedChange={(checked) => onShareToggle(list.id, checked)}
+                className="data-[state=unchecked]:bg-secondary"
+              />
             </div>
             <Button
               variant="ghost"
               size="icon"
-              className={`h-8 w-8 flex-shrink-0 hidden sm:flex items-center justify-center ${list.pinned ? 'text-yellow-500' : ''}`}
+              className={`h-8 w-8 flex-shrink-0 !justify-end ${list.pinned ? 'text-yellow-500' : ''}`}
               onClick={() => onPinToggle(list.id, !list.pinned)}
               title={list.pinned ? 'Unpin list' : 'Pin list'}
             >
@@ -97,21 +61,13 @@ const ListCard = ({ list, onSelect, onEdit, onDelete, onPractice, onExport, onIm
             </Button>
           </div>
         </div>
-        <CardDescription className="text-left">
+        <CardDescription className="!mt-3 md:!mt-1 text-left text-gray-400">
           {list.description && (
             <p className="text-tertiary-foreground mb-2">
               {list.description}
             </p>
           )}
-          {list.words.length} words total
-          {totalDueCount > 0 && (
-            <>
-              <span> - </span>
-              <span className="text-green-500 font-medium">
-                {totalDueCount} Ready for review
-              </span>
-            </>
-          )}
+          Total words: <span className="text-white font-bold">{list.words.length} · {totalDueCount}</span> Ready for review
         </CardDescription>
       </CardHeader>
       <CardFooter className="pt-2 mt-auto flex flex-wrap sm:flex-nowrap gap-2">

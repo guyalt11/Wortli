@@ -89,7 +89,6 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                     hideEmptyLists: data.hide_empty_lists || false,
                     defaultDirection: data.default_direction || false,
                 };
-                console.log('Loaded preferences:', mappedData);
                 setPreferences(mappedData);
             }
         } catch (error) {

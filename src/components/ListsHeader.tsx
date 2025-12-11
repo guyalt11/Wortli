@@ -1,7 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { Plus, Upload, Eye, EyeOff, Search, X, Play, BookOpen } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { VocabList } from "@/types/vocabulary";
 
 interface ListsHeaderProps {
@@ -10,14 +9,21 @@ interface ListsHeaderProps {
   onLibrary: () => void;
   lists: VocabList[];
   onFilterChange: (showOnlyDue: boolean) => void;
-  showOnlyDue: boolean;
+  showOnlyDue?: boolean;
   onSearchChange: (searchQuery: string) => void;
   onPracticeAll?: () => void;
   initialShowOnlyDue?: boolean;
 }
 
-const ListsHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, onSearchChange, onPracticeAll, initialShowOnlyDue = false }: ListsHeaderProps) => {
-  const showOnlyDue = initialShowOnlyDue;
+const ListsHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, onSearchChange, onPracticeAll, showOnlyDue, initialShowOnlyDue = false }: ListsHeaderProps) => {
+  const isControlled = typeof showOnlyDue !== 'undefined';
+  const [internalShowOnlyDue, setInternalShowOnlyDue] = useState<boolean>(initialShowOnlyDue);
+  useEffect(() => {
+    if (!isControlled) {
+      setInternalShowOnlyDue(initialShowOnlyDue);
+    }
+  }, [initialShowOnlyDue, isControlled]);
+  const effectiveShowOnlyDue = isControlled ? showOnlyDue! : internalShowOnlyDue;
   const [searchQuery, setSearchQuery] = useState("");
 
   // Calculate total due words from all lists
@@ -67,14 +73,15 @@ const ListsHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, on
             <BookOpen className="h-4 w-4 text-black" />
           </Button>
           <Button
-            title={showOnlyDue ? "All lists" : "Only practicable lists"}
+            title={effectiveShowOnlyDue ? "All lists" : "Only practicable lists"}
             onClick={() => {
-              setShowOnlyDue(!showOnlyDue);
-              onFilterChange(!showOnlyDue);
+              const newValue = !effectiveShowOnlyDue;
+              if (!isControlled) setInternalShowOnlyDue(newValue);
+              onFilterChange(newValue);
             }}
-            className={`gap-1 transition-all ${showOnlyDue ? 'btn-1' : 'btn-5'} text-foreground`}
+            className={`gap-1 transition-all ${effectiveShowOnlyDue ? 'btn-1' : 'btn-5'} text-foreground`}
           >
-            {showOnlyDue ? (
+            {effectiveShowOnlyDue ? (
               <Eye className="h-4 w-4 text-black" />
             ) : (
               <EyeOff className="h-4 w-4 text-black" />

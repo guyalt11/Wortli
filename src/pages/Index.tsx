@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useVocab } from '@/context/VocabContext';
@@ -40,8 +39,14 @@ const Index = () => {
   // UI state
   const [addListOpen, setAddListOpen] = useState(false);
   const [importDialogOpen, setImportDialogOpen] = useState(false);
-  const [showOnlyDue, setShowOnlyDue] = useState(false);
+  // Initialize showOnlyDue from preferences so the initial state is respected by controlled ListsHeader
+  const [showOnlyDue, setShowOnlyDue] = useState<boolean>(() => preferences?.hideEmptyLists ?? false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Keep showOnlyDue in sync if preferences change later
+  useEffect(() => {
+    setShowOnlyDue(preferences?.hideEmptyLists ?? false);
+  }, [preferences?.hideEmptyLists]);
 
   // Edit list state
   const [editDialogOpen, setEditDialogOpen] = useState(false);

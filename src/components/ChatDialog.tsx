@@ -90,9 +90,6 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
             const jsonData = extractJSON(response);
 
             if (jsonData && isValidVocabList(jsonData)) {
-                // JSON detected - import it and show a friendly message instead
-                console.log('[ChatDialog] Valid vocabulary list detected, importing...');
-
                 // Show a friendly message to the user instead of the JSON
                 const friendlyMessage: ChatMessage = {
                     role: 'assistant',
