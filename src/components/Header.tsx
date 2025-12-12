@@ -87,7 +87,7 @@ const Header = () => {
                             onClick={() => handleNavigation(getHomeLink())}
                             className="flex items-center focus:outline-none rounded"
                         >
-                            <img src="/logo.png" alt="Wörtli Logo" className="h-10 w-10" />
+                            <img src="/logo.webp" alt="Wörtli Logo" className="h-10 w-10" />
                         </button>
                         <div className="flex items-center gap-6 flex-1 justify-center">
                             {/* Desktop Navigation */}

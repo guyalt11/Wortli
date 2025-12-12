@@ -31,8 +31,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Download, Upload, Pencil, Trash2, Share2, MoreVertical } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
-import FlagIcon, { DirectionFlag } from '@/components/FlagIcon';
-import { ImportExportArrow, RightArrow } from '@/components/Icon';
+import FlagIcon from '@/components/FlagIcon';
+import { RightArrow } from '@/components/Icon';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -244,61 +244,12 @@ const VocabList = () => {
     return translateFromDueCount + translateToDueCount;
   };
 
-  const formatNextReview = (date: Date | undefined): string => {
-    if (!date) return 'Ready for review';
-
-    const now = new Date();
-
-    if (date <= now) {
-      return 'Ready for review';
-    }
-
-    return `In ${formatDistanceToNow(date)}`;
-  };
-
-  const getDueStatusForWord = (word: VocabWord) => {
-    const now = new Date();
-    const translateFromDue = !getNextReviewDate(word, 'translateFrom') || getNextReviewDate(word, 'translateFrom')! <= now;
-    const translateToDue = !getNextReviewDate(word, 'translateTo') || getNextReviewDate(word, 'translateTo')! <= now;
-    return { translateFromDue, translateToDue };
-  };
-
-  const isWordDueForReview = (word: VocabWord): boolean => {
-    if (!word.nextReview) return true;
-    const now = new Date();
-
-    const translateFromDue = !getNextReviewDate(word, 'translateFrom') ||
-      getNextReviewDate(word, 'translateFrom')! <= now;
-    const translateToDue = !getNextReviewDate(word, 'translateTo') ||
-      getNextReviewDate(word, 'translateTo')! <= now;
-
-    return translateFromDue || translateToDue;
-  };
-
-  const getFormattedReviewTimes = (word: VocabWord): React.ReactNode => {
-    const translateFromFormatted = formatNextReview(getNextReviewDate(word, 'translateFrom'));
-    const translateToFormatted = formatNextReview(getNextReviewDate(word, 'translateTo'));
-
-    return (
-      <div className="flex flex-col gap-1 items-start">
-        <div className="flex items-center gap-1">
-          <DirectionFlag direction="translateFrom" size={14} />
-          <span>{translateFromFormatted}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <DirectionFlag direction="translateTo" size={14} />
-          <span>{translateToFormatted}</span>
-        </div>
-      </div>
-    );
-  };
-
   const { translateFromDue, translateToDue } = getDueByLanguage();
 
   return (
     <div className="container py-6 max-w-3xl">
       <div className="mb-4 sm:flex sm:justify-between sm:items-center">
-        <div className="mt-4 sm:mt-0 w-full">
+        <div className="w-full">
           <div className="flex flex-col">
             <div className="mb-2 flex items-start justify-between gap-2">
               <h1 className="text-2xl font-bold">{currentList.name}</h1>

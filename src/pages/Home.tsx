@@ -32,13 +32,13 @@ const Home = () => {
         <div className="min-h-screen bg-gradient-to-b from-background to-background/80">
             {/* Hero Section */}
             <div className="container mx-auto px-4 pt-8 pb-20 text-center">
-                <img src="/logo.png" alt="Wörtli Logo" className="w-20 sm:w-24 h-20 sm:h-24 mb-6 mx-auto" />
-                <h1 className="text-5xl md:text-6xl font-bold pb-3 mb-6 bg-gradient-to-r from-light to-light/60 bg-clip-text text-transparent">
-                    Master Any Language
+                <img src="/logo.webp" alt="Wörtli Logo" className="w-20 sm:w-24 h-20 sm:h-24 mb-8 mx-auto" />
+                <h1 className="text-5xl md:text-6xl font-bold pb-3 mb-3 bg-gradient-to-r from-light to-light/60 bg-clip-text text-transparent">
+                    Wörtli
                 </h1>
-                <p className="text-xl md:text-2xl text-muted-foreground mb-4">
-                    Like a personal coach who truly understands you.
-                </p>
+                <h2 className="text-4xl md:text-5xl font-bold pb-3 mb-10 bg-gradient-to-r from-light to-light/60 bg-clip-text text-transparent">
+                    Master Any Language!
+                </h2>
                 <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
                     Wörtli uses AI and spaced repetition to help you build vocabulary faster and remember it longer.
                 </p>
