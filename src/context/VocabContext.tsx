@@ -78,11 +78,23 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
       return savedList;
     } catch (error) {
       console.error('Error adding list:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add list. Please try again.",
-        variant: "destructive",
-      });
+
+      const errorMessage = error instanceof Error ? error.message : String(error);
+
+      // Check for premium limitation errors
+      if (errorMessage.toLowerCase().includes('non-premium') || errorMessage.toLowerCase().includes('only 2 lists') || (errorMessage.toLowerCase().includes('create') && errorMessage.toLowerCase().includes('2') && errorMessage.toLowerCase().includes('list'))) {
+        toast({
+          title: "List limit reached",
+          description: "Free users can only have 2 lists. Upgrade to premium for unlimited lists.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to add list. Please try again.",
+          variant: "destructive",
+        });
+      }
       return null;
     }
   };
@@ -165,11 +177,23 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (error) {
       console.error('Error adding word:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add word. Please try again.",
-        variant: "destructive",
-      });
+
+      const errorMessage = error instanceof Error ? error.message : String(error);
+
+      // Check for premium limitation errors
+      if (errorMessage.toLowerCase().includes('non-premium') || errorMessage.toLowerCase().includes('only 50 words') || (errorMessage.toLowerCase().includes('50') && errorMessage.toLowerCase().includes('word'))) {
+        toast({
+          title: "Word limit reached",
+          description: "Free users can only have 50 words per list. Upgrade to premium for unlimited words.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to add word. Please try again.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -409,11 +433,32 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
       return null;
     } catch (error) {
       console.error('Error importing list:', error);
-      toast({
-        title: "Error",
-        description: "Failed to import list. Please check the file format.",
-        variant: "destructive",
-      });
+
+      // Parse error message to detect premium limitations
+      const errorMessage = error instanceof Error ? error.message : String(error);
+
+      // Check for specific limitation errors
+      if (errorMessage.toLowerCase().includes('non-premium') || errorMessage.toLowerCase().includes('only 2 lists') || (errorMessage.toLowerCase().includes('create') && errorMessage.toLowerCase().includes('2') && errorMessage.toLowerCase().includes('list'))) {
+        toast({
+          title: "List limit reached",
+          description: "Free users can only have 2 lists. Upgrade to premium for unlimited lists.",
+          variant: "destructive",
+        });
+      } else if (errorMessage.toLowerCase().includes('only 50 words') || (errorMessage.toLowerCase().includes('50') && errorMessage.toLowerCase().includes('word'))) {
+        toast({
+          title: "Word limit reached",
+          description: "Free users can only have 50 words per list. Upgrade to premium for unlimited words.",
+          variant: "destructive",
+        });
+      } else {
+        // Generic error for other cases
+        toast({
+          title: "Import failed",
+          description: "Failed to import list. Please try again or contact support.",
+          variant: "destructive",
+        });
+      }
+
       return null;
     }
   };

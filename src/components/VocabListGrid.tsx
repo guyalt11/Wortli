@@ -60,9 +60,20 @@ const VocabListGrid = ({
               }}
               onEdit={() => onEditList(list.id)}
               onDelete={() => onDeleteList(list.id)}
-              onPractice={(direction) => handlePractice(direction, list.id)}
-              onExport={onExportList}
-              onImport={async (file) => await onImportWords(file, list.name)}
+              onExport={() => onExportList(list.id, 'json')}
+              onImport={() => {
+                // Create a file input element to trigger file selection
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                input.onchange = async (e) => {
+                  const file = (e.target as HTMLInputElement).files?.[0];
+                  if (file) {
+                    await onImportWords(file, list.id);
+                  }
+                };
+                input.click();
+              }}
               onShareToggle={onShareToggle}
               onPinToggle={onPinToggle}
             />

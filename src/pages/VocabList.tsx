@@ -41,7 +41,7 @@ const VocabList = () => {
 
   const { listId } = useParams<{ listId: string }>();
   const { getListById, deleteWord, exportList, importList, deleteList, updateList, addWord, selectList, isLoading } = useVocab();
-  const { goToPractice } = useAppNavigation();
+  const { goToPractice, goToHome } = useAppNavigation();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [addWordOpen, setAddWordOpen] = useState(false);
@@ -214,6 +214,7 @@ const VocabList = () => {
       description: "The vocabulary list has been deleted.",
     });
     setDeleteListDialogOpen(false);
+    goToHome();
   };
 
   const getNextReviewDate = (word: VocabWord, direction: PracticeDirection): Date | undefined => {

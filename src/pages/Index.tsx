@@ -138,6 +138,43 @@ const Index = () => {
     updateList(id, { pinned });
   };
 
+  const importWordsToList = async (file: File, listId: string) => {
+    try {
+      const importedList = await importListFunc(file, 'temp');
+
+      if (!importedList || !importedList.words.length) {
+        toast({
+          title: "No words found",
+          description: "The file doesn't contain any words to import.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Add each word to the list
+      for (const word of importedList.words) {
+        await addWord(listId, {
+          origin: word.origin,
+          transl: word.transl,
+          gender: word.gender,
+          notes: word.notes
+        });
+      }
+
+      toast({
+        title: "Import successful",
+        description: `Added ${importedList.words.length} word${importedList.words.length > 1 ? 's' : ''} to the list.`,
+      });
+    } catch (error) {
+      console.error('Error importing words to list:', error);
+      toast({
+        title: "Import error",
+        description: "Failed to import words to the list. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="container py-6 max-w-3xl">
       <ChatButton />
@@ -162,8 +199,8 @@ const Index = () => {
           onEditList={handleEditList}
           onDeleteList={handleDeleteList}
           onExportList={exportList}
-          onImportWords={async (file, listName) => {
-            await importListFunc(file, listName);
+          onImportWords={async (file, listId) => {
+            await importWordsToList(file, listId);
           }}
           onShareToggle={handleShareToggle}
           onPinToggle={handlePinToggle}

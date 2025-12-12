@@ -2,7 +2,15 @@ import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/comp
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { VocabList } from "@/types/vocabulary";
-import { Pin } from "lucide-react";
+import { Pin, MoreVertical, Pencil, Trash2, Download, Upload } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuLabel,
+  DropdownMenuSeparator
+} from "@/components/ui/dropdown-menu";
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import FlagIcon from '@/components/FlagIcon';
 import { RightArrow } from '@/components/Icon';
@@ -12,9 +20,13 @@ interface ListCardProps {
   onSelect: (id: string) => void;
   onShareToggle: (id: string, share: boolean) => void;
   onPinToggle: (id: string, pinned: boolean) => void;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
+  onExport: (id: string) => void;
+  onImport: (id: string) => void;
 }
 
-const ListCard = ({ list, onSelect, onShareToggle, onPinToggle }: ListCardProps) => {
+const ListCard = ({ list, onSelect, onShareToggle, onPinToggle, onEdit, onDelete, onExport, onImport }: ListCardProps) => {
   const { goToPractice } = useAppNavigation();
   // Count words due for practice in each direction
   const now = new Date();
@@ -39,26 +51,62 @@ const ListCard = ({ list, onSelect, onShareToggle, onPinToggle }: ListCardProps)
             <CardTitle className="text-lg text-left flex-1">
               {list.name}
             </CardTitle>
-            <div className="flex items-center gap-2 px-2 py-1 rounded-md backdrop-blur bg-white/10">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-share-fill" viewBox="0 0 16 16">
-                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
-              </svg>
-              <Switch
-                id={`share-${list.id}`}
-                checked={list.share || false}
-                onCheckedChange={(checked) => onShareToggle(list.id, checked)}
-                className="data-[state=unchecked]:bg-secondary"
-              />
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-2 py-1 rounded-md backdrop-blur bg-white/10">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-share-fill" viewBox="0 0 16 16">
+                  <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
+                </svg>
+                <Switch
+                  id={`share-${list.id}`}
+                  checked={list.share || false}
+                  onCheckedChange={(checked) => onShareToggle(list.id, checked)}
+                  className="data-[state=unchecked]:bg-secondary"
+                />
+              </div>
+              <Button
+                variant="ghost"
+                className={`h-8 px-2 flex-shrink-0 hover:bg-transparent hover:text-light ${list.pinned ? 'text-yellow-500' : ''}`}
+                onClick={() => onPinToggle(list.id, !list.pinned)}
+                title={list.pinned ? 'Unpin list' : 'Pin list'}
+              >
+                <Pin className={`h-4 w-4 ${list.pinned ? 'fill-current' : ''}`} />
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="h-8 p-0 hover:bg-transparent hover:text-light"
+                    title="List actions"
+                  >
+                    <MoreVertical className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>List Actions</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => onEdit(list.id)}>
+                    <Pencil className="h-4 w-4 mr-2" />
+                    Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => onDelete(list.id)}
+                    className="text-destructive focus:text-destructive"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Delete
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => onExport(list.id)}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Export as JSON
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => onImport(list.id)}>
+                    <Upload className="h-4 w-4 mr-2" />
+                    Import Words
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={`h-8 w-8 flex-shrink-0 !justify-end ${list.pinned ? 'text-yellow-500' : ''}`}
-              onClick={() => onPinToggle(list.id, !list.pinned)}
-              title={list.pinned ? 'Unpin list' : 'Pin list'}
-            >
-              <Pin className={`h-4 w-4 ${list.pinned ? 'fill-current' : ''}`} />
-            </Button>
           </div>
         </div>
         <CardDescription className="!mt-3 md:!mt-1 text-left text-gray-400">

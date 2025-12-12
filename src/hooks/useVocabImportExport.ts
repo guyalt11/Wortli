@@ -103,11 +103,6 @@ export function useVocabImportExport({ lists, setLists }: VocabImportExportProps
         target: importData.target || 'en'
       };
 
-      toast({
-        title: "Import successful",
-        description: `Imported ${newList.words.length} words into "${newList.name}".`,
-      });
-
       return newList;
 
     } catch (error) {

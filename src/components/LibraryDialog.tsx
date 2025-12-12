@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/select';
 import { useSharedLists } from '@/hooks/useSharedLists';
 import { useVocab } from '@/context/VocabContext';
+import { useAuth } from '@/context/AuthContext';
 import { toast } from '@/components/ui/use-toast';
 import FlagIcon from '@/components/FlagIcon';
 import { VocabList } from '@/types/vocabulary';
@@ -26,6 +27,7 @@ interface LibraryDialogProps {
 const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
     const { sharedLists, isLoading } = useSharedLists();
     const { importList } = useVocab();
+    const { isAuthenticated } = useAuth();
     const [selectedLanguage, setSelectedLanguage] = useState<string>('any');
     const [selectedListIds, setSelectedListIds] = useState<Set<string>>(new Set());
     const [expandedListId, setExpandedListId] = useState<string | null>(null);
@@ -105,8 +107,14 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                 const file = new File([blob], `${list.name}.json`, { type: 'application/json' });
 
                 // Import the list
-                await importList(file, list.name);
-                successCount++;
+                const result = await importList(file, list.name);
+
+                // Only count as success if importList returns a valid result
+                if (result) {
+                    successCount++;
+                } else {
+                    errorCount++;
+                }
             } catch (error) {
                 console.error(`Error importing list ${list.name}:`, error);
                 errorCount++;
@@ -116,12 +124,15 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
         setIsImporting(false);
         setSelectedListIds(new Set());
 
-        if (errorCount > 0) {
+        // Show success toast only if there were successful imports
+        if (successCount > 0) {
             toast({
-                title: 'Import errors',
-                description: `Failed to import ${errorCount} list${errorCount > 1 ? 's' : ''}.`,
-                variant: 'destructive',
+                title: 'Lists imported',
+                description: `Successfully imported ${successCount} list${successCount > 1 ? 's' : ''}.`,
             });
+
+            // Close dialog and notify parent that lists were added
+            onOpenChange(false);
         }
     };
 
@@ -252,7 +263,8 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                         </Button>
                         <Button
                             onClick={handleAddLists}
-                            disabled={selectedListIds.size === 0 || isImporting}
+                            disabled={!isAuthenticated || selectedListIds.size === 0 || isImporting}
+                            title={!isAuthenticated ? "Please login to add lists" : ""}
                         >
                             {isImporting ? 'Adding...' : `Add ${selectedListIds.size > 0 ? `(${selectedListIds.size})` : ''}`}
                         </Button>

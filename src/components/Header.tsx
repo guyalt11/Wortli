@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, LogOut, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import LibraryDialog from '@/components/LibraryDialog';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,6 +18,7 @@ const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const [libraryDialogOpen, setLibraryDialogOpen] = useState(false);
     const { currentUser, logout, isAuthenticated } = useAuth();
     const { preferences } = usePreferences();
     const navigate = useNavigate();
@@ -60,6 +62,18 @@ const Header = () => {
         return isAuthenticated ? '/' : '/home';
     };
 
+    const handleLibraryClick = () => {
+        setLibraryDialogOpen(true);
+        setIsMobileMenuOpen(false);
+    };
+
+    const handleLibraryClose = (listsAdded: boolean) => {
+        setLibraryDialogOpen(false);
+        if (listsAdded && isAuthenticated) {
+            navigate('/');
+        }
+    };
+
     return (
         <>
             <header
@@ -89,6 +103,12 @@ const Header = () => {
                                     className="text-foreground hover:text-tertiary transition-colors font-medium"
                                 >
                                     Practice
+                                </button>
+                                <button
+                                    onClick={handleLibraryClick}
+                                    className="text-foreground hover:text-tertiary transition-colors font-medium"
+                                >
+                                    Library
                                 </button>
                                 <button
                                     onClick={() => isAuthenticated ? handleNavigation('/settings') : handleNavigation('/login')}
@@ -186,6 +206,13 @@ const Header = () => {
                         </Button>
                         <Button
                             variant="ghost"
+                            onClick={handleLibraryClick}
+                            className="justify-start text-foreground hover:text-primary"
+                        >
+                            Library
+                        </Button>
+                        <Button
+                            variant="ghost"
                             onClick={() => isAuthenticated ? handleNavigation('/settings') : handleNavigation('/login')}
                             className="justify-start text-foreground hover:text-primary"
                         >
@@ -225,6 +252,16 @@ const Header = () => {
 
             {/* Spacer to prevent content jump when header becomes fixed */}
             <div className="h-16" />
+
+            {/* Library Dialog */}
+            <LibraryDialog
+                open={libraryDialogOpen}
+                onOpenChange={(open) => {
+                    if (!open) {
+                        handleLibraryClose(false);
+                    }
+                }}
+            />
         </>
     );
 };
