@@ -39,7 +39,8 @@ const CardBack: React.FC<CardBackProps> = ({ word, direction, language, target }
         {showGender && <GenderTag gender={word.gender!} />}
       </div>
 
-      {direction === 'translateFrom' && (
+      {/* TODO: Add language-specific audio button */}
+      {direction === 'translateFrom' && currentList?.language === 'de' && (
         <Button
           variant="ghost"
           size="sm"

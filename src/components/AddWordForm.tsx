@@ -59,7 +59,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
     // Languages with m/f/n gender: de, is, bg, hr, cz, gr, mk, pl, ro, ru, rs, sk, si, ua
     // Languages with m/f gender: he, al, sa, fr, in, it, lv, lt, pt, es, pk
     // Languages with c/n gender: se, dk, no, nl
-    const languagesWithTranslation = ['de', 'he', 'is', 'bg', 'hr', 'cz', 'gr', 'mk', 'pl', 'ro', 'ru', 'rs', 'sk', 'si', 'ua', 'al', 'sa', 'fr', 'in', 'it', 'lv', 'lt', 'pt', 'es', 'pk', 'se', 'dk', 'no', 'nl'];
+    const languagesWithTranslation = ['de'];
     const currentLanguage = currentList?.language || 'de';
 
     if (!languagesWithTranslation.includes(currentLanguage)) {
