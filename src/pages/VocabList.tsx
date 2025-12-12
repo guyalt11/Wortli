@@ -300,7 +300,7 @@ const VocabList = () => {
       <div className="mb-4 sm:flex sm:justify-between sm:items-center">
         <div className="mt-4 sm:mt-0 w-full">
           <div className="flex flex-col">
-            <div className="mb-2 flex items-center justify-between gap-2">
+            <div className="mb-2 flex items-start justify-between gap-2">
               <h1 className="text-2xl font-bold">{currentList.name}</h1>
 
               <DropdownMenu>
@@ -308,10 +308,10 @@ const VocabList = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7"
+                    className="h-9 w-9 mt-0 sm:mt-2"
                     title="List actions"
                   >
-                    <MoreVertical className="h-4 w-4" />
+                    <MoreVertical className="!h-5 !w-5" />
                   </Button>
                 </DropdownMenuTrigger>
 
@@ -385,7 +385,7 @@ const VocabList = () => {
             className={`relative overflow-hidden truncate transition-all bg-secondary ${translateFromDue === 0 ? 'cursor-not-allowed' : ''} px-3`}
             disabled={translateFromDue === 0}
           >
-            <FlagIcon country={currentList.target || 'en'} size={20} />
+            <FlagIcon country={currentList.target || 'globe'} size={20} />
             <RightArrow size={20} className="text-foreground" />
             <FlagIcon country={currentList.language} size={20} />
           </Button>
@@ -397,7 +397,7 @@ const VocabList = () => {
           >
             <FlagIcon country={currentList.language} size={20} />
             <RightArrow size={20} className="text-foreground" />
-            <FlagIcon country={currentList.target || 'en'} size={20} />
+            <FlagIcon country={currentList.target || 'globe'} size={20} />
           </Button>
         </div>
         <input

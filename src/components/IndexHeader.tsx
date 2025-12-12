@@ -52,7 +52,9 @@ const IndexHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, on
   return (
     <>
       <div className="flex flex-wrap flex-col sm:flex-row gap-2 mb-5 sm:mb-6">
-        <div className="flex gap-2">
+        {/* Buttons container */}
+        <div className="flex gap-2 
+                  max-sm:w-[90%] max-sm:mx-auto max-sm:justify-center max-sm:space-x-2">
           {onPracticeAll && (
             <Button
               title="Practice all words"
@@ -63,15 +65,19 @@ const IndexHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, on
               <Play className="h-4 w-4 text-black" />
             </Button>
           )}
+
           <Button title="Add new list" onClick={onAddList} className="gap-1 transition-all btn-2 text-foreground">
             <Plus className="h-4 w-4 text-black" />
           </Button>
+
           <Button title="Import lists" onClick={onImport} className="gap-1 transition-all btn-3 text-foreground">
             <Upload className="h-4 w-4 text-black" />
           </Button>
+
           <Button title="Browse shared lists" onClick={onLibrary} className="gap-1 transition-all btn-4 text-foreground">
             <BookOpen className="h-4 w-4 text-black" />
           </Button>
+
           <Button
             title={effectiveShowOnlyDue ? "All lists" : "Only practicable lists"}
             onClick={() => {
@@ -88,10 +94,15 @@ const IndexHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, on
             )}
           </Button>
         </div>
-        <div className="h-full flex mt-3 sm:mt-0 sm:ml-auto justify-start w-full sm:w-auto self-center">
-          Total words: {lists.reduce((total, list) => total + list.words.length, 0)}&nbsp;&nbsp;·&nbsp;&nbsp;{totalDueWords} Ready for review
+
+        {/* Total words block */}
+        <div className="h-full flex mt-3 max-sm:mt-3 max-sm:w-[90%] max-sm:mx-auto max-sm:justify-center 
+                  sm:mt-0 sm:ml-auto sm:justify-end sm:w-auto self-center">
+          Total words: {lists.reduce((total, list) => total + list.words.length, 0)}
+          &nbsp;&nbsp;·&nbsp;&nbsp;{totalDueWords} Ready for review
         </div>
       </div>
+
       <div className="w-full mb-6">
         <div className="relative">
           <input

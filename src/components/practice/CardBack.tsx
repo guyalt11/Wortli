@@ -35,7 +35,7 @@ const CardBack: React.FC<CardBackProps> = ({ word, direction, language, target }
         <DirectionFlag direction={direction === 'translateTo' ? 'translateFrom' : 'translateTo'} size={16} language={language} target={target} />
       </div>
       <div className="flex items-center justify-center gap-2">
-        <h3 className="text-xl font-semibold">{backText}</h3>
+        <h3 className="text-xl font-semibold break-all">{backText}</h3>
         {showGender && <GenderTag gender={word.gender!} />}
       </div>
 

@@ -37,7 +37,7 @@ const CardFront: React.FC<CardFrontProps> = ({ word, direction, flipped, onDelet
         <DirectionFlag direction={direction} size={16} language={language} target={target} />
       </div>
       <div className="flex items-center justify-center gap-2">
-        <h2 className="text-2xl font-bold">{frontText}</h2>
+        <h2 className="text-2xl font-bold break-all">{frontText}</h2>
         {direction === 'translateTo' && word.gender && (
           <GenderTag gender={word.gender} />
         )}

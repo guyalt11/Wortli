@@ -57,12 +57,12 @@ const PracticeHeader: React.FC<PracticeHeaderProps> = ({
         >
           <div className="flex items-center gap-1">
             <FlagIcon
-              country={direction !== 'translateTo' ? (currentList?.language || 'de') : (currentList?.target || 'en')}
+              country={direction !== 'translateTo' ? (currentList?.language || 'globe') : (currentList?.target || 'globe')}
               size={24}
             />
             <RightArrow size={24} className="text-foreground" />
             <FlagIcon
-              country={direction !== 'translateTo' ? (currentList?.target || 'en') : (currentList?.language || 'de')}
+              country={direction !== 'translateTo' ? (currentList?.target || 'globe') : (currentList?.language || 'globe')}
               size={24}
             />
           </div>

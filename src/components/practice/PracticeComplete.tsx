@@ -9,17 +9,8 @@ interface PracticeCompleteProps {
 }
 
 const PracticeComplete: React.FC<PracticeCompleteProps> = ({
-  totalWords,
-  onRestart,
-  onBack
+  totalWords
 }) => {
-  // Format time spent in minutes and seconds
-  const formatTime = (ms: number) => {
-    const totalSeconds = Math.floor(ms / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${minutes}m ${seconds}s`;
-  };
 
   return (
     <Card className="mb-6">
