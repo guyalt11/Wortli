@@ -18,7 +18,7 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useEffect, useRef } from 'react';
 
 const Index = () => {
-  const { lists, exportList, importList, deleteList, updateList, getListById, addWord } = useVocab();
+  const { lists, exportList, importList, deleteList, updateList, getListById, addWord, isLoading } = useVocab();
   const { preferences } = usePreferences();
   const navigate = useNavigate();
   const { goToList, goToPracticeAll } = useAppNavigation();
@@ -28,13 +28,13 @@ const Index = () => {
 
   useEffect(() => {
     listsRef.current = lists;
-    if (lists.length === 0) {
-      const timer = setTimeout(() => setShowEmptyState(true), 500);
-      return () => clearTimeout(timer);
+    // Only show empty state if not loading and lists are empty
+    if (!isLoading && lists.length === 0) {
+      setShowEmptyState(true);
     } else {
       setShowEmptyState(false);
     }
-  }, [lists]);
+  }, [lists, isLoading]);
 
   // UI state
   const [addListOpen, setAddListOpen] = useState(false);
@@ -190,7 +190,12 @@ const Index = () => {
         initialShowOnlyDue={preferences?.hideEmptyLists || false}
       />
 
-      {showEmptyState ? (
+
+      {isLoading ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
+      ) : showEmptyState ? (
         <EmptyListsState onAddList={handleAddList} onLibrary={handleLibraryClick} />
       ) : (
         <VocabListGrid
