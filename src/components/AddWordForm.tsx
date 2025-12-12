@@ -98,7 +98,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
     if (!origin.trim() || !transl.trim()) {
       toast({
         title: "Error",
-        description: "Both language and English fields are required.",
+        description: "Both origin and translation fields are required.",
         variant: "destructive",
       });
       return;
@@ -116,17 +116,9 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
       if (editWord) {
         await updateWord(editWord.id, wordData);
         onOpenChange(false);
-        toast({
-          title: "Success",
-          description: "Word updated successfully.",
-        });
       } else {
         await addWord(currentList.id, wordData);
         onOpenChange(false);
-        toast({
-          title: "Success",
-          description: "Word added successfully.",
-        });
       }
 
       // Clear form state after successful submission

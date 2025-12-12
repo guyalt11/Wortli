@@ -108,10 +108,6 @@ const Index = () => {
 
   const handleSaveEdit = (id: string, updates: Partial<VocabList>) => {
     updateList(id, updates);
-    toast({
-      title: "List updated",
-      description: `List "${updates.name}" has been updated.`,
-    });
   };
 
   const handleDeleteList = (id: string) => {
@@ -128,31 +124,6 @@ const Index = () => {
       });
       setDeleteDialogOpen(false);
     }
-  };
-
-  const handleImportWords = async (listId: string) => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = async (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        const list = getListById(listId);
-        if (list) {
-          const importedList = await importListFunc(file, list.name);
-          if (importedList && importedList.words) {
-            for (const word of importedList.words) {
-              await addWord(listId, word);
-            }
-            toast({
-              title: "Success",
-              description: `Successfully imported ${importedList.words.length} words`,
-            });
-          }
-        }
-      }
-    };
-    input.click();
   };
 
   const handlePracticeAll = () => {

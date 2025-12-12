@@ -116,13 +116,6 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
         setIsImporting(false);
         setSelectedListIds(new Set());
 
-        if (successCount > 0) {
-            toast({
-                title: 'Lists imported',
-                description: `Successfully imported ${successCount} list${successCount > 1 ? 's' : ''}.`,
-            });
-        }
-
         if (errorCount > 0) {
             toast({
                 title: 'Import errors',

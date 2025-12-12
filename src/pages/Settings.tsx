@@ -132,17 +132,7 @@ const Settings = () => {
         setIsUpdatingTheme(true);
         const success = await updateColorScheme(scheme);
 
-        if (success) {
-            const themeNames = {
-                'dark': 'Dark (Teal)',
-                'light': 'Light',
-                'neubrutalism': 'Neubrutalism'
-            };
-            toast({
-                title: "Theme updated",
-                description: `Color scheme changed to ${themeNames[scheme]}.`,
-            });
-        } else {
+        if (!success) {
             toast({
                 title: "Update failed",
                 description: "Unable to update color scheme. Please try again.",
@@ -180,12 +170,7 @@ const Settings = () => {
     const handleHideEmptyListsToggle = async () => {
         const newValue = !preferences?.hideEmptyLists;
         const success = await updateHideEmptyLists(newValue);
-        if (success) {
-            toast({
-                title: "Preference updated",
-                description: `Empty lists will ${newValue ? 'be hidden' : 'be shown'} by default.`,
-            });
-        } else {
+        if (!success) {
             toast({
                 title: "Update failed",
                 description: "Unable to update preference. Please try again.",

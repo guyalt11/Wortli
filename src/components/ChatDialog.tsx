@@ -108,11 +108,6 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                 const importedList = await importList(jsonFile, jsonData.name);
 
                 if (importedList) {
-                    toast({
-                        title: 'List Created!',
-                        description: `"${jsonData.name}" has been added to your vocabulary lists.`,
-                    });
-
                     // Close the chat dialog and navigate to the new list
                     onOpenChange(false);
 

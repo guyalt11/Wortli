@@ -199,10 +199,6 @@ const VocabList = () => {
         name: editListName.trim(),
         description: editListDescription.trim() || undefined
       });
-      toast({
-        title: "List updated",
-        description: `List "${editListName}" has been updated.`,
-      });
       setEditListDialogOpen(false);
     }
   };
@@ -346,10 +342,6 @@ const VocabList = () => {
                       checked={currentList.share || false}
                       onCheckedChange={(checked) => {
                         updateList(currentList.id, { share: checked });
-                        toast({
-                          title: checked ? "List shared" : "List unshared",
-                          description: checked ? "This list is now shared." : "This list is no longer shared.",
-                        });
                       }}
                       onClick={(e) => {
                         e.stopPropagation();
