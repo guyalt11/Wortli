@@ -199,14 +199,6 @@ const Settings = () => {
             <div className="container mx-auto px-4 py-8 max-w-3xl">
                 {/* Header */}
                 <div className="flex items-center gap-4 mb-8">
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => navigate('/')}
-                        className="h-8 w-8"
-                    >
-                        <ArrowLeft className="h-5 w-5" />
-                    </Button>
                     <h1 className="text-3xl font-bold">Settings</h1>
                 </div>
 

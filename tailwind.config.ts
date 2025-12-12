@@ -40,9 +40,9 @@ export default {
 					DEFAULT: 'var(--secondary)',
 					foreground: 'var(--secondary-foreground)'
 				},
-				treitary: {
-					DEFAULT: 'var(--treitary)',
-					foreground: 'var(--treitary-foreground)'
+				tertiary: {
+					DEFAULT: 'var(--tertiary)',
+					foreground: 'var(--tertiary-foreground)'
 				},
 				danger: {
 					DEFAULT: 'var(--danger)',

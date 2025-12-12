@@ -11,16 +11,7 @@ import { Button } from '@/components/ui/button';
 import FlagIcon from '@/components/FlagIcon';
 import RightArrow from '@/components/Icon';
 import { RefreshCcw } from 'lucide-react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import DeleteWordDialog from '@/components/DeleteWordDialog';
 
 const PracticeAll: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -267,28 +258,14 @@ const PracticeAll: React.FC = () => {
         </>
       )}
 
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete Word</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete this word? This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => {
-                handleDelete();
-                setShowDeleteDialog(false);
-              }}
-              className="bg-danger text-danger-foreground hover:bg-danger/90"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <DeleteWordDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        onConfirm={() => {
+          handleDelete();
+          setShowDeleteDialog(false);
+        }}
+      />
     </div>
   );
 };

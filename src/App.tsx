@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { VocabProvider } from "@/context/VocabContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { PreferencesProvider } from "@/context/PreferencesContext";
-import SettingsMenu from "@/components/SettingsMenu";
+import Header from "@/components/Header";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
@@ -31,9 +31,7 @@ const App = () => (
             <VocabProvider>
               <Toaster />
               <Sonner />
-              <div className="fixed top-2 right-2 z-50">
-                <SettingsMenu />
-              </div>
+              <Header />
               <Routes>
                 <Route path="/home" element={<Home />} />
                 <Route path="/login" element={<Login />} />

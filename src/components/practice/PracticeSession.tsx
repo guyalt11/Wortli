@@ -8,16 +8,7 @@ import WordCompletionCounter from './WordCompletionCounter';
 import PracticeProgressBar from '@/components/PracticeProgressBar';
 import { DifficultyLevel, PracticeDirection } from '@/types/vocabulary';
 import { usePracticeWords } from '@/hooks/usePracticeWords';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import DeleteWordDialog from '@/components/DeleteWordDialog';
 
 interface PracticeSessionProps {
   direction: PracticeDirection;
@@ -209,28 +200,14 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
         />
       )}
 
-      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete Word</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete this word? This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => {
-                handleDelete();
-                setShowDeleteDialog(false);
-              }}
-              className="bg-danger text-danger-foreground hover:bg-danger/90"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <DeleteWordDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        onConfirm={() => {
+          handleDelete();
+          setShowDeleteDialog(false);
+        }}
+      />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import WordCard from '@/components/WordCard';
 import AddWordForm from '@/components/AddWordForm';
+import DeleteWordDialog from '@/components/DeleteWordDialog';
 import { VocabWord, PracticeDirection } from '@/types/vocabulary';
 import { formatDistanceToNow } from 'date-fns';
 import {
@@ -91,7 +92,7 @@ const VocabList = () => {
     );
   }
 
-  // Only redirect to 404 if we're sure the list doesn't exist and lists are loaded
+  // Redirect to 404 if list is not found
   if (listNotFound && !isLoading && !currentList) {
     return <Navigate to="/404" replace />;
   }
@@ -488,20 +489,11 @@ const VocabList = () => {
       />
 
       {/* Delete Word Dialog */}
-      <AlertDialog open={!!wordToDelete} onOpenChange={() => setWordToDelete(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete this word from your list.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDeleteWord}>Delete</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <DeleteWordDialog
+        open={!!wordToDelete}
+        onOpenChange={() => setWordToDelete(null)}
+        onConfirm={confirmDeleteWord}
+      />
 
       {/* Edit List Dialog */}
       <Dialog open={editListDialogOpen} onOpenChange={setEditListDialogOpen}>
