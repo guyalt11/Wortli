@@ -68,7 +68,6 @@ const PracticeHeader: React.FC<PracticeHeaderProps> = ({
           </div>
         </Button>
         <Button className="btn-2" onClick={onBack}>Back to List</Button>
-        <Button className="btn-2" onClick={() => navigate('/')}>Home</Button>
       </div>
     </div>
   );

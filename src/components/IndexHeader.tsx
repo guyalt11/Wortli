@@ -3,7 +3,7 @@ import { Plus, Upload, Eye, EyeOff, Search, X, Play, BookOpen } from "lucide-rea
 import { useState, useEffect } from "react";
 import { VocabList } from "@/types/vocabulary";
 
-interface ListsHeaderProps {
+interface IndexHeaderProps {
   onAddList: () => void;
   onImport: () => void;
   onLibrary: () => void;
@@ -15,7 +15,7 @@ interface ListsHeaderProps {
   initialShowOnlyDue?: boolean;
 }
 
-const ListsHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, onSearchChange, onPracticeAll, showOnlyDue, initialShowOnlyDue = false }: ListsHeaderProps) => {
+const IndexHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, onSearchChange, onPracticeAll, showOnlyDue, initialShowOnlyDue = false }: IndexHeaderProps) => {
   const isControlled = typeof showOnlyDue !== 'undefined';
   const [internalShowOnlyDue, setInternalShowOnlyDue] = useState<boolean>(initialShowOnlyDue);
   useEffect(() => {
@@ -123,4 +123,4 @@ const ListsHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, on
   );
 };
 
-export default ListsHeader;
+export default IndexHeader;

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useVocab } from '@/context/VocabContext';
+import { Plus } from 'lucide-react';
 import { useVocabImportExport } from '@/hooks/useVocabImportExport';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,7 +29,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
-import { Download, Upload, Pencil, Trash2, Share2 } from 'lucide-react';
+import { Download, Upload, Pencil, Trash2, Share2, MoreVertical } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import FlagIcon, { DirectionFlag } from '@/components/FlagIcon';
 import { ImportExportArrow, RightArrow } from '@/components/Icon';
@@ -40,7 +41,7 @@ const VocabList = () => {
 
   const { listId } = useParams<{ listId: string }>();
   const { getListById, deleteWord, exportList, importList, deleteList, updateList, addWord, selectList, isLoading } = useVocab();
-  const { goToHome, goToPractice } = useAppNavigation();
+  const { goToPractice } = useAppNavigation();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [addWordOpen, setAddWordOpen] = useState(false);
@@ -217,7 +218,6 @@ const VocabList = () => {
       description: "The vocabulary list has been deleted.",
     });
     setDeleteListDialogOpen(false);
-    goToHome();
   };
 
   const getNextReviewDate = (word: VocabWord, direction: PracticeDirection): Date | undefined => {
@@ -301,8 +301,91 @@ const VocabList = () => {
   return (
     <div className="container py-6 max-w-3xl">
       <div className="mb-4 sm:flex sm:justify-between sm:items-center">
-        <div className="flex gap-2 mr-0 sm:mr-4">
-          <Button onClick={() => goToHome()}>Home</Button>
+        <div className="mt-4 sm:mt-0 w-full">
+          <div className="flex flex-col">
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <h1 className="text-2xl font-bold">{currentList.name}</h1>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7"
+                    title="List actions"
+                  >
+                    <MoreVertical className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>List Actions</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleEditList}>
+                    <Pencil className="h-4 w-4 mr-2" />
+                    Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={handleDeleteList}
+                    className="text-destructive focus:text-destructive"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Delete
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <div
+                    className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Share2 className="h-4 w-4 mr-2" />
+                    <span className="flex-1 mr-2">Share List</span>
+                    <Switch
+                      id="share-toggle-dropdown"
+                      checked={currentList.share || false}
+                      onCheckedChange={(checked) => {
+                        updateList(currentList.id, { share: checked });
+                        toast({
+                          title: checked ? "List shared" : "List unshared",
+                          description: checked ? "This list is now shared." : "This list is no longer shared.",
+                        });
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    />
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => handleExport('json')}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Export as JSON
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleImportClick}>
+                    <Upload className="h-4 w-4 mr-2" />
+                    Import Words
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div>
+              Total words: {currentList.words.length}
+              &nbsp;&nbsp;·&nbsp;&nbsp;
+              {getDueWordsCount()} Ready for review
+            </div>
+          </div>
+          {currentList.description && (
+            <p className="text-tertiary-foreground mt-2 max-w-lg line-clamp-3">
+              {currentList.description}
+            </p>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center mb-6">
+        <Button className="mr-4" onClick={handleAddWord}>
+          <Plus className="h-4 w-4 text-black" />
+        </Button>
+        <div className="flex gap-2">
           <Button
             variant="default"
             onClick={() => goToPractice(currentList.id, 'translateFrom')}
@@ -324,111 +407,6 @@ const VocabList = () => {
             <FlagIcon country={currentList.target || 'en'} size={20} />
           </Button>
         </div>
-        <div className="mt-4 sm:mt-0">
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold">{currentList.name}</h1>
-            <span>({currentList.words.length} words)</span>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7"
-              onClick={handleEditList}
-              title="Edit list"
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7 text-destructive"
-              onClick={handleDeleteList}
-              title="Delete list"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          </div>
-          {currentList.description && (
-            <p className="text-tertiary-foreground mt-2 max-w-lg line-clamp-3">
-              {currentList.description}
-            </p>
-          )}
-        </div>
-      </div>
-      <div className="flex items-center mb-6">
-        <div className="relative max-w-sm w-full hidden md:block">
-          <Input
-            placeholder="Search words..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pr-8 bg-dark"
-          />
-          {searchTerm && (
-            <button
-              type="button"
-              onClick={() => setSearchTerm('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-              title="Clear"
-            >
-              ×
-            </button>
-          )}
-        </div>
-
-        <Button className="ml-0 md:ml-4" onClick={handleAddWord}>Add Word</Button>
-        <Button
-          className="ml-4"
-          variant="outline"
-          size="icon"
-          onClick={() => setShowReviewTimes(!showReviewTimes)}
-          title={showReviewTimes ? "Hide review times" : "Show review times"}
-        >
-          ⏱️
-        </Button>
-        <div className="ml-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" title="List actions" className="px-3">
-                <ImportExportArrow size={16} className="mx-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>List Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleExport('json')}>
-                Export as JSON
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleImportClick}>
-                <Upload className="h-4 w-4 mr-2" />
-                Import Words
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-
-        <div className="flex items-center gap-2 bg-tertiary/50 px-2 py-1 rounded-md ml-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            className="bi bi-share-fill"
-            viewBox="0 0 16 16"
-          >
-            <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
-          </svg>
-          <Switch
-            id="share-toggle"
-            checked={currentList.share || false}
-            onCheckedChange={(checked) => {
-              updateList(currentList.id, { share: checked });
-              toast({
-                title: checked ? "List shared" : "List unshared",
-                description: checked ? "This list is now shared." : "This list is no longer shared.",
-              });
-            }}
-          />
-        </div>
-
         <input
           type="file"
           ref={fileInputRef}
@@ -437,25 +415,38 @@ const VocabList = () => {
           className="hidden"
         />
       </div>
+      <div className="w-full mb-6">
+        <div className="relative flex items-center gap-2">
+          <div className="relative flex-1">
+            <Input
+              placeholder="Search words..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pr-8 bg-secondary"
+            />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm('')}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                title="Clear"
+              >
+                ×
+              </button>
+            )}
+          </div>
 
-      <div className="relative max-w-sm w-full mb-6 block md:hidden">
-        <Input
-          placeholder="Search words..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pr-8 bg-secondary"
-        />
-        {searchTerm && (
-          <button
-            type="button"
-            onClick={() => setSearchTerm('')}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            title="Clear"
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setShowReviewTimes(!showReviewTimes)}
+            title={showReviewTimes ? "Hide review times" : "Show review times"}
           >
-            ×
-          </button>
-        )}
+            ⏱️
+          </Button>
+        </div>
       </div>
+
       {filteredWords.length === 0 ? (
         <div className="text-center py-12">
           {searchTerm ? (

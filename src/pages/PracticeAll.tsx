@@ -218,7 +218,6 @@ const PracticeAll: React.FC = () => {
               />
             </div>
           </Button>
-          <Button onClick={() => navigate('/')}>Home</Button>
         </div>
       </div>
 

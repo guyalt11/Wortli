@@ -6,7 +6,7 @@ import { useVocabImportExport } from '@/hooks/useVocabImportExport';
 import { toast } from "@/components/ui/use-toast";
 import AddListForm from '@/components/AddListForm';
 import VocabListGrid from '@/components/VocabListGrid';
-import ListsHeader from '@/components/ListsHeader';
+import IndexHeader from '@/components/IndexHeader';
 import EmptyListsState from '@/components/EmptyListsState';
 import ImportListDialog from '@/components/ImportListDialog';
 import EditListDialog from '@/components/EditListDialog';
@@ -39,7 +39,7 @@ const Index = () => {
   // UI state
   const [addListOpen, setAddListOpen] = useState(false);
   const [importDialogOpen, setImportDialogOpen] = useState(false);
-  // Initialize showOnlyDue from preferences so the initial state is respected by controlled ListsHeader
+  // Initialize showOnlyDue from preferences so the initial state is respected by controlled IndexHeader
   const [showOnlyDue, setShowOnlyDue] = useState<boolean>(() => preferences?.hideEmptyLists ?? false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -170,7 +170,7 @@ const Index = () => {
   return (
     <div className="container py-6 max-w-3xl">
       <ChatButton />
-      <ListsHeader
+      <IndexHeader
         onAddList={handleAddList}
         onImport={handleImportClick}
         onLibrary={handleLibraryClick}
