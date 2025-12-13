@@ -11,6 +11,7 @@ export interface ChatRequest {
 export interface ChatResponse {
   success: boolean;
   response: string;
+  tokens: number;
   error?: string;
   details?: string;
 }
@@ -34,6 +35,7 @@ export const sendChatMessage = async (
     });
 
     const data: ChatResponse = await response.json();
+    //console.log(data.tokens);
 
     if (!response.ok) {
       // Throw error with the message from the API

@@ -71,7 +71,7 @@ const WordCard = ({ word, onEdit, onDelete, showReviewTimes }: WordCardProps) =>
           <div className="flex-1">
             <div className="flex items-center gap-3">
               <div>{word.gender && <GenderTag gender={word.gender} />}</div>
-              <h3 className="font-medium text-lg break-all">{word.origin}<span className="text-tertiary-foreground"> · {word.transl}</span></h3>
+              <h3 className="font-medium text-lg break-words min-w-0 [overflow-wrap:anywhere]">{word.origin}<span className="text-tertiary-foreground"> · {word.transl}</span></h3>
             </div>
             {word.notes && <p className="text-sm text-tertiary-foreground mt-2">{word.notes}</p>}
             {showReviewTimes && (

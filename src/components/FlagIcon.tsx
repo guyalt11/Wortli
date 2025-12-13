@@ -9,7 +9,7 @@ interface FlagIconProps {
 }
 
 const FlagIcon: React.FC<FlagIconProps> = ({ country, className = "", size = 20 }) => {
-  const FlagComponent = getFlag(country);
+  const FlagComponent = getFlag(country) || getFlag('globe');
 
   if (!FlagComponent) {
     // Fallback if flag not found
