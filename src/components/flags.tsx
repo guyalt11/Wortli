@@ -607,7 +607,7 @@ export const LOFlag: React.FC<FlagProps> = ({ }) => (
 );
 
 // Burmese (Myanmar)
-export const MMFlag: React.FC<FlagProps> = ({ }) => (
+export const MYFlag: React.FC<FlagProps> = ({ }) => (
     <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <path d="m496.077 345.043c10.291-27.732 15.923-57.729 15.923-89.043s-5.632-61.311-15.923-89.043l-240.077-22.261-240.077 22.261c-10.29 27.732-15.923 57.729-15.923 89.043s5.633 61.311 15.923 89.043l240.077 22.261z" fill="#6da544" />
         <path d="m496.077 166.957c-36.171-97.485-130.006-166.957-240.077-166.957s-203.906 69.472-240.077 166.957z" fill="#ffda44" />
@@ -734,7 +734,7 @@ export const getFlag = (countryCode: string): React.FC<FlagProps> | null => {
         tl: TLFlag,
         km: KMFlag,
         lo: LOFlag,
-        mm: MMFlag,
+        my: MYFlag,
         mn: MNFlag,
         zu: ZUFlag,
         am: AMFlag,
@@ -797,7 +797,7 @@ export const flags = {
     tl: TLFlag,
     km: KMFlag,
     lo: LOFlag,
-    mm: MMFlag,
+    my: MYFlag,
     mn: MNFlag,
     zu: ZUFlag,
     am: AMFlag,

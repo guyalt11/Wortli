@@ -17,12 +17,7 @@ BEGIN
     RAISE EXCEPTION 'Not authenticated';
   END IF;
   
-  -- Delete user's related data first (adjust table names as needed)
-  -- Add your tables here, for example:
-  -- DELETE FROM user_vocab_lists WHERE user_id = deleted_user_id;
-  -- DELETE FROM user_practice_sessions WHERE user_id = deleted_user_id;
-  
-  -- Delete the user from auth.users
+  -- Delete the user from auth.users and related data
   DELETE FROM auth.users WHERE id = deleted_user_id;
   
   -- Return success

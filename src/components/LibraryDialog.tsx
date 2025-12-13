@@ -18,6 +18,7 @@ import FlagIcon from '@/components/FlagIcon';
 import { VocabList } from '@/types/vocabulary';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import LoadingOverlay from '@/components/LoadingOverlay';
+import { getLanguageName } from '@/constants/languages';
 
 interface LibraryDialogProps {
     open: boolean;
@@ -157,10 +158,10 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                                     <SelectValue placeholder="Any" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="any">Any</SelectItem>
+                                    <SelectItem value="any">All Languages</SelectItem>
                                     {availableLanguages.map(lang => (
                                         <SelectItem key={lang} value={lang}>
-                                            {lang.toUpperCase()}
+                                            {getLanguageName(lang)}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
