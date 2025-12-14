@@ -35,28 +35,22 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
         scrollToBottom();
     }, [messages]);
 
-    // Helper function to detect and extract JSON from response
     const extractJSON = (text: string): any | null => {
         try {
-            // Try to find JSON in code blocks first
             const codeBlockMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
             if (codeBlockMatch) {
                 return JSON.parse(codeBlockMatch[1]);
             }
-
-            // Try to find JSON object directly
             const jsonMatch = text.match(/\{[\s\S]*"name"[\s\S]*"language"[\s\S]*"words"[\s\S]*\}/);
             if (jsonMatch) {
                 return JSON.parse(jsonMatch[0]);
             }
-
             return null;
-        } catch (error) {
+        } catch {
             return null;
         }
     };
 
-    // Helper function to validate vocabulary list JSON
     const isValidVocabList = (obj: any): boolean => {
         return (
             obj &&
@@ -70,6 +64,21 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
             )
         );
     };
+
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+        }
+    }, [input]);
+
+    useEffect(() => {
+        if (!isLoading && !/Mobi|Android/i.test(navigator.userAgent)) {
+            textareaRef.current?.focus();
+        }
+    }, [messages, isLoading]);
 
     const handleSend = async () => {
         if (!input.trim() || isLoading) return;
@@ -86,32 +95,24 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
         try {
             const response = await sendChatMessage(userMessage.content, messages);
 
-            // Check if response contains a valid vocabulary list JSON
             const jsonData = extractJSON(response);
 
             if (jsonData && isValidVocabList(jsonData)) {
-                // Show a friendly message to the user instead of the JSON
                 const friendlyMessage: ChatMessage = {
                     role: 'assistant',
                     content: `Great! I've created a vocabulary list called "${jsonData.name}" with ${jsonData.words.length} words. Importing it now...`,
                 };
                 setMessages((prev) => [...prev, friendlyMessage]);
 
-                // Show loading overlay while importing
                 setIsSavingList(true);
 
-                // Create a File object from the JSON data
                 const jsonBlob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
                 const jsonFile = new File([jsonBlob], `${jsonData.name}.json`, { type: 'application/json' });
 
-                // Import the list
                 const importedList = await importList(jsonFile, jsonData.name);
 
                 if (importedList) {
-                    // Close the chat dialog and navigate to the new list
                     onOpenChange(false);
-
-                    // Small delay to ensure the dialog closes before navigation
                     setTimeout(() => {
                         navigate(`/list/${importedList.id}`);
                     }, 100);
@@ -123,7 +124,6 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                     });
                 }
             } else {
-                // No JSON or invalid JSON - show the normal response
                 const assistantMessage: ChatMessage = {
                     role: 'assistant',
                     content: response,
@@ -133,9 +133,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
         } catch (error: any) {
             console.error('Chat error:', error);
 
-            // Extract error message from the API response
             let errorMessage = 'Failed to get response from AI. Please try again.';
-
             if (error.message) {
                 errorMessage = error.message;
             }
@@ -161,7 +159,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     return (
         <>
             {isSavingList && <LoadingOverlay message="Saving vocabulary list..." />}
-            <Dialog open={open} onOpenChange={onOpenChange} >
+            <Dialog open={open} onOpenChange={onOpenChange}>
                 <DialogContent className="sm:max-w-full md:max-w-3xl h-[100dvh] flex flex-col p-0 gap-0 border-0 sm:border animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-4 duration-300 sm:rounded-lg rounded-none">
                     <DialogHeader className="px-6 pt-5 pb-5 border-b-0 sm:border-b border-white/20 bg-gradient-dark">
                         <DialogTitle className="flex items-center gap-2 text-xl">
@@ -170,7 +168,6 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                         </DialogTitle>
                     </DialogHeader>
 
-                    {/* Messages Container */}
                     <div className="flex-1 flex flex-col overflow-y-auto px-6 py-3 space-y-3 bg-dark">
                         {messages.length === 0 ? (
                             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4">
@@ -186,8 +183,15 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                             </div>
                         ) : (
                             messages.map((message, index) => (
-                                <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in-0 slide-in-from-bottom-2 duration-300`} style={{ animationDelay: `${index * 50}ms` }}>
-                                    <div className={`max-w-[85%] md:max-w-[75%] rounded-2xl px-5 py-3 shadow-lg transition-all hover:shadow-xl ${message.role === 'user' ? 'bg-light text-light-foreground' : 'bg-gradient-dark'}`}>
+                                <div
+                                    key={index}
+                                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in-0 slide-in-from-bottom-2 duration-300`}
+                                    style={{ animationDelay: `${index * 50}ms` }}
+                                >
+                                    <div
+                                        className={`max-w-[85%] md:max-w-[75%] rounded-2xl px-5 py-3 shadow-lg transition-all hover:shadow-xl ${message.role === 'user' ? 'bg-light text-light-foreground' : 'bg-gradient-dark'
+                                            }`}
+                                    >
                                         <p className="text-sm md:text-base whitespace-pre-wrap break-words leading-relaxed">
                                             {message.content}
                                         </p>
@@ -208,18 +212,17 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                         <div ref={messagesEndRef} />
                     </div>
 
-
-                    {/* Input Container */}
                     <div className="border-t-0 sm:border-t border-white/20 px-6 py-4 bg-gradient-dark">
                         <div className="flex gap-3">
-                            <input
-                                type="text"
+                            <textarea
+                                ref={textareaRef}
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                onKeyPress={handleKeyPress}
+                                onKeyDown={handleKeyPress}
                                 placeholder="Type your message..."
                                 disabled={isLoading}
-                                className="flex-1 px-4 py-3 text-sm md:text-base border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-light focus:border-transparent disabled:opacity-50 transition-all bg-dark"
+                                rows={1}
+                                className="flex-1 resize-none px-4 py-3 text-sm md:text-base border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-light focus:border-transparent disabled:opacity-50 transition-all bg-dark overflow-hidden"
                             />
                             <Button
                                 onClick={handleSend}

@@ -107,7 +107,7 @@ const IndexHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, on
         <div className="relative">
           <input
             type="text"
-            placeholder="Search lists..."
+            placeholder={`Search lists... (Total: ${lists.length})`}
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);

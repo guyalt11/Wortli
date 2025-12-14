@@ -339,15 +339,6 @@ const Settings = () => {
                             </div>
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <Label>Practice Notifications</Label>
-                                    <p className="text-sm text-tertiary-foreground">Get reminded when words are due for review</p>
-                                </div>
-                                <Button variant="outline" size="sm" disabled>
-                                    Coming Soon
-                                </Button>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <div>
                                     <Label>Daily Goal</Label>
                                     <p className="text-sm text-tertiary-foreground">Set a daily practice target</p>
                                 </div>
