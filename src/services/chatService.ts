@@ -35,7 +35,6 @@ export const sendChatMessage = async (
     });
 
     const data: ChatResponse = await response.json();
-    //console.log(data.tokens);
 
     if (!response.ok) {
       // Throw error with the message from the API
