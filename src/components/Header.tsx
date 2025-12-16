@@ -193,28 +193,28 @@ const Header = () => {
                         <Button
                             variant="ghost"
                             onClick={() => handleNavigation(getHomeLink())}
-                            className="justify-start text-foreground hover:text-primary"
+                            className="justify-start text-foreground hover:header-hover"
                         >
                             Home
                         </Button>
                         <Button
                             variant="ghost"
                             onClick={() => isAuthenticated ? handleNavigation('/practice-all') : handleNavigation('/login')}
-                            className="justify-start text-foreground hover:text-primary"
+                            className="justify-start text-foreground hover:header-hover"
                         >
                             Practice
                         </Button>
                         <Button
                             variant="ghost"
                             onClick={handleLibraryClick}
-                            className="justify-start text-foreground hover:text-primary"
+                            className="justify-start text-foreground hover:header-hover"
                         >
                             Library
                         </Button>
                         <Button
                             variant="ghost"
                             onClick={() => isAuthenticated ? handleNavigation('/settings') : handleNavigation('/login')}
-                            className="justify-start text-foreground hover:text-primary"
+                            className="justify-start text-foreground hover:header-hover"
                         >
                             Settings
                         </Button>
@@ -230,7 +230,7 @@ const Header = () => {
                                 <Button
                                     variant="ghost"
                                     onClick={handleLogout}
-                                    className="justify-start text-foreground hover:text-primary flex items-center gap-2"
+                                    className="justify-start text-foreground flex items-center gap-2"
                                 >
                                     <LogOut className="h-4 w-4" />
                                     <span>Logout</span>
@@ -240,7 +240,7 @@ const Header = () => {
                             <Button
                                 variant="ghost"
                                 onClick={() => handleNavigation('/login')}
-                                className="justify-start text-foreground hover:text-primary flex items-center gap-2"
+                                className="justify-start text-foreground flex items-center gap-2"
                             >
                                 <LogIn className="h-4 w-4" />
                                 <span>Login</span>

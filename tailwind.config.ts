@@ -56,6 +56,9 @@ export default {
 					DEFAULT: 'var(--dark)',
 					foreground: 'var(--dark-foreground)'
 				},
+				toggle: {
+					DEFAULT: 'var(--toggle-bg)',
+				},
 
 				// Additional utility colors
 				difficulty: {

@@ -8,20 +8,20 @@
     --primary-foreground: #020b0b;
 
     /* Secondary - Light teal */
-    --secondary: #CDEEEE;
-    --secondary-foreground: #020b0b;
+    --secondary: #1d695e;
+    --secondary-foreground: #FFFFFF;
 
     /* Tertiary - Pale teal */
-    --tertiary: #F3F3F3;
-    --tertiary-foreground: #020b0b;
+    --tertiary: #234b45;
+    --tertiary-foreground: #ffffff;
 
     /* Danger - Red for destructive actions */
     --danger: #D92626;
     --danger-foreground: #FFFFFF;
 
     /* Dark - Accents on text or elements */
-    --dark: #414141;
-    --dark-foreground: #020b0b;
+    --dark: #0e333c;
+    --dark-foreground: #FFFFFF;
 
     /* Light - Main background for subtle elements */
     --light: #00A39C;
@@ -29,9 +29,10 @@
 
     /* Utility colors */
     --border: var(--secondary);
-    --input: var(--tertiary);
+    --input: var(--secondary);
     --ring: var(--light);
     --radius: 0.5rem;
+    --toggle-bg: #033533;
 
     /* Button colors - Pure HEX */
     --btn-1: #00A39C;
@@ -72,4 +73,35 @@
 
     --gradient-dark: var(--primary);
     --gradient-tertiary: var(--light);
+
+    /* Specifications */
+    .list-card {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+    }
+
+    .word-card,
+    .practice-card {
+        background: var(--gradient-dark);
+        color: var(--foreground);
+    }
+
+    .direction-button {
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
+    }
+
+    .view-list-button {
+        background: var(--gradient-tertiary);
+        color: var(--light-foreground);
+    }
+
+    .header-hover {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+    }
+
+    .total-words {
+        color: var(--primary-foreground);
+    }
 }

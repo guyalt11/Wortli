@@ -366,7 +366,7 @@ const VocabList = () => {
               placeholder="Search words..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pr-8 bg-secondary"
+              className="w-full pr-8"
             />
             {searchTerm && (
               <button

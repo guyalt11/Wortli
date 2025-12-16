@@ -175,7 +175,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                     <MessageCircle className="h-8 w-8 text-light" />
                                 </div>
                                 <div className="space-y-2">
-                                    <p className="text-lg font-semibold">Start a conversation</p>
+                                    <p className="text-lg text-tertiary-foreground font-semibold">Start a conversation</p>
                                     <p className="text-sm text-tertiary-foreground max-w-md">
                                         I'm here to help you generate vocabulary lists!
                                     </p>

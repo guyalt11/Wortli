@@ -33,6 +33,7 @@
     --input: var(--secondary);
     --ring: var(--light);
     --radius: 0.5rem;
+    --toggle-bg: #033533;
 
     /* Button colors - Pure HEX */
     --btn-1: #00E5CC;
@@ -73,4 +74,35 @@
 
     --gradient-dark: linear-gradient(135deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
     --gradient-tertiary: linear-gradient(135deg, var(--btn-1) 0%, var(--btn-3) 100%);
+
+    /* Specifications */
+    .list-card {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+    }
+
+    .word-card,
+    .practice-card {
+        background: var(--gradient-dark);
+        color: var(--foreground);
+    }
+
+    .direction-button {
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
+    }
+
+    .view-list-button {
+        background: var(--gradient-tertiary);
+        color: var(--light-foreground);
+    }
+
+    .header-hover {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+    }
+
+    .total-words {
+        color: var(--primary-foreground);
+    }
 }

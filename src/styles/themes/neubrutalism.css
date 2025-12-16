@@ -30,9 +30,10 @@
 
     /* Utility colors */
     --border: #000000;
-    --input: #1A1A1A;
+    --input: #FF1493;
     --ring: #FFD700;
     --radius: 0.25rem;
+    --toggle-bg: #FF1493;
 
     /* Button colors */
     --btn-1: #FFD700;
@@ -73,4 +74,35 @@
 
     --gradient-dark: var(--primary);
     --gradient-tertiary: var(--light);
+
+    /* Specifications */
+    .list-card {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+    }
+
+    .word-card,
+    .practice-card {
+        background: var(--gradient-dark);
+        color: var(--foreground);
+    }
+
+    .direction-button {
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
+    }
+
+    .view-list-button {
+        background: var(--gradient-tertiary);
+        color: var(--light-foreground);
+    }
+
+    .header-hover {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+    }
+
+    .total-words {
+        color: var(--primary-foreground);
+    }
 }

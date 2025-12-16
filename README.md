@@ -1,1 +1,1 @@
-# Top Card - an app to practice vocabulary
+# Wörtli - an app to practice vocabulary
