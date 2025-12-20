@@ -48,6 +48,14 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
         return sharedLists.filter(list => list.language === selectedLanguage);
     }, [sharedLists, selectedLanguage]);
 
+    const { systemLists, userLists } = useMemo(() => {
+        const SYSTEM_USER_ID = '2a439013-2c4e-44f9-ba7b-00baf0676138';
+        return {
+            systemLists: filteredLists.filter(list => list.userId === SYSTEM_USER_ID),
+            userLists: filteredLists.filter(list => list.userId !== SYSTEM_USER_ID)
+        };
+    }, [filteredLists]);
+
     const handleCheckboxChange = (listId: string, checked: boolean) => {
         const newSelected = new Set(selectedListIds);
         if (checked) {
@@ -66,6 +74,78 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
     const toggleExpanded = (listId: string) => {
         setExpandedListId(expandedListId === listId ? null : listId);
     };
+
+    const renderListRow = (list: VocabList) => (
+        <div key={list.id} className="border rounded-md overflow-hidden bg-dark/20">
+            <div className="flex items-center gap-3 p-2 hover:bg-tertiary/50">
+                <button
+                    onClick={() => toggleExpanded(list.id)}
+                    className="p-1 hover:bg-tertiary rounded transition-transform duration-200"
+                >
+                    {expandedListId === list.id ? (
+                        <ChevronDown className="h-4 w-4 transition-transform duration-200" />
+                    ) : (
+                        <ChevronRight className="h-4 w-4 transition-transform duration-200" />
+                    )}
+                </button>
+                <FlagIcon country={list.language} size={20} />
+                <div
+                    className="flex-1 cursor-pointer"
+                    onClick={() => toggleExpanded(list.id)}
+                >
+                    <div className="font-medium">{list.name}</div>
+                    {list.description && (
+                        <div className="text-sm text-tertiary-foreground line-clamp-1">
+                            {list.description}
+                        </div>
+                    )}
+                    <div className="text-xs text-tertiary-foreground">
+                        {list.words.length} words
+                    </div>
+                </div>
+                <Checkbox
+                    id={`list-${list.id}`}
+                    checked={selectedListIds.has(list.id)}
+                    onCheckedChange={(checked) => handleCheckboxChange(list.id, checked as boolean)}
+                    onClick={(e) => e.stopPropagation()}
+                />
+            </div>
+
+            <div
+                className="overflow-hidden transition-all duration-300 ease-in-out"
+                style={{
+                    maxHeight: expandedListId === list.id ? '15rem' : '0',
+                    opacity: expandedListId === list.id ? 1 : 0
+                }}
+            >
+                <div className="bg-tertiary/30 p-3 border-t overflow-y-auto" style={{ maxHeight: '15rem' }}>
+                    <div className="space-y-1">
+                        {list.words.length === 0 ? (
+                            <div className="text-sm text-tertiary-foreground text-center py-2">
+                                No words in this list
+                            </div>
+                        ) : (
+                            list.words.map((word, index) => (
+                                <div
+                                    key={index}
+                                    className="text-sm flex items-center gap-2 py-1 px-2 hover:bg-tertiary/50 rounded"
+                                >
+                                    <span className="font-medium">{word.origin}</span>
+                                    <span className="text-tertiary-foreground">|</span>
+                                    <span>{word.transl}</span>
+                                    {word.gender && (
+                                        <span className="text-xs text-tertiary-foreground ml-auto">
+                                            ({word.gender})
+                                        </span>
+                                    )}
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 
     const handleAddLists = async () => {
         if (selectedListIds.size === 0) {
@@ -179,81 +259,25 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                                     No shared lists available.
                                 </div>
                             ) : (
-                                filteredLists.map(list => (
-                                    <div key={list.id} className="border rounded-md overflow-hidden">
-                                        <div className="flex items-center gap-3 p-2 hover:bg-tertiary/50">
-                                            <button
-                                                onClick={() => toggleExpanded(list.id)}
-                                                className="p-1 hover:bg-tertiary rounded transition-transform duration-200"
-                                                style={{
-                                                    transform: expandedListId === list.id ? 'rotate(0deg)' : 'rotate(0deg)'
-                                                }}
-                                            >
-                                                {expandedListId === list.id ? (
-                                                    <ChevronDown className="h-4 w-4 transition-transform duration-200" />
-                                                ) : (
-                                                    <ChevronRight className="h-4 w-4 transition-transform duration-200" />
-                                                )}
-                                            </button>
-                                            <FlagIcon country={list.language} size={20} />
-                                            <div
-                                                className="flex-1 cursor-pointer"
-                                                onClick={() => toggleExpanded(list.id)}
-                                            >
-                                                <div className="font-medium">{list.name}</div>
-                                                {list.description && (
-                                                    <div className="text-sm text-tertiary-foreground line-clamp-1">
-                                                        {list.description}
-                                                    </div>
-                                                )}
-                                                <div className="text-xs text-tertiary-foreground">
-                                                    {list.words.length} words
-                                                </div>
+                                <div className="space-y-6">
+                                    {systemLists.length > 0 && (
+                                        <div className="space-y-2">
+                                            <h3 className="text-sm font-semibold text-tertiary-foreground px-1">Wörtli Lists</h3>
+                                            <div className="space-y-2">
+                                                {systemLists.map(list => renderListRow(list))}
                                             </div>
-                                            <Checkbox
-                                                id={`list-${list.id}`}
-                                                checked={selectedListIds.has(list.id)}
-                                                onCheckedChange={(checked) => handleCheckboxChange(list.id, checked as boolean)}
-                                                onClick={(e) => e.stopPropagation()}
-                                            />
                                         </div>
+                                    )}
 
-                                        {/* Expandable word list with smooth animation */}
-                                        <div
-                                            className="overflow-hidden transition-all duration-300 ease-in-out"
-                                            style={{
-                                                maxHeight: expandedListId === list.id ? '15rem' : '0',
-                                                opacity: expandedListId === list.id ? 1 : 0
-                                            }}
-                                        >
-                                            <div className="bg-tertiary/30 p-3 border-t overflow-y-auto" style={{ maxHeight: '15rem' }}>
-                                                <div className="space-y-1">
-                                                    {list.words.length === 0 ? (
-                                                        <div className="text-sm text-tertiary-foreground text-center py-2">
-                                                            No words in this list
-                                                        </div>
-                                                    ) : (
-                                                        list.words.map((word, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className="text-sm flex items-center gap-2 py-1 px-2 hover:bg-tertiary/50 rounded"
-                                                            >
-                                                                <span className="font-medium">{word.origin}</span>
-                                                                <span className="text-tertiary-foreground">|</span>
-                                                                <span>{word.transl}</span>
-                                                                {word.gender && (
-                                                                    <span className="text-xs text-tertiary-foreground ml-auto">
-                                                                        ({word.gender})
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                        ))
-                                                    )}
-                                                </div>
+                                    {userLists.length > 0 && (
+                                        <div className="space-y-2">
+                                            <h3 className="text-sm font-semibold text-tertiary-foreground px-1">User Lists</h3>
+                                            <div className="space-y-2">
+                                                {userLists.map(list => renderListRow(list))}
                                             </div>
                                         </div>
-                                    </div>
-                                ))
+                                    )}
+                                </div>
                             )}
                         </div>
                     </div>

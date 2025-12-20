@@ -222,7 +222,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                 placeholder="Type your message..."
                                 disabled={isLoading}
                                 rows={1}
-                                className="flex-1 resize-none px-4 py-3 text-sm md:text-base border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-light focus:border-transparent disabled:opacity-50 transition-all bg-dark overflow-hidden"
+                                className="flex-1 resize-none px-4 py-3 text-sm md:text-base border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-light focus:border-transparent disabled:opacity-50 bg-dark overflow-hidden"
                             />
                             <Button
                                 onClick={handleSend}

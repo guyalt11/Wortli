@@ -59,7 +59,8 @@ export const useSharedLists = () => {
                             sm2: word.sm2 || undefined
                         })),
                         createdAt,
-                        updatedAt
+                        updatedAt,
+                        userId: list.user_id
                     } as VocabList;
                 })
             );

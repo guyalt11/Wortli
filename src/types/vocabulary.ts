@@ -50,6 +50,7 @@ export interface VocabList {
   words: VocabWord[];
   createdAt: Date;
   updatedAt: Date;
+  userId?: string;
 }
 
 // Map difficulty levels to SM-2 quality ratings (0-5)
