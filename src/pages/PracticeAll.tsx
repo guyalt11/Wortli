@@ -208,12 +208,12 @@ const PracticeAll: React.FC = () => {
           >
             <div className="flex items-center gap-1">
               <FlagIcon
-                country={direction !== 'translateTo' ? (currentWord?.listTarget || 'globe') : (currentWord?.listLanguage || 'globe')}
+                country={direction !== 'translateTo' ? (currentWord?.listLanguage || 'globe') : (currentWord?.listTarget || 'globe')}
                 size={24}
               />
               <RightArrow size={24} className="text-foreground" />
               <FlagIcon
-                country={direction !== 'translateTo' ? (currentWord?.listLanguage || 'globe') : (currentWord?.listTarget || 'globe')}
+                country={direction !== 'translateTo' ? (currentWord?.listTarget || 'globe') : (currentWord?.listLanguage || 'globe')}
                 size={24}
               />
             </div>
