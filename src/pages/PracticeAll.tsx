@@ -10,7 +10,7 @@ import { usePracticeAllWords, WordWithListInfo } from '@/hooks/usePracticeAllWor
 import { Button } from '@/components/ui/button';
 import FlagIcon from '@/components/FlagIcon';
 import RightArrow from '@/components/Icon';
-import { RefreshCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RefreshCcw } from 'lucide-react';
 import DeleteWordDialog from '@/components/DeleteWordDialog';
 
 const PracticeAll: React.FC = () => {
@@ -23,6 +23,7 @@ const PracticeAll: React.FC = () => {
   const { practiceWords, resetPracticeWords } = usePracticeAllWords(direction);
   const [isAnswered, setIsAnswered] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [processedStatus, setProcessedStatus] = useState<boolean[]>([]);
   const [initialized, setInitialized] = useState(false);
 
   // Store the initial word list as a ref so it never changes during the session
@@ -53,6 +54,7 @@ const PracticeAll: React.FC = () => {
     setCurrentIndex(0);
     setCompletedCount(0);
     setIsAnswered(false);
+    setProcessedStatus([]);
     initialWordsRef.current = [];
     totalWordsRef.current = 0;
   };
@@ -124,31 +126,16 @@ const PracticeAll: React.FC = () => {
 
   const handleAnswered = (difficulty: DifficultyLevel) => {
     if (currentWord) {
-      // Update the word's difficulty and next review time
-      const now = new Date();
-      const updatedWord = {
-        ...currentWord,
-        sm2: {
-          ...currentWord.sm2 || {},
-          [direction]: {
-            easeFactor: 2.5,
-            interval: 0,
-            repetitions: 0
-          }
-        },
-        nextReview: {
-          ...currentWord.nextReview || {},
-          [direction]: new Date(now.getTime() + (difficulty === 'hard' ? 60000 : 3600000))
-        }
-      };
+      // Track processing without mutating initialWordsRef.current
+      if (!processedStatus[currentIndex]) {
+        setProcessedStatus(prev => {
+          const next = [...prev];
+          next[currentIndex] = true;
+          return next;
+        });
+        setCompletedCount(prev => prev + 1);
+      }
 
-      // Update the word in the practice list
-      initialWordsRef.current = initialWordsRef.current.map(w =>
-        w.id === currentWord.id ? updatedWord : w
-      );
-
-      // Update the completed count and answered state
-      setCompletedCount(prev => prev + 1);
       setIsAnswered(true);
 
       // Call updateWordDifficulty in the background
@@ -166,6 +153,35 @@ const PracticeAll: React.FC = () => {
   const handleNext = () => {
     setCurrentIndex(prev => prev + 1);
     setIsAnswered(false);
+  };
+
+  const handleSkip = () => {
+    if (!processedStatus[currentIndex]) {
+      setProcessedStatus(prev => {
+        const next = [...prev];
+        next[currentIndex] = true;
+        return next;
+      });
+      setCompletedCount(prev => prev + 1);
+    }
+    handleNext();
+  };
+
+  const handleBack = () => {
+    if (currentIndex > 0) {
+      const prevIndex = currentIndex - 1;
+      // If the word we are going back to was processed (answered or skipped), decrement completion
+      if (processedStatus[prevIndex]) {
+        setProcessedStatus(prev => {
+          const next = [...prev];
+          next[prevIndex] = false;
+          return next;
+        });
+        setCompletedCount(prev => Math.max(0, prev - 1));
+      }
+      setCurrentIndex(prevIndex);
+      setIsAnswered(false);
+    }
   };
 
   const handleRestart = () => {
@@ -228,11 +244,33 @@ const PracticeAll: React.FC = () => {
         />
       </div>
 
-      <div className="mb-6">
+      <div className="mb-6 flex items-center justify-between">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleBack}
+          disabled={currentIndex === 0}
+          className="text-tertiary-foreground flex items-center gap-1 px-2"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          <span>Back</span>
+        </Button>
+
         <WordCompletionCounter
           completedCount={completedCount}
           totalWords={totalWords}
         />
+
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleSkip}
+          disabled={isComplete || currentIndex >= totalWords - 1}
+          className="text-tertiary-foreground flex items-center gap-1 px-2"
+        >
+          <span>Skip</span>
+          <ChevronRight className="h-4 w-4" />
+        </Button>
       </div>
 
       {isComplete ? (
