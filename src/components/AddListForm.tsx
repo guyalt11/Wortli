@@ -21,19 +21,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Sparkles } from 'lucide-react';
 
 interface AddListFormProps {
   editList?: VocabList;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSuccess?: (list: VocabList) => void;
+  onOpenChat?: () => void;
 }
 
 const AddListForm: React.FC<AddListFormProps> = ({
   editList,
   open,
   onOpenChange,
-  onSuccess
+  onSuccess,
+  onOpenChat
 }) => {
   const { addList, updateList } = useVocab();
 
@@ -147,8 +150,22 @@ const AddListForm: React.FC<AddListFormProps> = ({
             />
           </div>
 
-          <DialogFooter>
-            <Button type="submit">
+          <DialogFooter className="flex flex-col sm:flex-row sm:justify-between gap-3">
+            {!editList && onOpenChat && (
+              <Button
+                type="button"
+                variant="ghost"
+                className="group order-2 sm:order-1"
+                onClick={() => {
+                  onOpenChange(false);
+                  onOpenChat();
+                }}
+              >
+                <Sparkles className="h-5 w-5 mt-0.5 animate-pulse" />
+                <span>Try generating with AI</span>
+              </Button>
+            )}
+            <Button type="submit" className="order-1 sm:order-2">
               {editList ? 'Update List' : 'Create List'}
             </Button>
           </DialogFooter>

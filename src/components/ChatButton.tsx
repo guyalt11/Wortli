@@ -1,14 +1,16 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import ChatDialog from './ChatDialog';
 
-const ChatButton = () => {
-    const [open, setOpen] = useState(false);
+interface ChatButtonProps {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+}
 
+const ChatButton = ({ open, onOpenChange }: ChatButtonProps) => {
     return (
         <>
             <Button
-                onClick={() => setOpen(true)}
+                onClick={() => onOpenChange(true)}
                 size="icon"
                 className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:scale-110 transition-transform z-40"
                 aria-label="Open chat"
@@ -22,7 +24,7 @@ const ChatButton = () => {
                 </svg>
             </Button>
 
-            <ChatDialog open={open} onOpenChange={setOpen} />
+            <ChatDialog open={open} onOpenChange={onOpenChange} />
         </>
     );
 };

@@ -59,6 +59,9 @@ const Index = () => {
   // Library state
   const [libraryDialogOpen, setLibraryDialogOpen] = useState(false);
 
+  // Chat state
+  const [chatOpen, setChatOpen] = useState(false);
+
   // Handlers
   const handleAddList = () => {
     setAddListOpen(true);
@@ -177,7 +180,7 @@ const Index = () => {
 
   return (
     <div className="container py-6 max-w-3xl">
-      <ChatButton />
+      <ChatButton open={chatOpen} onOpenChange={setChatOpen} />
       <IndexHeader
         onAddList={handleAddList}
         onImport={handleImportClick}
@@ -218,6 +221,7 @@ const Index = () => {
       <AddListForm
         open={addListOpen}
         onOpenChange={setAddListOpen}
+        onOpenChat={() => setChatOpen(true)}
         onSuccess={async (list) => {
 
           const maxRetries = 3;
