@@ -59,6 +59,9 @@ export default {
 				toggle: {
 					DEFAULT: 'var(--toggle-bg)',
 				},
+				muted: {
+					foreground: 'var(--muted-foreground)'
+				},
 
 				// Additional utility colors
 				difficulty: {

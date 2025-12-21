@@ -40,7 +40,7 @@ const CardBack: React.FC<CardBackProps> = ({ word, direction, language, target }
       </div>
 
       {/* TODO: Add language-specific audio button */}
-      {direction === 'translateFrom' && currentList?.language === 'de' && (
+      {direction === 'translateFrom' && (currentList?.language === 'de' || currentList?.language === 'en') && (
         <Button
           variant="ghost"
           size="sm"

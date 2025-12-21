@@ -44,7 +44,7 @@ const CardFront: React.FC<CardFrontProps> = ({ word, direction, flipped, onDelet
       </div>
 
       {/* TODO: Add language-specific audio button */}
-      {direction === 'translateTo' && currentList?.language === 'de' && (
+      {direction === 'translateTo' && (currentList?.language === 'de' || currentList?.language === 'en') && (
         <Button
           variant="ghost"
           size="sm"

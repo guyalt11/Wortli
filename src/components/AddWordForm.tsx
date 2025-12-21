@@ -151,8 +151,8 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
     onOpenChange(false);
   };
 
-  const clearGender = () => {
-    setGender(undefined);
+  const handleGenderClick = (value: Gender) => {
+    setGender(prev => prev === value ? undefined : value);
   };
 
   return (
@@ -209,19 +209,9 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
           {/* Languages with c/n: se, dk, no, nl */}
           {['de', 'he', 'is', 'bg', 'hr', 'cz', 'gr', 'mk', 'pl', 'ro', 'ru', 'rs', 'sk', 'si', 'ua', 'al', 'sa', 'fr', 'in', 'it', 'lv', 'lt', 'pt', 'es', 'pk', 'se', 'dk', 'no', 'nl'].includes(currentList?.language || '') && (
             <div className="space-y-2">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-2">
                   <Label>Gender</Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={clearGender}
-                    className="h-8 flex items-center gap-1"
-                  >
-                    <X className="h-4 w-4" />
-                    <span>Clear</span>
-                  </Button>
                 </div>
               </div>
               <RadioGroup
@@ -236,7 +226,11 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
                       <RadioGroupItem value="m" id="male" className="sr-only" />
                       <Label
                         htmlFor="male"
-                        className={`gender-tag-m w-8 h-8 flex items-center justify-center rounded-full cursor-pointer ${gender === 'm' ? 'gender-tag-selected' : ''}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleGenderClick('m');
+                        }}
+                        className={`bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'm' ? 'gender-tag-selected' : ''}`}
                         style={{ padding: 0, lineHeight: 1 }}
                       >
                         M
@@ -246,7 +240,11 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
                       <RadioGroupItem value="f" id="female" className="sr-only" />
                       <Label
                         htmlFor="female"
-                        className={`gender-tag-f w-8 h-8 flex items-center justify-center rounded-full cursor-pointer ${gender === 'f' ? 'gender-tag-selected' : ''}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleGenderClick('f');
+                        }}
+                        className={`bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'f' ? 'gender-tag-selected' : ''}`}
                         style={{ padding: 0, lineHeight: 1 }}
                       >
                         F
@@ -260,7 +258,11 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
                     <RadioGroupItem value="n" id="neutral" className="sr-only" />
                     <Label
                       htmlFor="neutral"
-                      className={`gender-tag-n w-8 h-8 flex items-center justify-center rounded-full cursor-pointer ${gender === 'n' ? 'gender-tag-selected' : ''}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleGenderClick('n');
+                      }}
+                      className={`bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'n' ? 'gender-tag-selected' : ''}`}
                       style={{ padding: 0, lineHeight: 1 }}
                     >
                       N
@@ -273,7 +275,11 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
                     <RadioGroupItem value="c" id="common" className="sr-only" />
                     <Label
                       htmlFor="common"
-                      className={`gender-tag-c w-8 h-8 flex items-center justify-center rounded-full cursor-pointer ${gender === 'c' ? 'gender-tag-selected' : ''}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleGenderClick('c');
+                      }}
+                      className={`bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'c' ? 'gender-tag-selected' : ''}`}
                       style={{ padding: 0, lineHeight: 1 }}
                     >
                       C
