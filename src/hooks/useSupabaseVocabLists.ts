@@ -26,7 +26,7 @@ export const useSupabaseVocabLists = () => {
     }
 
     try {
-      setIsLoading(true);
+      if (lists.length === 0) setIsLoading(true);
       setError(null);
 
       // Fetch the user's lists
@@ -159,12 +159,19 @@ export const useSupabaseVocabLists = () => {
       }
     }
 
-    // After saving the list, refresh the lists from the server
-    await fetchLists();
+    // After saving the list, update the local state instead of refreshing everything from server
+    setLists(prevLists => {
+      const isActuallyNew = !prevLists.some(l => l.id === list.id);
+      if (isActuallyNew) {
+        // If it's a new list, prepend it to the state
+        return [list, ...prevLists];
+      } else {
+        // If it's an update, map over the lists and update the matching one
+        return prevLists.map(l => l.id === list.id ? { ...l, ...list } : l);
+      }
+    });
 
-    // Return the updated list from our state
-    const updatedList = lists.find(l => l.id === list.id) || list;
-    return updatedList;
+    return list;
   };
 
   // Delete a list from Supabase
@@ -201,8 +208,8 @@ export const useSupabaseVocabLists = () => {
       throw new Error(error.message || 'Failed to delete list');
     }
 
-    // Refresh the lists after deletion
-    await fetchLists();
+    // Update the local state instead of refreshing from server
+    setLists(prevLists => prevLists.filter(l => l.id !== id));
   };
 
   // Save a word to Supabase
@@ -335,8 +342,19 @@ export const useSupabaseVocabLists = () => {
       }
     );
 
-    // Refresh the lists after deletion
-    await fetchLists();
+    // Refresh the local lists state after deletion
+    setLists(prevLists =>
+      prevLists.map(list => {
+        if (list.id === listId) {
+          return {
+            ...list,
+            words: list.words.filter(w => w.id !== wordId),
+            updatedAt: new Date()
+          };
+        }
+        return list;
+      })
+    );
   };
 
   return {

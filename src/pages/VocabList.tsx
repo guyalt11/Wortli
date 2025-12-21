@@ -41,8 +41,9 @@ import { Switch } from "@/components/ui/switch";
 const VocabList = () => {
 
   const { listId } = useParams<{ listId: string }>();
-  const { getListById, deleteWord, exportList, importList, deleteList, updateList, addWord, selectList, isLoading } = useVocab();
+  const { getListById, deleteWord, exportList, importList, deleteList, updateList, addWord, selectList, isLoading, lists } = useVocab();
   const { goToPractice, goToHome } = useAppNavigation();
+  const { importList: importListFunc } = useVocabImportExport({ lists, setLists: async () => { } });
 
   const [searchTerm, setSearchTerm] = useState('');
   const [addWordOpen, setAddWordOpen] = useState(false);
@@ -137,8 +138,7 @@ const VocabList = () => {
 
   const importToList = async (file: File, listId: string) => {
     try {
-      const { importList } = useVocabImportExport({ lists: [], setLists: () => { } });
-      const importedList = await importList(file, 'temp');
+      const importedList = await importListFunc(file, 'temp');
 
       if (!importedList || !importedList.words.length) {
         return;

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useCallback, useMemo } from 'react';
 import { VocabList, VocabWord, DifficultyLevel, PracticeDirection, DIFFICULTY_TO_SM2_QUALITY } from '@/types/vocabulary';
 import { v4 as uuidv4 } from 'uuid';
 import { useSupabaseVocabLists } from '@/hooks/useSupabaseVocabLists';
@@ -39,10 +39,6 @@ export const useVocab = () => {
 
 export const VocabProvider = ({ children }: { children: ReactNode }) => {
 
-  const getListById = (id: string): VocabList | undefined => {
-    return lists.find(list => list.id === id);
-  };
-
   // Use the Supabase hook to manage vocabulary lists
   const {
     lists,
@@ -57,13 +53,17 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
     currentUser
   } = useSupabaseVocabLists();
 
+  const getListById = useCallback((id: string): VocabList | undefined => {
+    return lists.find(list => list.id === id);
+  }, [lists]);
+
   const [currentList, setCurrentList] = useState<VocabList | null>(null);
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
   const { exportList, importList: importListFunc } = useVocabImportExport({ lists, setLists });
   const { token } = useAuth();
 
   // Add a new list
-  const addList = async (name: string, description?: string, language: string = 'de', target: string = 'en'): Promise<VocabList | null> => {
+  const addList = useCallback(async (name: string, description?: string, language: string = 'de', target: string = 'en'): Promise<VocabList | null> => {
     try {
       const newList: VocabList = {
         id: uuidv4(),
@@ -101,10 +101,10 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
       }
       return null;
     }
-  };
+  }, [saveList]);
 
   // Update an existing list
-  const updateList = async (id: string, updates: Partial<VocabList>): Promise<void> => {
+  const updateList = useCallback(async (id: string, updates: Partial<VocabList>): Promise<void> => {
     try {
       const list = lists.find(l => l.id === id);
       if (!list) throw new Error('List not found');
@@ -115,12 +115,13 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
         updatedAt: new Date()
       };
 
-      await saveList(updatedList);
-
-      // If we're updating the current list, update it in state too
+      // Optimistically update the local state
+      setLists(prev => prev.map(l => l.id === id ? updatedList : l));
       if (currentList && currentList.id === id) {
         setCurrentList(updatedList);
       }
+
+      await saveList(updatedList);
     } catch (error) {
       console.error('Error updating list:', error);
       toast({
@@ -129,10 +130,10 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
         variant: "destructive",
       });
     }
-  };
+  }, [lists, saveList, currentList]);
 
   // Delete a list
-  const deleteList = async (id: string): Promise<void> => {
+  const deleteList = useCallback(async (id: string): Promise<void> => {
     try {
       await deleteListFromSupabase(id);
 
@@ -148,20 +149,20 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
         variant: "destructive",
       });
     }
-  };
+  }, [deleteListFromSupabase, currentList]);
 
   // Set the currently selected list
-  const selectList = async (id: string) => {
+  const selectList = useCallback(async (id: string) => {
     const list = getListById(id);
     await new Promise<void>(resolve => {
       setCurrentList(list ?? null);
       // Wait for next render cycle
       setTimeout(resolve, 0);
     });
-  };
+  }, [getListById]);
 
   // Add a word to a list
-  const addWord = async (listId: string, wordData: Omit<VocabWord, 'id'>): Promise<void> => {
+  const addWord = useCallback(async (listId: string, wordData: Omit<VocabWord, 'id'>): Promise<void> => {
     try {
       const word: VocabWord = {
         ...wordData,
@@ -201,10 +202,10 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
         });
       }
     }
-  };
+  }, [saveWord, currentList]);
 
   // Update a word
-  const updateWord = async (wordId: string, updates: Partial<VocabWord>): Promise<void> => {
+  const updateWord = useCallback(async (wordId: string, updates: Partial<VocabWord>): Promise<void> => {
     try {
       // Find which list contains this word
       let list: VocabList | undefined;
@@ -245,10 +246,10 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
         variant: "destructive",
       });
     }
-  };
+  }, [lists, saveWord, currentList]);
 
   // Delete a word
-  const deleteWord = async (wordId: string): Promise<void> => {
+  const deleteWord = useCallback(async (wordId: string): Promise<void> => {
     try {
       await deleteWordFromSupabase(wordId);
 
@@ -274,10 +275,10 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
         variant: "destructive",
       });
     }
-  };
+  }, [deleteWordFromSupabase, currentList]);
 
   // Update a word's difficulty and next review time based on spaced repetition
-  const updateWordDifficulty = async (
+  const updateWordDifficulty = useCallback(async (
     wordId: string,
     difficulty: DifficultyLevel,
     direction: PracticeDirection
@@ -357,7 +358,7 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
         variant: "destructive",
       });
     }
-  };
+  }, [lists, saveWord, currentList]);
 
   // Import function with support for Supabase
   const importList = async (file: File, listName: string): Promise<VocabList | null> => {
@@ -526,7 +527,7 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
     };
   }
 
-  const value: VocabContextType = {
+  const value = useMemo(() => ({
     lists,
     isLoading,
     currentList,
@@ -544,7 +545,23 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
     isLibraryOpen,
     setIsLibraryOpen,
     allWords: lists.flatMap(list => list.words)
-  };
+  }), [
+    lists,
+    isLoading,
+    currentList,
+    addList,
+    updateList,
+    deleteList,
+    selectList,
+    addWord,
+    updateWord,
+    deleteWord,
+    updateWordDifficulty,
+    exportList,
+    importList,
+    getListById,
+    isLibraryOpen
+  ]);
 
   return (
     <VocabContext.Provider value={value}>
