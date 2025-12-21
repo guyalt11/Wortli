@@ -20,7 +20,7 @@ export interface ChatResponse {
   details?: string;
 }
 
-const API_URL = 'https://nhmrdnczfxomarpncyot.supabase.co/functions/v1/ai-agent-staging';
+const API_URL = 'https://nhmrdnczfxomarpncyot.supabase.co/functions/v1/ai-agent';
 
 export const sendChatMessage = async (
   prompt: string,
