@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { VocabWord, Gender } from '@/types/vocabulary';
 import { useVocab } from '@/context/VocabContext';
 import { Button } from '@/components/ui/button';
@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Loader2, AlertCircle, X } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import {
@@ -39,6 +40,8 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
   const [notes, setNotes] = useState('');
   const [isTranslating, setIsTranslating] = useState(false);
   const [translateError, setTranslateError] = useState<string | null>(null);
+  const [checked, setChecked] = useState(false);
+  const originInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (editWord) {
@@ -118,7 +121,14 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
         onOpenChange(false);
       } else {
         await addWord(currentList.id, wordData);
-        onOpenChange(false);
+        if (!checked) {
+          onOpenChange(false);
+        } else {
+          // Re-focus origin input for the next word
+          setTimeout(() => {
+            originInputRef.current?.focus();
+          }, 0);
+        }
       }
 
       // Clear form state after successful submission
@@ -162,6 +172,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
             <div className="relative">
               <Input
                 id="origin"
+                ref={originInputRef}
                 value={origin}
                 onChange={(e) => setOrigin(e.target.value)}
                 placeholder={`e.g. ${currentList?.language === 'de' ? 'Apfel' : 'word'}`}
@@ -293,13 +304,30 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
             />
           </div>
 
-          <DialogFooter>
-            <Button type="submit">
-              {editWord ? 'Update Word' : 'Add Word'}
-            </Button>
-            <Button variant="outline" onClick={handleCancel}>
-              Cancel
-            </Button>
+          <DialogFooter className="flex flex-row items-center gap-2">
+            {!editWord && (
+              <div className="flex items-center space-x-2 mr-auto">
+                <Checkbox
+                  id="add-more"
+                  checked={checked}
+                  onCheckedChange={(val) => setChecked(!!val)}
+                />
+                <Label
+                  htmlFor="add-more"
+                  className="text-sm font-medium leading-none cursor-pointer"
+                >
+                  Add more
+                </Label>
+              </div>
+            )}
+            <div className="flex gap-2 ml-auto">
+              <Button type="submit">
+                {editWord ? 'Update Word' : 'Add Word'}
+              </Button>
+              <Button variant="outline" onClick={handleCancel}>
+                Cancel
+              </Button>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>
