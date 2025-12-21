@@ -28,7 +28,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     const [isSavingList, setIsSavingList] = useState(false);
     const [viewportHeight, setViewportHeight] = useState('100dvh');
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const { importList } = useVocab();
+    const { importList, allWords } = useVocab();
     const { token } = useAuth();
     const { preferences } = usePreferences();
     const navigate = useNavigate();
@@ -120,7 +120,8 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                 token,
                 preferences?.defaultOrigin,
                 preferences?.defaultTransl,
-                preferences?.aiRules
+                preferences?.aiRules,
+                (preferences?.aiInclude ?? true) ? Array.from(new Set(allWords.map(w => w.origin.toLowerCase()))) : undefined
             );
 
             const jsonData = extractJSON(response);
@@ -128,7 +129,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
             if (jsonData && isValidVocabList(jsonData)) {
                 const friendlyMessage: ChatMessage = {
                     role: 'assistant',
-                    content: `Great! I've created a vocabulary list called "${jsonData.name}" with ${jsonData.words.length} words. Importing it now...`,
+                    content: `Great! I've created a vocabulary list called "${jsonData.name}" with ${jsonData.words.length} words. Saving it now...`,
                 };
                 setMessages((prev) => [...prev, friendlyMessage]);
 

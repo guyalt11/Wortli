@@ -24,6 +24,7 @@ interface VocabContextType {
   getListById: (id: string) => VocabList | undefined;
   isLibraryOpen: boolean;
   setIsLibraryOpen: (open: boolean) => void;
+  allWords: VocabWord[];
 }
 
 const VocabContext = createContext<VocabContextType | undefined>(undefined);
@@ -531,7 +532,8 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
     importList,
     getListById,
     isLibraryOpen,
-    setIsLibraryOpen
+    setIsLibraryOpen,
+    allWords: lists.flatMap(list => list.words)
   };
 
   return (

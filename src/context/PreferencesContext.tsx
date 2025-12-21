@@ -12,6 +12,7 @@ type UserPreferences = {
     defaultOrigin: string;
     defaultTransl: string;
     aiRules: string;
+    aiInclude: boolean;
 };
 
 type PreferencesContextType = {
@@ -23,6 +24,7 @@ type PreferencesContextType = {
     updateDefaultOrigin: (origin: string) => Promise<boolean>;
     updateDefaultTransl: (transl: string) => Promise<boolean>;
     updateAiRules: (rules: string) => Promise<boolean>;
+    updateAiInclude: (include: boolean) => Promise<boolean>;
     isLoading: boolean;
 };
 
@@ -34,6 +36,7 @@ const defaultPreferences: UserPreferences = {
     defaultOrigin: '',
     defaultTransl: '',
     aiRules: '',
+    aiInclude: true,
 };
 
 const PreferencesContext = createContext<PreferencesContextType | undefined>(undefined);
@@ -72,6 +75,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                             default_origin: defaultPreferences.defaultOrigin,
                             default_transl: defaultPreferences.defaultTransl,
                             ai_rules: defaultPreferences.aiRules,
+                            ai_include: defaultPreferences.aiInclude,
                         }])
                         .select()
                         .single();
@@ -89,6 +93,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                             defaultOrigin: newData.default_origin || '',
                             defaultTransl: newData.default_transl || '',
                             aiRules: newData.ai_rules || '',
+                            aiInclude: newData.ai_include ?? true,
                         };
                         setPreferences(mappedData);
                     }
@@ -106,6 +111,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                     defaultOrigin: data.default_origin || '',
                     defaultTransl: data.default_transl || '',
                     aiRules: data.ai_rules || '',
+                    aiInclude: data.ai_include ?? true,
                 };
                 setPreferences(mappedData);
             }
@@ -278,6 +284,27 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const updateAiInclude = async (include: boolean): Promise<boolean> => {
+        if (!currentUser) return false;
+
+        try {
+            const { error } = await supabase
+                .from('preferences')
+                .update({
+                    ai_include: include
+                })
+                .eq('user_id', currentUser.id);
+
+            if (error) throw error;
+
+            setPreferences(prev => prev ? { ...prev, aiInclude: include } : null);
+            return true;
+        } catch (error) {
+            console.error('Error updating AI include preference:', error);
+            return false;
+        }
+    };
+
     return (
         <PreferencesContext.Provider value={{
             preferences,
@@ -288,6 +315,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
             updateDefaultOrigin,
             updateDefaultTransl,
             updateAiRules,
+            updateAiInclude,
             isLoading,
         }}>
             {children}
