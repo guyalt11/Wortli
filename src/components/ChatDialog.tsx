@@ -16,6 +16,14 @@ import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import { useAuth } from '@/context/AuthContext';
 import { usePreferences } from '@/context/PreferencesContext';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Plus, ListPlus } from 'lucide-react';
 
 interface ChatDialogProps {
     open: boolean;
@@ -27,9 +35,11 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isSavingList, setIsSavingList] = useState(false);
+    const [importMode, setImportMode] = useState<'new' | 'existing' | null>(null);
+    const [selectedListId, setSelectedListId] = useState<string>('');
     const [viewportHeight, setViewportHeight] = useState('100dvh');
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const { importList, allWords } = useVocab();
+    const { importList, addWord, lists, allWords } = useVocab();
     const { token } = useAuth();
     const { preferences } = usePreferences();
     const navigate = useNavigate();
@@ -47,6 +57,15 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
 
         return () => window.visualViewport?.removeEventListener('resize', handleResize);
     }, []);
+
+    // Reset chat when opened
+    useEffect(() => {
+        if (open) {
+            setMessages([]);
+            setImportMode(null);
+            setSelectedListId('');
+        }
+    }, [open]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -113,45 +132,91 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
         setInput('');
         setIsLoading(true);
 
+        // If user just started typing without choosing, default to 'new'
+        let effectiveImportMode = importMode;
+        if (!effectiveImportMode) {
+            setImportMode('new');
+            effectiveImportMode = 'new';
+        }
+
         try {
             if (!token) throw new Error('Not authenticated');
+
+            // Find context for the selected list if in 'existing' mode
+            const selectedList = effectiveImportMode === 'existing' ? lists.find(l => l.id === selectedListId) : null;
+
+            // Determine words to exclude (prioritize selected list words, then all words if preference is on)
+            let existingWordStrings: string[] | undefined = undefined;
+            if (preferences?.aiInclude ?? true) {
+                if (selectedList) {
+                    // Combine selected list words and all words for better context
+                    const listWords = selectedList.words.map(w => w.origin.toLowerCase());
+                    const otherWords = allWords.map(w => w.origin.toLowerCase());
+                    existingWordStrings = Array.from(new Set([...listWords, ...otherWords]));
+                } else {
+                    existingWordStrings = Array.from(new Set(allWords.map(w => w.origin.toLowerCase())));
+                }
+            }
+
             const response = await sendChatMessage(
                 userMessage.content,
                 messages,
                 token,
-                preferences?.defaultOrigin,
-                preferences?.defaultTransl,
+                selectedList?.language || preferences?.defaultOrigin,
+                selectedList?.target || preferences?.defaultTransl,
                 preferences?.aiRules,
-                (preferences?.aiInclude ?? true) ? Array.from(new Set(allWords.map(w => w.origin.toLowerCase()))) : undefined
+                existingWordStrings
             );
 
             const jsonData = extractJSON(response);
 
             if (jsonData && isValidVocabList(jsonData)) {
-                const friendlyMessage: ChatMessage = {
-                    role: 'assistant',
-                    content: `Great! I've created a vocabulary list called "${jsonData.name}" with ${jsonData.words.length} words. Saving it now...`,
-                };
-                setMessages((prev) => [...prev, friendlyMessage]);
-
                 setIsSavingList(true);
 
-                const jsonBlob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
-                const jsonFile = new File([jsonBlob], `${jsonData.name}.json`, { type: 'application/json' });
+                if (importMode === 'existing' && selectedListId) {
+                    // Add words to existing list sequentially for better stability
+                    for (const word of jsonData.words) {
+                        try {
+                            await addWord(selectedListId, {
+                                origin: word.origin,
+                                transl: word.transl,
+                                gender: word.gender,
+                                notes: word.notes
+                            });
+                        } catch (err) {
+                            console.error('Error adding word to existing list:', err);
+                        }
+                    }
 
-                const importedList = await importList(jsonFile, jsonData.name);
+                    const successMessage: ChatMessage = {
+                        role: 'assistant',
+                        content: `Excellent! I've added ${jsonData.words.length} words to your existing list.`,
+                    };
+                    setMessages((prev) => [...prev, successMessage]);
 
-                if (importedList) {
                     onOpenChange(false);
                     setTimeout(() => {
-                        navigate(`/list/${importedList.id}`);
+                        navigate(`/list/${selectedListId}`);
                     }, 100);
                 } else {
-                    toast({
-                        title: 'Error',
-                        description: 'Failed to import the vocabulary list.',
-                        variant: 'destructive',
-                    });
+                    // Create new list (default or if 'new' chosen)
+                    const jsonBlob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
+                    const jsonFile = new File([jsonBlob], `${jsonData.name}.json`, { type: 'application/json' });
+
+                    const importedList = await importList(jsonFile, jsonData.name);
+
+                    if (importedList) {
+                        onOpenChange(false);
+                        setTimeout(() => {
+                            navigate(`/list/${importedList.id}`);
+                        }, 100);
+                    } else {
+                        toast({
+                            title: 'Error',
+                            description: 'Failed to import the vocabulary list.',
+                            variant: 'destructive',
+                        });
+                    }
                 }
             } else {
                 const assistantMessage: ChatMessage = {
@@ -197,22 +262,106 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                     <DialogHeader className="px-6 pt-5 pb-5 border-b-0 sm:border-b border-white/20 bg-gradient-dark">
                         <DialogTitle className="flex items-center gap-2 text-xl">
                             <MessageCircle className="h-6 w-6 text-light" />
-                            Vocabulary Assistant
+                            AI Assistant
                         </DialogTitle>
                     </DialogHeader>
 
                     <div className="flex-1 flex flex-col overflow-y-auto px-6 py-3 space-y-3 bg-dark">
-                        {messages.length === 0 ? (
-                            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4">
+                        {messages.length === 0 && !importMode ? (
+                            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">
                                 <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center animate-pulse">
                                     <MessageCircle className="h-8 w-8 text-light" />
                                 </div>
                                 <div className="space-y-2">
-                                    <p className="text-lg text-tertiary-foreground font-semibold">Start a conversation</p>
-                                    <p className="text-sm text-tertiary-foreground max-w-md">
-                                        I'm here to help you generate vocabulary lists!
+                                    <p className="text-xl text-tertiary-foreground font-bold">AI Assistant</p>
+                                    <p className="text-sm text-tertiary-foreground/80 max-w-md">
+                                        What would you like me to help you with?
                                     </p>
                                 </div>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
+                                    <Button
+                                        variant="outline"
+                                        className="h-24 flex flex-col gap-2 bg-dark/50 border-white/10 hover:bg-light transition-all"
+                                        onClick={() => setImportMode('new')}
+                                    >
+                                        <Plus className="h-6 w-6 text-secondary" />
+                                        <span>Create New List</span>
+                                    </Button>
+                                    <Button
+                                        variant="outline"
+                                        className="h-24 flex flex-col gap-2 bg-dark/50 border-white/10 hover:bg-light transition-all"
+                                        onClick={() => setImportMode('existing')}
+                                        disabled={lists.length === 0}
+                                    >
+                                        <ListPlus className="h-6 w-6 text-primary" />
+                                        <span>Add to Existing</span>
+                                    </Button>
+                                </div>
+
+                                {lists.length === 0 && (
+                                    <p className="text-xs text-tertiary-foreground/60 italic">
+                                        (You don't have any lists yet. Create a new one first!)
+                                    </p>
+                                )}
+                            </div>
+                        ) : messages.length === 0 && importMode === 'existing' && !selectedListId ? (
+                            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">
+                                <div className="space-y-2">
+                                    <p className="text-lg text-tertiary-foreground font-semibold">Which list should I add to?</p>
+                                    <p className="text-sm text-tertiary-foreground/80">
+                                        Choose one of your existing vocabulary lists.
+                                    </p>
+                                </div>
+
+                                <div className="w-full max-w-xs">
+                                    <Select onValueChange={setSelectedListId}>
+                                        <SelectTrigger className="bg-dark/50 border-white/10">
+                                            <SelectValue placeholder="Select a list..." />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {lists.map(list => (
+                                                <SelectItem key={list.id} value={list.id}>
+                                                    {list.name} ({list.words.length} words)
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-tertiary-foreground/60 hover:text-white"
+                                    onClick={() => setImportMode(null)}
+                                >
+                                    Back to options
+                                </Button>
+                            </div>
+                        ) : messages.length === 0 ? (
+                            <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4">
+                                <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center animate-pulse">
+                                    <MessageCircle className="h-8 w-8 text-light" />
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-lg text-tertiary-foreground font-semibold">
+                                        {importMode === 'new' ? 'Creating a New List' : `Adding to: ${lists.find(l => l.id === selectedListId)?.name}`}
+                                    </p>
+                                    <p className="text-sm text-tertiary-foreground max-w-md">
+                                        Tell me what vocabulary you'd like to generate!
+                                    </p>
+                                </div>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-tertiary-foreground/40 h-7 text-[10px]"
+                                    onClick={() => {
+                                        setImportMode(null);
+                                        setSelectedListId('');
+                                    }}
+                                >
+                                    Change Destination
+                                </Button>
                             </div>
                         ) : (
                             messages.map((message, index) => (
@@ -249,14 +398,14 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={handleKeyPress}
-                                placeholder="Type your message..."
-                                disabled={isLoading}
+                                placeholder={importMode === 'existing' && !selectedListId ? "Select a list first..." : "Type your message..."}
+                                disabled={isLoading || (importMode === 'existing' && !selectedListId)}
                                 rows={1}
                                 className="flex-1 resize-none px-4 py-3 text-sm md:text-base border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-light focus:border-transparent disabled:opacity-50 bg-dark overflow-hidden"
                             />
                             <Button
                                 onClick={handleSend}
-                                disabled={!input.trim() || isLoading}
+                                disabled={!input.trim() || isLoading || (importMode === 'existing' && !selectedListId)}
                                 size="icon"
                                 className="h-12 w-12 rounded-xl transition-all hover:scale-105 active:scale-95"
                             >
