@@ -11,14 +11,13 @@ import EmptyListsState from '@/components/EmptyListsState';
 import ImportListDialog from '@/components/ImportListDialog';
 import EditListDialog from '@/components/EditListDialog';
 import DeleteListDialog from '@/components/DeleteListDialog';
-import LibraryDialog from '@/components/LibraryDialog';
 import ChatButton from '@/components/ChatButton';
 import { VocabList } from '@/types/vocabulary';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useEffect, useRef } from 'react';
 
 const Index = () => {
-  const { lists, exportList, importList, deleteList, updateList, getListById, addWord, isLoading } = useVocab();
+  const { lists, exportList, importList, deleteList, updateList, getListById, addWord, isLoading, isLibraryOpen, setIsLibraryOpen } = useVocab();
   const { preferences } = usePreferences();
   const navigate = useNavigate();
   const { goToList, goToPracticeAll } = useAppNavigation();
@@ -56,8 +55,7 @@ const Index = () => {
   const [deleteListId, setDeleteListId] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  // Library state
-  const [libraryDialogOpen, setLibraryDialogOpen] = useState(false);
+  // Library state removed - using global context
 
   // Chat state
   const [chatOpen, setChatOpen] = useState(false);
@@ -72,7 +70,7 @@ const Index = () => {
   };
 
   const handleLibraryClick = () => {
-    setLibraryDialogOpen(true);
+    setIsLibraryOpen(true);
   };
 
   const handleImport = async (file: File, listName: string) => {
@@ -268,10 +266,6 @@ const Index = () => {
         onConfirm={confirmDeleteList}
       />
 
-      <LibraryDialog
-        open={libraryDialogOpen}
-        onOpenChange={setLibraryDialogOpen}
-      />
     </div>
   );
 };

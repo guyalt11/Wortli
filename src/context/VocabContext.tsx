@@ -22,6 +22,8 @@ interface VocabContextType {
   exportList: (id: string, format: 'json') => void;
   importList: (file: File, listName: string) => Promise<VocabList | null>;
   getListById: (id: string) => VocabList | undefined;
+  isLibraryOpen: boolean;
+  setIsLibraryOpen: (open: boolean) => void;
 }
 
 const VocabContext = createContext<VocabContextType | undefined>(undefined);
@@ -55,6 +57,7 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
   } = useSupabaseVocabLists();
 
   const [currentList, setCurrentList] = useState<VocabList | null>(null);
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false);
   const { exportList, importList: importListFunc } = useVocabImportExport({ lists, setLists });
   const { token } = useAuth();
 
@@ -526,7 +529,9 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
     updateWordDifficulty,
     exportList,
     importList,
-    getListById
+    getListById,
+    isLibraryOpen,
+    setIsLibraryOpen
   };
 
   return (

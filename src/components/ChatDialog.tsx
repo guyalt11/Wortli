@@ -25,11 +25,26 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isSavingList, setIsSavingList] = useState(false);
+    const [viewportHeight, setViewportHeight] = useState('100dvh');
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { importList } = useVocab();
     const { token } = useAuth();
     const { preferences } = usePreferences();
     const navigate = useNavigate();
+
+    // Fix for mobile keyboard covering input
+    useEffect(() => {
+        if (!window.visualViewport) return;
+
+        const handleResize = () => {
+            setViewportHeight(`${window.visualViewport.height}px`);
+        };
+
+        window.visualViewport.addEventListener('resize', handleResize);
+        handleResize();
+
+        return () => window.visualViewport?.removeEventListener('resize', handleResize);
+    }, []);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -172,7 +187,10 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
         <>
             {isSavingList && <LoadingOverlay message="Saving vocabulary list..." />}
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="sm:max-w-full md:max-w-3xl h-[100dvh] flex flex-col p-0 gap-0 border-0 sm:border animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-4 duration-300 sm:rounded-lg rounded-none">
+                <DialogContent
+                    style={{ height: viewportHeight }}
+                    className="sm:max-w-full md:max-w-3xl flex flex-col p-0 gap-0 border-0 sm:border animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-4 duration-300 sm:rounded-lg rounded-none"
+                >
                     <DialogHeader className="px-6 pt-5 pb-5 border-b-0 sm:border-b border-white/20 bg-gradient-dark">
                         <DialogTitle className="flex items-center gap-2 text-xl">
                             <MessageCircle className="h-6 w-6 text-light" />
@@ -224,7 +242,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                         <div ref={messagesEndRef} />
                     </div>
 
-                    <div className="border-t-0 sm:border-t border-white/20 px-6 py-4 bg-gradient-dark">
+                    <div className="border-t-0 sm:border-t border-white/20 px-6 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-gradient-dark">
                         <div className="flex gap-3">
                             <textarea
                                 ref={textareaRef}

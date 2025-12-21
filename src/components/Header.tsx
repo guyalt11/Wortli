@@ -13,14 +13,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from '@/context/AuthContext';
 import { usePreferences } from '@/context/PreferencesContext';
+import { useVocab } from '@/context/VocabContext';
 
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
-    const [libraryDialogOpen, setLibraryDialogOpen] = useState(false);
     const { currentUser, logout, isAuthenticated } = useAuth();
     const { preferences } = usePreferences();
+    const { isLibraryOpen, setIsLibraryOpen } = useVocab();
     const navigate = useNavigate();
 
     // Handle scroll behavior
@@ -63,12 +64,12 @@ const Header = () => {
     };
 
     const handleLibraryClick = () => {
-        setLibraryDialogOpen(true);
+        setIsLibraryOpen(true);
         setIsMobileMenuOpen(false);
     };
 
     const handleLibraryClose = (listsAdded: boolean) => {
-        setLibraryDialogOpen(false);
+        setIsLibraryOpen(false);
         if (listsAdded && isAuthenticated) {
             navigate('/');
         }
@@ -255,10 +256,12 @@ const Header = () => {
 
             {/* Library Dialog */}
             <LibraryDialog
-                open={libraryDialogOpen}
+                open={isLibraryOpen}
                 onOpenChange={(open) => {
                     if (!open) {
                         handleLibraryClose(false);
+                    } else {
+                        setIsLibraryOpen(true);
                     }
                 }}
             />
