@@ -103,7 +103,8 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                 messages,
                 token,
                 preferences?.defaultOrigin,
-                preferences?.defaultTransl
+                preferences?.defaultTransl,
+                preferences?.aiRules
             );
 
             const jsonData = extractJSON(response);

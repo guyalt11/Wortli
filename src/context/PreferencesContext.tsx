@@ -11,6 +11,7 @@ type UserPreferences = {
     defaultDirection: boolean;
     defaultOrigin: string;
     defaultTransl: string;
+    aiRules: string;
 };
 
 type PreferencesContextType = {
@@ -18,9 +19,10 @@ type PreferencesContextType = {
     colorScheme: ColorScheme;
     updateColorScheme: (scheme: ColorScheme) => Promise<boolean>;
     updateUsername: (username: string) => Promise<boolean>;
-    updateHideEmptyLists: (hideEmptyLists: boolean) => Promise<boolean>;
+    updateHideEmptyLists: (hide: boolean) => Promise<boolean>;
     updateDefaultOrigin: (origin: string) => Promise<boolean>;
     updateDefaultTransl: (transl: string) => Promise<boolean>;
+    updateAiRules: (rules: string) => Promise<boolean>;
     isLoading: boolean;
 };
 
@@ -31,6 +33,7 @@ const defaultPreferences: UserPreferences = {
     defaultDirection: false,
     defaultOrigin: '',
     defaultTransl: '',
+    aiRules: '',
 };
 
 const PreferencesContext = createContext<PreferencesContextType | undefined>(undefined);
@@ -67,7 +70,8 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                             hide_empty_lists: defaultPreferences.hideEmptyLists,
                             default_direction: defaultPreferences.defaultDirection,
                             default_origin: defaultPreferences.defaultOrigin,
-                            default_transl: defaultPreferences.defaultTransl
+                            default_transl: defaultPreferences.defaultTransl,
+                            ai_rules: defaultPreferences.aiRules,
                         }])
                         .select()
                         .single();
@@ -84,6 +88,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                             defaultDirection: newData.default_direction || false,
                             defaultOrigin: newData.default_origin || '',
                             defaultTransl: newData.default_transl || '',
+                            aiRules: newData.ai_rules || '',
                         };
                         setPreferences(mappedData);
                     }
@@ -100,6 +105,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                     defaultDirection: data.default_direction || false,
                     defaultOrigin: data.default_origin || '',
                     defaultTransl: data.default_transl || '',
+                    aiRules: data.ai_rules || '',
                 };
                 setPreferences(mappedData);
             }
@@ -251,6 +257,27 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const updateAiRules = async (rules: string): Promise<boolean> => {
+        if (!currentUser) return false;
+
+        try {
+            const { error } = await supabase
+                .from('preferences')
+                .update({
+                    ai_rules: rules
+                })
+                .eq('user_id', currentUser.id);
+
+            if (error) throw error;
+
+            setPreferences(prev => prev ? { ...prev, aiRules: rules } : null);
+            return true;
+        } catch (error) {
+            console.error('Error updating AI rules:', error);
+            return false;
+        }
+    };
+
     return (
         <PreferencesContext.Provider value={{
             preferences,
@@ -260,6 +287,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
             updateHideEmptyLists,
             updateDefaultOrigin,
             updateDefaultTransl,
+            updateAiRules,
             isLoading,
         }}>
             {children}

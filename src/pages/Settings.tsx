@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { usePreferences } from "@/context/PreferencesContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, AlertTriangle } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
@@ -43,11 +44,15 @@ const Settings = () => {
         updateUsername,
         updateHideEmptyLists,
         updateDefaultOrigin,
-        updateDefaultTransl
+        updateDefaultTransl,
+        updateAiRules
     } = usePreferences();
     const navigate = useNavigate();
     const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [aiRules, setAiRules] = useState(preferences?.aiRules || '');
+    const [isEditingAiRules, setIsEditingAiRules] = useState(false);
+    const [isUpdatingAiRules, setIsUpdatingAiRules] = useState(false);
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isUpdating, setIsUpdating] = useState(false);
@@ -182,6 +187,12 @@ const Settings = () => {
             });
         }
     };
+
+    useEffect(() => {
+        if (preferences) {
+            setAiRules(preferences.aiRules || '');
+        }
+    }, [preferences]);
 
     const handleHideEmptyListsToggle = async () => {
         const newValue = !preferences?.hideEmptyLists;
@@ -393,6 +404,50 @@ const Settings = () => {
                                         </Select>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="border-t border-border/20 my-2" />
+                            <div>
+                                <div className="flex items-center justify-between mb-2">
+                                    <div>
+                                        <Label>AI Instructions & Rules</Label>
+                                        <p className="text-sm text-tertiary-foreground">
+                                            Custom instructions for the AI vocabulary assistant
+                                        </p>
+                                    </div>
+
+                                    <div className="flex gap-2">
+                                        <Button
+                                            size="sm"
+                                            onClick={() => setIsEditingAiRules(true)}
+                                        >
+                                            Edit
+                                        </Button>
+
+                                        <Button
+                                            size="sm"
+                                            onClick={async () => {
+                                                setIsUpdatingAiRules(true);
+                                                await updateAiRules(aiRules);
+                                                setIsUpdatingAiRules(false);
+                                                setIsEditingAiRules(false);
+                                                toast({
+                                                    title: "Success",
+                                                    description: "AI rules updated successfully",
+                                                });
+                                            }}
+                                            disabled={isUpdatingAiRules || aiRules === (preferences?.aiRules || '')}
+                                        >
+                                            {isUpdatingAiRules ? 'Saving...' : 'Save'}
+                                        </Button>
+                                    </div>
+                                </div>
+                                <Textarea
+                                    disabled={!isEditingAiRules}
+                                    value={aiRules}
+                                    onChange={(e) => setAiRules(e.target.value)}
+                                    placeholder="e.g. Always respond only in my default origin language."
+                                    className="bg-secondary border-none resize-none min-h-[100px]"
+                                />
                             </div>
                             <div className="border-t border-border/20 my-2" />
                             <div className="flex items-center justify-between">

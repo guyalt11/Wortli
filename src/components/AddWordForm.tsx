@@ -175,7 +175,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
                 ref={originInputRef}
                 value={origin}
                 onChange={(e) => setOrigin(e.target.value)}
-                placeholder={`e.g. ${currentList?.language === 'de' ? 'Apfel' : 'word'}`}
+                placeholder='word'
                 required
                 autoFocus
               />
@@ -295,7 +295,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
               id="transl"
               value={transl}
               onChange={(e) => setTransl(e.target.value)}
-              placeholder="e.g. apple"
+              placeholder="translation"
               required
             />
           </div>

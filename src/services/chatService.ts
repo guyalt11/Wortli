@@ -8,6 +8,7 @@ export interface ChatRequest {
   prompt: string;
   defaultOrigin?: string;
   defaultTransl?: string;
+  aiRules?: string;
 }
 
 export interface ChatResponse {
@@ -25,7 +26,8 @@ export const sendChatMessage = async (
   history: ChatMessage[],
   token: string,
   defaultOrigin?: string,
-  defaultTransl?: string
+  defaultTransl?: string,
+  aiRules?: string
 ): Promise<string> => {
   try {
     const response = await fetch(API_URL, {
@@ -39,6 +41,7 @@ export const sendChatMessage = async (
         prompt,
         defaultOrigin,
         defaultTransl,
+        aiRules,
       } as ChatRequest),
     });
 
