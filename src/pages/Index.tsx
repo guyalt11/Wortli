@@ -15,6 +15,7 @@ import ChatButton from '@/components/ChatButton';
 import { VocabList } from '@/types/vocabulary';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useEffect, useRef } from 'react';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 const Index = () => {
   const { lists, exportList, importList, deleteList, updateList, getListById, addWord, isLoading, isLibraryOpen, setIsLibraryOpen } = useVocab();
@@ -194,7 +195,7 @@ const Index = () => {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <LoadingSpinner size="lg" />
         </div>
       ) : showEmptyState ? (
         <EmptyListsState onAddList={handleAddList} onLibrary={handleLibraryClick} />

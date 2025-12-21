@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -56,11 +57,8 @@ const Login = () => {
   // Show loading state while checking initial auth
   if (isLoading && !isSubmitting) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p>Loading...</p>
-        </div>
+      <div className="flex justify-center items-center h-screen">
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

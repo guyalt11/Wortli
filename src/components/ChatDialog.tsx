@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, Send, Loader2 } from 'lucide-react';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -32,7 +33,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     const { preferences } = usePreferences();
     const navigate = useNavigate();
 
-    // Fix for mobile keyboard covering input
+    // Mobile keyboard not to cover input
     useEffect(() => {
         if (!window.visualViewport) return;
 
@@ -232,10 +233,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                         {isLoading && (
                             <div className="flex justify-start animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
                                 <div className="rounded-2xl px-5 py-3 shadow-lg bg-gradient-dark">
-                                    <div className="flex items-center gap-2">
-                                        <Loader2 className="h-4 w-4 animate-spin text-light" />
-                                        <span className="text-sm">Thinking...</span>
-                                    </div>
+                                    <LoadingSpinner size="sm" />
                                 </div>
                             </div>
                         )}

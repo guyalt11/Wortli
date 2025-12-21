@@ -1,7 +1,7 @@
-
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from '@/components/ui/use-toast';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 interface AdminRouteProps {
   children: React.ReactNode;
@@ -11,7 +11,11 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
   const { isAuthenticated, isLoading, currentUser } = useAuth();
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
   if (!isAuthenticated) {

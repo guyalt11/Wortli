@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { useParams, Navigate } from 'react-router-dom';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useVocab } from '@/context/VocabContext';
@@ -85,10 +86,7 @@ const VocabList = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p>Loading...</p>
-        </div>
+        <LoadingSpinner size="lg" />
       </div>
     );
   }
