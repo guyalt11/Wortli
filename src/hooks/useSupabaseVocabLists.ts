@@ -269,20 +269,22 @@ export const useSupabaseVocabLists = () => {
     );
 
     // Update the local list state instead of fetching all lists
-    const updatedLists = lists.map(list => {
-      if (list.id === listId) {
-        const updatedWords = isNew
-          ? [...list.words, word]
-          : list.words.map(w => w.id === word.id ? word : w);
-        return {
-          ...list,
-          words: updatedWords,
-          updatedAt: new Date()
-        };
-      }
-      return list;
+    setLists(prevLists => {
+      const isActuallyNew = !prevLists.some(l => l.words.some(w => w.id === word.id));
+      return prevLists.map(list => {
+        if (list.id === listId) {
+          const updatedWords = isActuallyNew
+            ? [...list.words, word]
+            : list.words.map(w => w.id === word.id ? word : w);
+          return {
+            ...list,
+            words: updatedWords,
+            updatedAt: new Date()
+          };
+        }
+        return list;
+      });
     });
-    setLists(updatedLists);
 
     return word;
   };

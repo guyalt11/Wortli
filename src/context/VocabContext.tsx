@@ -172,11 +172,13 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
 
       // Update the current list if this word is being added to it
       if (currentList && currentList.id === listId) {
-        const updatedWords = [...currentList.words, word];
-        setCurrentList({
-          ...currentList,
-          words: updatedWords,
-          updatedAt: new Date()
+        setCurrentList(prev => {
+          if (!prev || prev.id !== listId) return prev;
+          return {
+            ...prev,
+            words: [...prev.words, word],
+            updatedAt: new Date()
+          };
         });
       }
     } catch (error) {
@@ -223,13 +225,16 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
 
       // Update the current list if this word is part of it
       if (currentList && currentList.id === list.id) {
-        const updatedWords = currentList.words.map(w =>
-          w.id === wordId ? updatedWord : w
-        );
-        setCurrentList({
-          ...currentList,
-          words: updatedWords,
-          updatedAt: new Date()
+        setCurrentList(prev => {
+          if (!prev || prev.id !== list.id) return prev;
+          const updatedWords = prev.words.map(w =>
+            w.id === wordId ? updatedWord : w
+          );
+          return {
+            ...prev,
+            words: updatedWords,
+            updatedAt: new Date()
+          };
         });
       }
     } catch (error) {
@@ -249,15 +254,17 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
 
       // Update the current list if this word was part of it
       if (currentList) {
-        const wordInCurrentList = currentList.words.some(w => w.id === wordId);
-        if (wordInCurrentList) {
-          const updatedWords = currentList.words.filter(w => w.id !== wordId);
-          setCurrentList({
-            ...currentList,
-            words: updatedWords,
+        setCurrentList(prev => {
+          if (!prev) return prev;
+          const wordInList = prev.words.some(w => w.id === wordId);
+          if (!wordInList) return prev;
+
+          return {
+            ...prev,
+            words: prev.words.filter(w => w.id !== wordId),
             updatedAt: new Date()
-          });
-        }
+          };
+        });
       }
     } catch (error) {
       console.error('Error deleting word:', error);
@@ -330,13 +337,16 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
 
       // Update the current list if this word is part of it
       if (currentList && currentList.id === list.id) {
-        const updatedWords = currentList.words.map(w =>
-          w.id === wordId ? updatedWord : w
-        );
-        setCurrentList({
-          ...currentList,
-          words: updatedWords,
-          updatedAt: new Date()
+        setCurrentList(prev => {
+          if (!prev || prev.id !== list.id) return prev;
+          const updatedWords = prev.words.map(w =>
+            w.id === wordId ? updatedWord : w
+          );
+          return {
+            ...prev,
+            words: updatedWords,
+            updatedAt: new Date()
+          };
         });
       }
     } catch (error) {
