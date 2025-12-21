@@ -16,17 +16,19 @@ export interface ChatResponse {
   details?: string;
 }
 
-const API_URL = 'https://top-card.vercel.app/api/ai';
+const API_URL = 'https://nhmrdnczfxomarpncyot.supabase.co/functions/v1/ai-agent';
 
 export const sendChatMessage = async (
   prompt: string,
-  history: ChatMessage[]
+  history: ChatMessage[],
+  token: string
 ): Promise<string> => {
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({
         history,
@@ -37,7 +39,6 @@ export const sendChatMessage = async (
     const data: ChatResponse = await response.json();
 
     if (!response.ok) {
-      // Throw error with the message from the API
       throw new Error(data.error || data.details || `HTTP error! status: ${response.status}`);
     }
 

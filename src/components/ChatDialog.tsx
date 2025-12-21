@@ -12,6 +12,7 @@ import { toast } from '@/components/ui/use-toast';
 import { useVocab } from '@/context/VocabContext';
 import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from '@/components/LoadingOverlay';
+import { useAuth } from '@/context/AuthContext';
 
 interface ChatDialogProps {
     open: boolean;
@@ -25,6 +26,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     const [isSavingList, setIsSavingList] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { importList } = useVocab();
+    const { token } = useAuth();
     const navigate = useNavigate();
 
     const scrollToBottom = () => {
@@ -93,7 +95,8 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
         setIsLoading(true);
 
         try {
-            const response = await sendChatMessage(userMessage.content, messages);
+            if (!token) throw new Error('Not authenticated');
+            const response = await sendChatMessage(userMessage.content, messages, token);
 
             const jsonData = extractJSON(response);
 
