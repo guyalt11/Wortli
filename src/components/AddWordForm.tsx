@@ -157,7 +157,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-[90%] sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{editWord ? 'Edit Word' : 'Add New Word'}</DialogTitle>
           <DialogDescription>

@@ -99,8 +99,8 @@ const Register = () => {
   // Show success screen after registration
   if (registrationComplete) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Card className="w-full max-w-md">
+      <div className="flex justify-center items-center min-h-[calc(100dvh-4rem)]">
+        <Card className="w-[90%] max-w-md">
           <CardHeader>
             <div className="flex justify-center mb-4">
               <CheckCircle2 className="h-16 w-16 text-green-500" />
@@ -142,8 +142,8 @@ const Register = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <Card className="w-full max-w-md">
+    <div className="flex justify-center items-center min-h-[calc(100dvh-4rem)]">
+      <Card className="w-[90%] max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl text-center">Register</CardTitle>
         </CardHeader>

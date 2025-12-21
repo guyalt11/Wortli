@@ -16,7 +16,7 @@ interface EditListDialogProps {
 const EditListDialog = ({ open, onOpenChange, onSave, list }: EditListDialogProps) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  
+
   // Update form when list changes
   useEffect(() => {
     if (list) {
@@ -24,7 +24,7 @@ const EditListDialog = ({ open, onOpenChange, onSave, list }: EditListDialogProp
       setDescription(list.description || '');
     }
   }, [list]);
-  
+
   const handleSave = () => {
     if (list && name.trim()) {
       onSave(list.id, {
@@ -34,7 +34,7 @@ const EditListDialog = ({ open, onOpenChange, onSave, list }: EditListDialogProp
       onOpenChange(false);
     }
   };
-  
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
@@ -73,7 +73,7 @@ const EditListDialog = ({ open, onOpenChange, onSave, list }: EditListDialogProp
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={!name.trim()}>
+          <Button onClick={handleSave} disabled={!name.trim()} className="mb-2">
             Save Changes
           </Button>
         </DialogFooter>

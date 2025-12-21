@@ -19,11 +19,6 @@ const ImportListDialog = ({ open, onOpenChange, onImport }: ImportListDialogProp
   const [useFileNameFromFile, setUseFileNameFromFile] = useState(false);
   const [fileListName, setFileListName] = useState('');
   const [isImporting, setIsImporting] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileSelect = () => {
-    fileInputRef.current?.click();
-  };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -76,14 +71,12 @@ const ImportListDialog = ({ open, onOpenChange, onImport }: ImportListDialogProp
 
       // Reset state after successful import
       setSelectedFile(null);
-      if (fileInputRef.current) fileInputRef.current.value = '';
       setImportListName('');
       setUseFileNameFromFile(false);
       setFileListName('');
     } catch (error) {
       // Error is already handled by the import function
       setSelectedFile(null);
-      if (fileInputRef.current) fileInputRef.current.value = '';
       setUseFileNameFromFile(false);
       setFileListName('');
     } finally {
@@ -95,7 +88,7 @@ const ImportListDialog = ({ open, onOpenChange, onImport }: ImportListDialogProp
     <>
       {isImporting && <LoadingOverlay message="Importing list..." />}
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="w-[90%] sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Import Vocabulary List</DialogTitle>
             <DialogDescription>
@@ -103,20 +96,20 @@ const ImportListDialog = ({ open, onOpenChange, onImport }: ImportListDialogProp
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+            <div className="items-center">
+              <Label htmlFor="name" className="text-left">
                 Name
               </Label>
               <Input
                 id="name"
                 value={importListName}
                 onChange={(e) => setImportListName(e.target.value)}
-                className="col-span-3 bg-dark"
+                className="col-span-3 bg-dark mt-2"
                 disabled={useFileNameFromFile}
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <div className="col-start-2 col-span-3 flex items-center space-x-2">
+            <div className="items-left">
+              <div className="flex items-left space-x-2">
                 <Checkbox
                   id="use-file-name"
                   checked={useFileNameFromFile}
@@ -130,21 +123,15 @@ const ImportListDialog = ({ open, onOpenChange, onImport }: ImportListDialogProp
                 </label>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <Button variant="default" className="" onClick={handleFileSelect}>
-                Select File
-              </Button>
-              {selectedFile && (
-                <span className="text-sm text-muted-foreground">
-                  {selectedFile.name}
-                </span>
-              )}
-            </div>
+            <Input
+              type="file"
+              accept=".json"
+              onChange={handleFileChange}
+            />
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => {
               setSelectedFile(null);
-              if (fileInputRef.current) fileInputRef.current.value = '';
               onOpenChange(false);
             }}>
               Cancel
@@ -158,15 +145,6 @@ const ImportListDialog = ({ open, onOpenChange, onImport }: ImportListDialogProp
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      {/* Hidden file input */}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        accept=".json"
-        className="hidden"
-      />
     </>
   );
 };

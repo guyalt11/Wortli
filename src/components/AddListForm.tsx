@@ -113,7 +113,7 @@ const AddListForm: React.FC<AddListFormProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-[90%] sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{editList ? 'Edit List' : 'Create New List'}</DialogTitle>
           <DialogDescription>

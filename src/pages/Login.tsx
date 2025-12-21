@@ -57,7 +57,7 @@ const Login = () => {
   // Show loading state while checking initial auth
   if (isLoading && !isSubmitting) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-[calc(100dvh-4rem)]">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -141,8 +141,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <Card className="w-full max-w-md">
+    <div className="flex justify-center items-center min-h-[calc(100dvh-4rem)]">
+      <Card className="w-[90%] max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl text-center">Login</CardTitle>
         </CardHeader>

@@ -221,7 +221,7 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
         <>
             {isImporting && <LoadingOverlay message="Importing lists..." />}
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="sm:max-w-[600px] max-h-[80vh] flex flex-col">
+                <DialogContent className="w-[90%] sm:max-w-[600px] max-h-[80vh] flex flex-col">
                     <DialogHeader>
                         <DialogTitle>Shared Lists Library</DialogTitle>
                         <DialogDescription>

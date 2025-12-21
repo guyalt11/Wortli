@@ -85,7 +85,7 @@ const VocabList = () => {
   // Show loading state while loading lists
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center h-[calc(100dvh-4rem)]">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -466,7 +466,7 @@ const VocabList = () => {
             <Button variant="outline" onClick={() => setEditListDialogOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={handleSaveListEdit} disabled={!editListName.trim()}>
+            <Button onClick={handleSaveListEdit} disabled={!editListName.trim()} className='mb-2'>
               Save Changes
             </Button>
           </DialogFooter>
