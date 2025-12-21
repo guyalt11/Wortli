@@ -13,6 +13,7 @@ import { useVocab } from '@/context/VocabContext';
 import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import { useAuth } from '@/context/AuthContext';
+import { usePreferences } from '@/context/PreferencesContext';
 
 interface ChatDialogProps {
     open: boolean;
@@ -27,6 +28,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { importList } = useVocab();
     const { token } = useAuth();
+    const { preferences } = usePreferences();
     const navigate = useNavigate();
 
     const scrollToBottom = () => {
@@ -96,7 +98,13 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
 
         try {
             if (!token) throw new Error('Not authenticated');
-            const response = await sendChatMessage(userMessage.content, messages, token);
+            const response = await sendChatMessage(
+                userMessage.content,
+                messages,
+                token,
+                preferences?.defaultOrigin,
+                preferences?.defaultTransl
+            );
 
             const jsonData = extractJSON(response);
 

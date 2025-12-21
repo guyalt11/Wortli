@@ -6,6 +6,8 @@ export interface ChatMessage {
 export interface ChatRequest {
   history: ChatMessage[];
   prompt: string;
+  defaultOrigin?: string;
+  defaultTransl?: string;
 }
 
 export interface ChatResponse {
@@ -16,12 +18,14 @@ export interface ChatResponse {
   details?: string;
 }
 
-const API_URL = 'https://nhmrdnczfxomarpncyot.supabase.co/functions/v1/ai-agent';
+const API_URL = 'https://nhmrdnczfxomarpncyot.supabase.co/functions/v1/ai-agent-staging';
 
 export const sendChatMessage = async (
   prompt: string,
   history: ChatMessage[],
-  token: string
+  token: string,
+  defaultOrigin?: string,
+  defaultTransl?: string
 ): Promise<string> => {
   try {
     const response = await fetch(API_URL, {
@@ -33,6 +37,8 @@ export const sendChatMessage = async (
       body: JSON.stringify({
         history,
         prompt,
+        defaultOrigin,
+        defaultTransl,
       } as ChatRequest),
     });
 
