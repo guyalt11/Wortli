@@ -31,7 +31,6 @@ export const sendChatMessage = async (
   aiRules?: string,
   existingWords?: string[]
 ): Promise<string> => {
-  console.log("Chat Service Debug - existingWords:", existingWords);
   try {
     const response = await fetch(API_URL, {
       method: 'POST',

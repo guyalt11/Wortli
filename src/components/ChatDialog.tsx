@@ -11,6 +11,7 @@ import {
 import { sendChatMessage, ChatMessage } from '@/services/chatService';
 import { toast } from '@/components/ui/use-toast';
 import { useVocab } from '@/context/VocabContext';
+import TypingIndicator from '@/components/ui/TypingIndicator';
 import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import { useAuth } from '@/context/AuthContext';
@@ -234,7 +235,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                         {isLoading && (
                             <div className="flex justify-start animate-in fade-in-0 slide-in-from-bottom-2 duration-300">
                                 <div className="rounded-2xl px-5 py-3 shadow-lg bg-gradient-dark">
-                                    <LoadingSpinner size="sm" />
+                                    <TypingIndicator />
                                 </div>
                             </div>
                         )}

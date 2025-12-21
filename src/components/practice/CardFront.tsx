@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import GenderTag from '@/components/GenderTag';
 import { DirectionFlag } from '@/components/FlagIcon';
-import { VocabWord, PracticeDirection } from '@/types/vocabulary';
+import { VocabWord, PracticeDirection, Gender } from '@/types/vocabulary';
 import { Trash2 } from 'lucide-react';
 import { speak } from '@/lib/speech';
 import { useVocab } from '@/context/VocabContext';
@@ -17,6 +17,16 @@ interface CardFrontProps {
 }
 
 const CardFront: React.FC<CardFrontProps> = ({ word, direction, flipped, onDelete, language, target }) => {
+  const getGenderBgClass = (gender: Gender | undefined) => {
+    switch (gender) {
+      case 'm': return 'bg-gender-m';
+      case 'f': return 'bg-gender-f';
+      case 'n': return 'bg-gender-n';
+      case 'c': return 'bg-gender-c';
+      default: return '';
+    }
+  };
+
   const { currentList } = useVocab();
   // For translateTo (Language to English), show language word
   // For translateFrom (English to Language), show English word
@@ -39,7 +49,9 @@ const CardFront: React.FC<CardFrontProps> = ({ word, direction, flipped, onDelet
       <div className="flex items-center justify-center gap-2">
         <h2 className="text-2xl font-bold break-words min-w-0 [overflow-wrap:anywhere]">{frontText}</h2>
         <span>{direction === 'translateTo' && word.gender && (
-          <GenderTag gender={word.gender} />
+          <div className={`${getGenderBgClass(word.gender)} rounded-full text-dark`}>
+            <GenderTag gender={word.gender} />
+          </div>
         )}</span>
       </div>
 

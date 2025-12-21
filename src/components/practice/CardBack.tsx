@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import GenderTag from '@/components/GenderTag';
 import { DirectionFlag } from '@/components/FlagIcon';
-import { VocabWord, PracticeDirection } from '@/types/vocabulary';
+import { VocabWord, PracticeDirection, Gender } from '@/types/vocabulary';
 import { speak } from '@/lib/speech';
 import { useVocab } from '@/context/VocabContext';
 
@@ -14,6 +14,16 @@ interface CardBackProps {
 }
 
 const CardBack: React.FC<CardBackProps> = ({ word, direction, language, target }) => {
+  const getGenderBgClass = (gender: Gender | undefined) => {
+    switch (gender) {
+      case 'm': return 'bg-gender-m';
+      case 'f': return 'bg-gender-f';
+      case 'n': return 'bg-gender-n';
+      case 'c': return 'bg-gender-c';
+      default: return '';
+    }
+  };
+
   const { currentList } = useVocab();
   // For translateTo (Language to English), show English word
   // For translateFrom (English to Language), show language word
@@ -36,7 +46,11 @@ const CardBack: React.FC<CardBackProps> = ({ word, direction, language, target }
       </div>
       <div className="flex items-center justify-center gap-2">
         <h3 className="text-xl font-semibold break-words min-w-0 [overflow-wrap:anywhere]">{backText}</h3>
-        <span>{showGender && <GenderTag gender={word.gender!} />}</span>
+        <span>{showGender && (
+          <div className={`${getGenderBgClass(word.gender)} rounded-full text-dark`}>
+            <GenderTag gender={word.gender!} />
+          </div>
+        )}</span>
       </div>
 
       {/* TODO: Add language-specific audio button */}

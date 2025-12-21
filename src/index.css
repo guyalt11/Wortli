@@ -155,4 +155,41 @@
   .gender-radio:active {
     transform: scale(0.85);
   }
+
+  @keyframes bounce-high-scale {
+
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+    }
+
+    50% {
+      transform: translateY(-6px) scale(1.5);
+    }
+  }
+
+  .animate-bounce-high-scale {
+    animation: bounce-high-scale 1s infinite;
+  }
+
+  /* Gender specific utility classes */
+  .bg-gender-masculine,
+  .bg-gender-m {
+    background-color: var(--gender-male) !important;
+  }
+
+  .bg-gender-feminine,
+  .bg-gender-f {
+    background-color: var(--gender-female) !important;
+  }
+
+  .bg-gender-neuter,
+  .bg-gender-n {
+    background-color: var(--gender-neuter) !important;
+  }
+
+  .bg-gender-common,
+  .bg-gender-c {
+    background-color: var(--gender-common) !important;
+  }
 }

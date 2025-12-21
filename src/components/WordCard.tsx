@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { VocabWord, PracticeDirection } from "@/types/vocabulary";
+import { VocabWord, PracticeDirection, Gender } from "@/types/vocabulary";
 import { Edit, Trash2 } from "lucide-react";
 import GenderTag from "@/components/GenderTag";
 import { DirectionFlag } from "@/components/FlagIcon";
@@ -14,6 +14,16 @@ interface WordCardProps {
 }
 
 const WordCard = ({ word, onEdit, onDelete, showReviewTimes }: WordCardProps) => {
+  const getGenderBgClass = (gender: Gender | undefined) => {
+    switch (gender) {
+      case 'm': return 'bg-gender-m';
+      case 'f': return 'bg-gender-f';
+      case 'n': return 'bg-gender-n';
+      case 'c': return 'bg-gender-c';
+      default: return '';
+    }
+  };
+
   const getNextReviewDate = (word: VocabWord, direction: PracticeDirection): Date | undefined => {
     return word.nextReview?.[direction];
   };
@@ -28,18 +38,6 @@ const WordCard = ({ word, onEdit, onDelete, showReviewTimes }: WordCardProps) =>
     }
 
     return `In ${formatDistanceToNow(date)}`;
-  };
-
-  const isWordDueForReview = (word: VocabWord): boolean => {
-    if (!word.nextReview) return true;
-    const now = new Date();
-
-    const translateFromDue = !getNextReviewDate(word, 'translateFrom') ||
-      getNextReviewDate(word, 'translateFrom')! <= now;
-    const translateToDue = !getNextReviewDate(word, 'translateTo') ||
-      getNextReviewDate(word, 'translateTo')! <= now;
-
-    return translateFromDue || translateToDue;
   };
 
   const getFormattedReviewTimes = (word: VocabWord): React.ReactNode => {
@@ -70,7 +68,7 @@ const WordCard = ({ word, onEdit, onDelete, showReviewTimes }: WordCardProps) =>
         <div className="flex justify-between items-start">
           <div className="flex-1">
             <div className="flex items-center gap-3">
-              <div>{word.gender && <GenderTag gender={word.gender} />}</div>
+              <div className={`${getGenderBgClass(word.gender)} rounded-full text-dark`}>{word.gender && <GenderTag gender={word.gender} />}</div>
               <h3 className="font-medium text-lg break-words min-w-0 [overflow-wrap:anywhere]">{word.origin}<span className="text-tertiary-foreground"> · {word.transl}</span></h3>
             </div>
             {word.notes && <p className="text-sm text-tertiary-foreground mt-2">{word.notes}</p>}
