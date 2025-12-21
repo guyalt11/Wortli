@@ -307,11 +307,11 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                             </div>
                         ) : messages.length === 0 && importMode === 'existing' && !selectedListId ? (
                             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">
-                                <div className="space-y-2">
+                                <div className="space-y-2 flex flex-col items-center">
+                                    <div className="w-16 h-16 mb-4 rounded-full bg-secondary flex items-center justify-center animate-pulse">
+                                        <MessageCircle className="h-8 w-8 text-light" />
+                                    </div>
                                     <p className="text-lg text-tertiary-foreground font-semibold">Which list should I add to?</p>
-                                    <p className="text-sm text-tertiary-foreground/80">
-                                        Choose one of your existing vocabulary lists.
-                                    </p>
                                 </div>
 
                                 <div className="w-full max-w-xs">
@@ -319,7 +319,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                         <SelectTrigger className="bg-dark/50 border-white/10">
                                             <SelectValue placeholder="Select a list..." />
                                         </SelectTrigger>
-                                        <SelectContent>
+                                        <SelectContent className="max-h-60 overflow-y-auto">
                                             {lists.map(list => (
                                                 <SelectItem key={list.id} value={list.id}>
                                                     {list.name} ({list.words.length} words)
@@ -332,10 +332,10 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="text-tertiary-foreground/60 hover:text-white"
+                                    className="bg-secondary text-tertiary-foreground/60"
                                     onClick={() => setImportMode(null)}
                                 >
-                                    Back to options
+                                    Back
                                 </Button>
                             </div>
                         ) : messages.length === 0 ? (
