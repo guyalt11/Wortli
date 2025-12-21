@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { VocabList } from '@/types/vocabulary';
 import { useVocab } from '@/context/VocabContext';
 import { LANGUAGES } from '@/constants/languages';
+import { usePreferences } from '@/context/PreferencesContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -39,16 +40,37 @@ const AddListForm: React.FC<AddListFormProps> = ({
   onOpenChat
 }) => {
   const { addList, updateList } = useVocab();
+  const { preferences } = usePreferences();
+  const languageInputRef = useRef<HTMLInputElement>(null);
+  const targetInputRef = useRef<HTMLInputElement>(null);
 
   const [name, setName] = useState(editList?.name || '');
   const [description, setDescription] = useState(editList?.description || '');
-  const [language, setLanguage] = useState(editList?.language || '');
-  const [target, setTarget] = useState(editList?.target || 'en');
+  const [language, setLanguage] = useState(editList?.language || (preferences?.defaultOrigin === 'none' ? '' : preferences?.defaultOrigin) || '');
+  const [target, setTarget] = useState(editList?.target || (preferences?.defaultTransl === 'none' ? '' : preferences?.defaultTransl) || '');
+
+  // Sync defaults when preferences load
+  useEffect(() => {
+    if (!editList && preferences) {
+      setLanguage(preferences.defaultOrigin === 'none' ? '' : preferences.defaultOrigin);
+      setTarget(preferences.defaultTransl === 'none' ? '' : preferences.defaultTransl);
+    }
+  }, [preferences, editList]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!name.trim()) {
+      return;
+    }
+
+    if (!language) {
+      languageInputRef.current?.reportValidity();
+      return;
+    }
+
+    if (!target) {
+      targetInputRef.current?.reportValidity();
       return;
     }
 
@@ -84,8 +106,8 @@ const AddListForm: React.FC<AddListFormProps> = ({
     // Reset form
     setName('');
     setDescription('');
-    setLanguage('');
-    setTarget('en');
+    setLanguage((preferences?.defaultOrigin === 'none' ? '' : preferences?.defaultOrigin) || '');
+    setTarget((preferences?.defaultTransl === 'none' ? '' : preferences?.defaultTransl) || '');
     onOpenChange(false);
   };
 
@@ -114,30 +136,60 @@ const AddListForm: React.FC<AddListFormProps> = ({
 
           <div className="space-y-2">
             <Label htmlFor="language">Translate From</Label>
-            <Select value={language} onValueChange={setLanguage}>
-              <SelectTrigger className="bg-secondary">
-                <SelectValue placeholder="Select a language" />
-              </SelectTrigger>
-              <SelectContent className="max-h-60 overflow-y-auto bg-secondary">
-                {LANGUAGES.map(lang => (
-                  <SelectItem key={lang.code} value={lang.code}>{lang.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="relative">
+              <Select value={language} onValueChange={setLanguage}>
+                <SelectTrigger className="bg-secondary">
+                  <SelectValue placeholder="Select a language" />
+                </SelectTrigger>
+                <SelectContent className="max-h-60 overflow-y-auto bg-secondary">
+                  {LANGUAGES.map(lang => (
+                    <SelectItem key={lang.code} value={lang.code}>{lang.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <input
+                ref={languageInputRef}
+                value={language}
+                onChange={() => { }}
+                required
+                className="absolute inset-0 w-full h-full opacity-0 pointer-events-none"
+                tabIndex={-1}
+                aria-hidden="true"
+                onFocus={(e) => {
+                  const trigger = e.target.previousElementSibling?.querySelector('button') || e.target.parentElement?.querySelector('button');
+                  if (trigger instanceof HTMLButtonElement) trigger.focus();
+                }}
+              />
+            </div>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="target">To</Label>
-            <Select value={target} onValueChange={setTarget}>
-              <SelectTrigger className="bg-secondary">
-                <SelectValue placeholder="Select a language" />
-              </SelectTrigger>
-              <SelectContent className="max-h-60 overflow-y-auto bg-secondary">
-                {LANGUAGES.map(lang => (
-                  <SelectItem key={lang.code} value={lang.code}>{lang.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="relative">
+              <Select value={target} onValueChange={setTarget}>
+                <SelectTrigger className="bg-secondary">
+                  <SelectValue placeholder="Select a language" />
+                </SelectTrigger>
+                <SelectContent className="max-h-60 overflow-y-auto bg-secondary">
+                  {LANGUAGES.map(lang => (
+                    <SelectItem key={lang.code} value={lang.code}>{lang.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <input
+                ref={targetInputRef}
+                value={target}
+                onChange={() => { }}
+                required
+                className="absolute inset-0 w-full h-full opacity-0 pointer-events-none"
+                tabIndex={-1}
+                aria-hidden="true"
+                onFocus={(e) => {
+                  const trigger = e.target.previousElementSibling?.querySelector('button') || e.target.parentElement?.querySelector('button');
+                  if (trigger instanceof HTMLButtonElement) trigger.focus();
+                }}
+              />
+            </div>
           </div>
 
           <div className="space-y-2">

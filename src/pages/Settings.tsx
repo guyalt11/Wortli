@@ -25,10 +25,26 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { LANGUAGES } from "@/constants/languages";
 
 const Settings = () => {
     const { currentUser, updatePassword, deleteUser } = useAuth();
-    const { colorScheme, updateColorScheme, preferences, updateUsername, updateHideEmptyLists } = usePreferences();
+    const {
+        colorScheme,
+        updateColorScheme,
+        preferences,
+        updateUsername,
+        updateHideEmptyLists,
+        updateDefaultOrigin,
+        updateDefaultTransl
+    } = usePreferences();
     const navigate = useNavigate();
     const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -337,6 +353,48 @@ const Settings = () => {
                                     {preferences?.hideEmptyLists ? 'Enabled' : 'Disabled'}
                                 </Button>
                             </div>
+                            <div className="border-t border-border/20 my-2" />
+                            <div>
+                                <Label>Default Creation Languages</Label>
+                                <p className="text-sm text-tertiary-foreground mb-3">Default languages when creating a new list</p>
+                                <div className="grid grid-cols-2 gap-4 mt-2">
+                                    <div className="space-y-2">
+                                        <Label className="text-xs text-tertiary-foreground">Translate From</Label>
+                                        <Select
+                                            value={preferences?.defaultOrigin}
+                                            onValueChange={updateDefaultOrigin}
+                                        >
+                                            <SelectTrigger className="bg-secondary border-none">
+                                                <SelectValue placeholder="Select a language" />
+                                            </SelectTrigger>
+                                            <SelectContent className="max-h-60 bg-secondary border-border/40">
+                                                <SelectItem value="none">---</SelectItem>
+                                                {LANGUAGES.map(lang => (
+                                                    <SelectItem key={lang.code} value={lang.code}>{lang.name}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label className="text-xs text-tertiary-foreground">To</Label>
+                                        <Select
+                                            value={preferences?.defaultTransl}
+                                            onValueChange={updateDefaultTransl}
+                                        >
+                                            <SelectTrigger className="bg-secondary border-none">
+                                                <SelectValue placeholder="Select a language" />
+                                            </SelectTrigger>
+                                            <SelectContent className="max-h-60 bg-secondary border-border/40">
+                                                <SelectItem value="none">---</SelectItem>
+                                                {LANGUAGES.map(lang => (
+                                                    <SelectItem key={lang.code} value={lang.code}>{lang.name}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-border/20 my-2" />
                             <div className="flex items-center justify-between">
                                 <div>
                                     <Label>Daily Goal</Label>

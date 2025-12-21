@@ -230,7 +230,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
                           e.preventDefault();
                           handleGenderClick('m');
                         }}
-                        className={`bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'm' ? 'gender-tag-selected' : ''}`}
+                        className={`gender-radio bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'm' ? 'gender-tag-selected' : ''}`}
                         style={{ padding: 0, lineHeight: 1 }}
                       >
                         M
@@ -244,7 +244,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
                           e.preventDefault();
                           handleGenderClick('f');
                         }}
-                        className={`bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'f' ? 'gender-tag-selected' : ''}`}
+                        className={`gender-radio bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'f' ? 'gender-tag-selected' : ''}`}
                         style={{ padding: 0, lineHeight: 1 }}
                       >
                         F
@@ -262,7 +262,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
                         e.preventDefault();
                         handleGenderClick('n');
                       }}
-                      className={`bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'n' ? 'gender-tag-selected' : ''}`}
+                      className={`gender-radio bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'n' ? 'gender-tag-selected' : ''}`}
                       style={{ padding: 0, lineHeight: 1 }}
                     >
                       N
@@ -279,7 +279,7 @@ const AddWordForm: React.FC<AddWordFormProps> = ({
                         e.preventDefault();
                         handleGenderClick('c');
                       }}
-                      className={`bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'c' ? 'gender-tag-selected' : ''}`}
+                      className={`gender-radio bg-secondary w-8 h-8 flex text-muted-foreground items-center justify-center rounded-full cursor-pointer ${gender === 'c' ? 'gender-tag-selected' : ''}`}
                       style={{ padding: 0, lineHeight: 1 }}
                     >
                       C

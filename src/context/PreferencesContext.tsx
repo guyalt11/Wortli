@@ -9,6 +9,8 @@ type UserPreferences = {
     username: string;
     hideEmptyLists: boolean;
     defaultDirection: boolean;
+    defaultOrigin: string;
+    defaultTransl: string;
 };
 
 type PreferencesContextType = {
@@ -17,6 +19,8 @@ type PreferencesContextType = {
     updateColorScheme: (scheme: ColorScheme) => Promise<boolean>;
     updateUsername: (username: string) => Promise<boolean>;
     updateHideEmptyLists: (hideEmptyLists: boolean) => Promise<boolean>;
+    updateDefaultOrigin: (origin: string) => Promise<boolean>;
+    updateDefaultTransl: (transl: string) => Promise<boolean>;
     isLoading: boolean;
 };
 
@@ -25,6 +29,8 @@ const defaultPreferences: UserPreferences = {
     username: '',
     hideEmptyLists: false,
     defaultDirection: false,
+    defaultOrigin: '',
+    defaultTransl: '',
 };
 
 const PreferencesContext = createContext<PreferencesContextType | undefined>(undefined);
@@ -59,7 +65,9 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                             color_scheme: defaultPreferences.colorScheme,
                             username: defaultPreferences.username,
                             hide_empty_lists: defaultPreferences.hideEmptyLists,
-                            default_direction: defaultPreferences.defaultDirection
+                            default_direction: defaultPreferences.defaultDirection,
+                            default_origin: defaultPreferences.defaultOrigin,
+                            default_transl: defaultPreferences.defaultTransl
                         }])
                         .select()
                         .single();
@@ -74,6 +82,8 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                             username: newData.username || '',
                             hideEmptyLists: newData.hide_empty_lists || false,
                             defaultDirection: newData.default_direction || false,
+                            defaultOrigin: newData.default_origin || '',
+                            defaultTransl: newData.default_transl || '',
                         };
                         setPreferences(mappedData);
                     }
@@ -88,6 +98,8 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                     username: data.username || '',
                     hideEmptyLists: data.hide_empty_lists || false,
                     defaultDirection: data.default_direction || false,
+                    defaultOrigin: data.default_origin || '',
+                    defaultTransl: data.default_transl || '',
                 };
                 setPreferences(mappedData);
             }
@@ -191,6 +203,54 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    // Update default_origin in database
+    const updateDefaultOrigin = async (origin: string): Promise<boolean> => {
+        if (!currentUser) return false;
+
+        try {
+            const { error } = await supabase
+                .from('preferences')
+                .update({ default_origin: origin })
+                .eq('user_id', currentUser.id);
+
+            if (error) {
+                console.error('Error updating default_origin:', error);
+                return false;
+            }
+
+            // Update local state
+            setPreferences(prev => prev ? { ...prev, defaultOrigin: origin } : null);
+            return true;
+        } catch (error) {
+            console.error('Error in updateDefaultOrigin:', error);
+            return false;
+        }
+    };
+
+    // Update default_transl in database
+    const updateDefaultTransl = async (transl: string): Promise<boolean> => {
+        if (!currentUser) return false;
+
+        try {
+            const { error } = await supabase
+                .from('preferences')
+                .update({ default_transl: transl })
+                .eq('user_id', currentUser.id);
+
+            if (error) {
+                console.error('Error updating default_transl:', error);
+                return false;
+            }
+
+            // Update local state
+            setPreferences(prev => prev ? { ...prev, defaultTransl: transl } : null);
+            return true;
+        } catch (error) {
+            console.error('Error in updateDefaultTransl:', error);
+            return false;
+        }
+    };
+
     return (
         <PreferencesContext.Provider value={{
             preferences,
@@ -198,6 +258,8 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
             updateColorScheme,
             updateUsername,
             updateHideEmptyLists,
+            updateDefaultOrigin,
+            updateDefaultTransl,
             isLoading,
         }}>
             {children}
