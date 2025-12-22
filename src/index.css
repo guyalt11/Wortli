@@ -192,4 +192,11 @@
   .bg-gender-c {
     background-color: var(--gender-common) !important;
   }
+
+  .home-title {
+    background: linear-gradient(to right, var(--btn-1), var(--btn-5));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }

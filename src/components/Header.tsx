@@ -92,7 +92,7 @@ const Header = () => {
                         </button>
                         <div className="flex items-center gap-6 flex-1 justify-center">
                             {/* Desktop Navigation */}
-                            <nav className="hidden md:flex items-center gap-10">
+                            <nav className="hidden md:flex items-center gap-8">
                                 <button
                                     onClick={() => handleNavigation(getHomeLink())}
                                     className="text-foreground hover:text-tertiary transition-colors font-medium"
