@@ -7,6 +7,7 @@ import { VocabProvider } from "@/context/VocabContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { PreferencesProvider } from "@/context/PreferencesContext";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
@@ -29,40 +30,45 @@ const App = () => (
           <TokenExpiryChecker />
           <PreferencesProvider>
             <VocabProvider>
-              <Toaster />
-              <Sonner />
-              <Header />
-              <Routes>
-                <Route path="/home" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/" element={
-                  <ProtectedRoute>
-                    <Index />
-                  </ProtectedRoute>
-                } />
-                <Route path="/list/:listId" element={
-                  <ProtectedRoute>
-                    <VocabList />
-                  </ProtectedRoute>
-                } />
-                <Route path="/practice/:listId" element={
-                  <ProtectedRoute>
-                    <Practice />
-                  </ProtectedRoute>
-                } />
-                <Route path="/practice-all" element={
-                  <ProtectedRoute>
-                    <PracticeAll />
-                  </ProtectedRoute>
-                } />
-                <Route path="/settings" element={
-                  <ProtectedRoute>
-                    <Settings />
-                  </ProtectedRoute>
-                } />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <div className="min-h-screen flex flex-col">
+                <Toaster />
+                <Sonner />
+                <Header />
+                <main className="flex-grow">
+                  <Routes>
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/" element={
+                      <ProtectedRoute>
+                        <Index />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/list/:listId" element={
+                      <ProtectedRoute>
+                        <VocabList />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/practice/:listId" element={
+                      <ProtectedRoute>
+                        <Practice />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/practice-all" element={
+                      <ProtectedRoute>
+                        <PracticeAll />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="/settings" element={
+                      <ProtectedRoute>
+                        <Settings />
+                      </ProtectedRoute>
+                    } />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </div>
             </VocabProvider>
           </PreferencesProvider>
         </AuthProvider>
