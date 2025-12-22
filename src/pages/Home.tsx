@@ -74,7 +74,7 @@ const Home = () => {
             </div>
 
             {/* Hero Section */}
-            <section className="relative z-10 min-h-[90vh] flex flex-col justify-center items-center pt-20 pb-10 px-4">
+            <section className="relative z-10 min-h-[90vh] flex flex-col justify-center items-center py-10 px-4">
                 <div className="container mx-auto max-w-6xl text-center">
                     <motion.div
                         initial="hidden"
