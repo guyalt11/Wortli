@@ -12,7 +12,7 @@ export const useSupabaseVocabLists = () => {
       setListsInternal(newLists);
     }
   };
-  const listsRef = useRef(lists);
+  const lastSentTimezoneRef = useRef<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { currentUser, token } = useAuth();
@@ -248,6 +248,24 @@ export const useSupabaseVocabLists = () => {
       }
     } else {
       // Update an existing word
+
+      // Update user's timezone in preferences before updating the word
+      try {
+        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        if (lastSentTimezoneRef.current !== timeZone) {
+          await fetch(`${SUPABASE_URL}/rest/v1/preferences?user_id=eq.${currentUser.id}`, {
+            method: 'PATCH',
+            headers: getAuthHeaders(token),
+            body: JSON.stringify({ timezone: timeZone })
+          });
+          lastSentTimezoneRef.current = timeZone;
+        }
+      } catch (e) {
+        console.error('Failed to update timezone:', e);
+        // Continue with word update even if timezone update fails
+      }
+
       const response = await fetch(
         `${SUPABASE_URL}/rest/v1/words?id=eq.${word.id}`,
         {
