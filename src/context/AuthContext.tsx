@@ -17,6 +17,7 @@ type AuthContextType = {
   updatePassword: (newPassword: string) => Promise<boolean>;
   deleteUser: () => Promise<boolean>;
   checkAndRefreshToken: () => void;
+  streak: number;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -30,14 +31,37 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [streak, setStreak] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+
+  const fetchUserStreak = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('user_data')
+        .select('streak')
+        .eq('user_id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching streak:', error);
+        return;
+      }
+
+      if (data) {
+        setStreak(data.streak || 0);
+      }
+    } catch (error) {
+      console.error('Error in fetchUserStreak:', error);
+    }
+  };
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         setCurrentUser(session.user);
         setToken(session.access_token);
+        fetchUserStreak(session.user.id);
       }
       setIsLoading(false);
     });
@@ -46,9 +70,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (session) {
         setCurrentUser(prev => prev?.id !== session.user.id ? session.user : prev);
         setToken(prev => prev !== session.access_token ? session.access_token : prev);
+        // Only fetch if user changed or was just set
+        if (!currentUser || currentUser.id !== session.user.id) {
+          fetchUserStreak(session.user.id);
+        }
       } else {
         setCurrentUser(null);
         setToken(null);
+        setStreak(0);
       }
       setIsLoading(false);
     });
@@ -58,8 +87,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (credentials: UserCredentials): Promise<boolean> => {
     try {
-      const { error } = await supabase.auth.signInWithPassword(credentials);
+      const { data, error } = await supabase.auth.signInWithPassword(credentials);
       if (error) throw error;
+      if (data.user) {
+        fetchUserStreak(data.user.id);
+      }
       return true;
     } catch (error) {
       console.error('Login failed:', error);
@@ -70,11 +102,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     try {
       await supabase.auth.signOut();
+      setStreak(0);
       navigate('/login');
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
+
+  // ... (keep register and signInWithGoogle as is from original, or update if needed - they trigger onAuthStateChange anyway)
 
   const register = async (credentials: UserCredentials): Promise<{ success: boolean; error?: string }> => {
     try {
@@ -144,6 +179,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await supabase.auth.signOut();
       setCurrentUser(null);
       setToken(null);
+      setStreak(0);
 
       return true;
     } catch (error) {
@@ -169,6 +205,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       updatePassword,
       deleteUser,
       checkAndRefreshToken,
+      streak,
     }}>
       {children}
     </AuthContext.Provider>
