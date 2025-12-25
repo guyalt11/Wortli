@@ -76,11 +76,11 @@ const VocabListGrid = ({
             />
           </div>
         ))}
-      <div key="add-list" className="flex justify-center items-center border-dashed rounded-lg border-2 border-light px-6 py-14">
+      <div key="add-list" className="flex flex-col sm:flex-row justify-center items-center border-dashed rounded-lg border-2 border-light px-6 py-10 sm:py-14">
         <Button className="w-fit text-lg px-10 rounded-full border-2 border-tertiary !bg-secondary !text-light" onClick={onAddList}>
           Add a new list
         </Button>
-        <p className="text-center mx-6">or</p>
+        <p className="text-center mx-6 my-2 sm:my-0">or</p>
         <Button className="w-fit text-lg px-10 rounded-full border-2 border-tertiary !bg-secondary !text-light" onClick={onLibrary}>
           Browse library
         </Button>
