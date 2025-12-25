@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { VocabList, VocabWord } from '@/types/vocabulary';
 import { useAuth } from '@/context/AuthContext';
 import { SUPABASE_URL, getAuthHeaders } from '@/lib/supabase';
@@ -17,6 +18,31 @@ export const useSupabaseVocabLists = () => {
   const [error, setError] = useState<string | null>(null);
   const { currentUser, token } = useAuth();
 
+  // Update user's timezone in preferences and reset streak if needed
+  const updateUserTimezone = useCallback(async () => {
+    if (!currentUser?.id || !token) return;
+
+    try {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+      if (lastSentTimezoneRef.current !== timeZone) {
+        await fetch(`${SUPABASE_URL}/rest/v1/preferences?user_id=eq.${currentUser.id}`, {
+          method: 'PATCH',
+          headers: getAuthHeaders(token),
+          body: JSON.stringify({ timezone: timeZone })
+        });
+        lastSentTimezoneRef.current = timeZone;
+      }
+
+      await fetch(`${SUPABASE_URL}/rest/v1/rpc/reset_streak`, {
+        method: 'POST',
+        headers: getAuthHeaders(token)
+      });
+    } catch (e) {
+      console.error('Failed to update timezone or reset streak:', e);
+    }
+  }, [currentUser, token]);
+
   // Load lists from Supabase based on current user
   const fetchLists = useCallback(async () => {
     if (!currentUser || !token) {
@@ -28,6 +54,9 @@ export const useSupabaseVocabLists = () => {
     try {
       if (lists.length === 0) setIsLoading(true);
       setError(null);
+      
+      // Update timezone on page load
+      await updateUserTimezone();
 
       // Fetch the user's lists
       const response = await fetch(
@@ -89,6 +118,11 @@ export const useSupabaseVocabLists = () => {
   useEffect(() => {
     fetchLists();
   }, [fetchLists]);
+  
+  const location = useLocation();
+  useEffect(() => {
+    updateUserTimezone();
+  }, [updateUserTimezone, location.pathname]);
 
   // Helper to parse nested dates in JSON objects
   const parseJsonDates = (jsonObj: any) => {
@@ -248,24 +282,6 @@ export const useSupabaseVocabLists = () => {
       }
     } else {
       // Update an existing word
-
-      // Update user's timezone in preferences before updating the word
-      try {
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-        if (lastSentTimezoneRef.current !== timeZone) {
-          await fetch(`${SUPABASE_URL}/rest/v1/preferences?user_id=eq.${currentUser.id}`, {
-            method: 'PATCH',
-            headers: getAuthHeaders(token),
-            body: JSON.stringify({ timezone: timeZone })
-          });
-          lastSentTimezoneRef.current = timeZone;
-        }
-      } catch (e) {
-        console.error('Failed to update timezone:', e);
-        // Continue with word update even if timezone update fails
-      }
-
       const response = await fetch(
         `${SUPABASE_URL}/rest/v1/words?id=eq.${word.id}`,
         {
