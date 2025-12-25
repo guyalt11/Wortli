@@ -16,11 +16,12 @@ export const useSupabaseVocabLists = () => {
   const lastSentTimezoneRef = useRef<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { currentUser, token } = useAuth();
+  const { currentUser, token, setStreak } = useAuth();
 
   // Update user's timezone in preferences and reset streak if needed
   const updateUserTimezone = useCallback(async () => {
     if (!currentUser?.id || !token) return;
+
 
     try {
       const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -34,10 +35,15 @@ export const useSupabaseVocabLists = () => {
         lastSentTimezoneRef.current = timeZone;
       }
 
-      await fetch(`${SUPABASE_URL}/rest/v1/rpc/reset_streak`, {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/reset_streak`, {
         method: 'POST',
         headers: getAuthHeaders(token)
       });
+
+      if (!res.ok) throw new Error('Failed to reset streak');
+      const streakReset = await res.json();
+      streakReset === true && currentUser?.id && setStreak?.(0);
+
     } catch (e) {
       console.error('Failed to update timezone or reset streak:', e);
     }

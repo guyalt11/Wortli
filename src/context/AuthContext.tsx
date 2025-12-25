@@ -18,6 +18,7 @@ type AuthContextType = {
   deleteUser: () => Promise<boolean>;
   checkAndRefreshToken: () => void;
   streak: number;
+  setStreak: (streak: number) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -193,20 +194,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const checkAndRefreshToken = () => { }; // Optional if Supabase handles it
 
   return (
-    <AuthContext.Provider value={{
-      currentUser,
-      token,
-      login,
-      logout,
-      register,
-      signInWithGoogle,
-      isAuthenticated: !!currentUser,
-      isLoading,
-      updatePassword,
-      deleteUser,
-      checkAndRefreshToken,
-      streak,
-    }}>
+    <AuthContext.Provider 
+      value={{
+        currentUser,
+        token,
+        login,
+        logout,
+        register,
+        signInWithGoogle,
+        isAuthenticated: !!currentUser,
+        isLoading,
+        updatePassword,
+        deleteUser,
+        checkAndRefreshToken,
+        streak,
+        setStreak
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
