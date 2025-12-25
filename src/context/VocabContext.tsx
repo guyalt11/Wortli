@@ -527,6 +527,8 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
     };
   }
 
+  const allWords = useMemo(() => lists.flatMap(list => list.words), [lists]);
+
   const value = useMemo(() => ({
     lists,
     isLoading,
@@ -544,7 +546,7 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
     getListById,
     isLibraryOpen,
     setIsLibraryOpen,
-    allWords: lists.flatMap(list => list.words)
+    allWords
   }), [
     lists,
     isLoading,
@@ -560,7 +562,9 @@ export const VocabProvider = ({ children }: { children: ReactNode }) => {
     exportList,
     importList,
     getListById,
-    isLibraryOpen
+    isLibraryOpen,
+    setIsLibraryOpen,
+    allWords
   ]);
 
   return (

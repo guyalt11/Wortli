@@ -5,7 +5,7 @@ import { SUPABASE_URL, getAuthHeaders } from '@/lib/supabase';
 
 export const useSharedLists = () => {
     const [sharedLists, setSharedLists] = useState<VocabList[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { currentUser, token } = useAuth();
 
@@ -90,13 +90,12 @@ export const useSharedLists = () => {
     };
 
     useEffect(() => {
-        fetchSharedLists();
     }, [currentUser, token]);
 
     return {
         sharedLists,
         isLoading,
         error,
-        refreshSharedLists: fetchSharedLists
+        fetchSharedLists
     };
 };

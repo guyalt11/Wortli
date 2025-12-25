@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -17,7 +17,6 @@ import { toast } from '@/components/ui/use-toast';
 import FlagIcon from '@/components/FlagIcon';
 import { VocabList } from '@/types/vocabulary';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import LoadingOverlay from '@/components/LoadingOverlay';
 import { getLanguageName } from '@/constants/languages';
 
 interface LibraryDialogProps {
@@ -26,13 +25,15 @@ interface LibraryDialogProps {
 }
 
 const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
-    const { sharedLists, isLoading } = useSharedLists();
+    const { sharedLists, isLoading, fetchSharedLists } = useSharedLists();
     const { importList } = useVocab();
     const { isAuthenticated } = useAuth();
     const [selectedLanguage, setSelectedLanguage] = useState<string>('any');
     const [selectedListIds, setSelectedListIds] = useState<Set<string>>(new Set());
     const [expandedListId, setExpandedListId] = useState<string | null>(null);
     const [isImporting, setIsImporting] = useState(false);
+    const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
+    const [renderLists, setRenderLists] = useState(false);
 
     // Get unique languages from shared lists
     const availableLanguages = useMemo(() => {
@@ -47,6 +48,24 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
         }
         return sharedLists.filter(list => list.language === selectedLanguage);
     }, [sharedLists, selectedLanguage]);
+
+    // Track when the dialog opens to trigger loading
+    useEffect(() => {
+        if (open && !hasLoadedOnce) {
+            setHasLoadedOnce(true);
+            fetchSharedLists();
+        }
+    }, [open, hasLoadedOnce, fetchSharedLists]);
+
+    useEffect(() => {
+        if (!open) {
+            setRenderLists(false);
+            return;
+        }
+
+        const raf = window.requestAnimationFrame(() => setRenderLists(true));
+        return () => window.cancelAnimationFrame(raf);
+    }, [open]);
 
     const { systemLists, userLists } = useMemo(() => {
         const SYSTEM_USER_ID = '2a439013-2c4e-44f9-ba7b-00baf0676138';
@@ -118,31 +137,33 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                     opacity: expandedListId === list.id ? 1 : 0
                 }}
             >
-                <div className="bg-tertiary/30 p-3 border-t overflow-y-auto" style={{ maxHeight: '15rem' }}>
-                    <div className="space-y-1">
-                        {list.words.length === 0 ? (
-                            <div className="text-sm text-tertiary-foreground text-center py-2">
-                                No words in this list
-                            </div>
-                        ) : (
-                            list.words.map((word, index) => (
-                                <div
-                                    key={index}
-                                    className="text-sm flex items-center gap-2 py-1 px-2 hover:bg-tertiary/50 rounded"
-                                >
-                                    <span className="font-medium">{word.origin}</span>
-                                    <span className="text-tertiary-foreground">|</span>
-                                    <span>{word.transl}</span>
-                                    {word.gender && (
-                                        <span className="text-xs text-tertiary-foreground ml-auto">
-                                            ({word.gender})
-                                        </span>
-                                    )}
+                {expandedListId === list.id && (
+                    <div className="bg-tertiary/30 p-3 border-t overflow-y-auto" style={{ maxHeight: '15rem' }}>
+                        <div className="space-y-1">
+                            {list.words.length === 0 ? (
+                                <div className="text-sm text-tertiary-foreground text-center py-2">
+                                    No words in this list
                                 </div>
-                            ))
-                        )}
+                            ) : (
+                                list.words.map((word, index) => (
+                                    <div
+                                        key={index}
+                                        className="text-sm flex items-center gap-2 py-1 px-2 hover:bg-tertiary/50 rounded"
+                                    >
+                                        <span className="font-medium">{word.origin}</span>
+                                        <span className="text-tertiary-foreground">|</span>
+                                        <span>{word.transl}</span>
+                                        {word.gender && (
+                                            <span className="text-xs text-tertiary-foreground ml-auto">
+                                                ({word.gender})
+                                            </span>
+                                        )}
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );
@@ -219,9 +240,8 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
 
     return (
         <>
-            {isImporting && <LoadingOverlay message="Importing lists..." />}
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="w-[90%] sm:max-w-[600px] max-h-[80vh] flex flex-col">
+                <DialogContent className="w-[90%] sm:max-w-[600px] h-[85vh] flex flex-col">
                     <DialogHeader>
                         <DialogTitle>Shared Lists Library</DialogTitle>
                         <DialogDescription>
@@ -249,20 +269,26 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                         </div>
 
                         {/* Lists */}
-                        <div className="flex-1 overflow-y-auto border rounded-md p-2 space-y-2">
+                        <div className="flex-1 overflow-y-auto border rounded-md p-2 space-y-2 relative">
                             {isLoading ? (
-                                <div className="text-center py-8 text-tertiary-foreground">
+                                <div className="absolute inset-0 flex items-center justify-center text-center text-tertiary-foreground">
+                                    Loading shared lists...
+                                </div>
+                            ) : !renderLists ? (
+                                <div className="absolute inset-0 flex items-center justify-center text-tertiary-foreground">
                                     Loading shared lists...
                                 </div>
                             ) : filteredLists.length === 0 ? (
-                                <div className="text-center py-8 text-tertiary-foreground">
+                                <div className="absolute inset-0 flex items-center justify-center text-tertiary-foreground">
                                     No shared lists available.
                                 </div>
                             ) : (
                                 <div className="space-y-6">
                                     {systemLists.length > 0 && (
                                         <div className="space-y-2">
-                                            <h3 className="text-sm font-semibold text-tertiary-foreground px-1">Wörtli Lists</h3>
+                                            <h3 className="text-sm font-semibold text-tertiary-foreground px-1">
+                                                Wörtli Lists
+                                            </h3>
                                             <div className="space-y-2">
                                                 {systemLists.map(list => renderListRow(list))}
                                             </div>
@@ -271,7 +297,9 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
 
                                     {userLists.length > 0 && (
                                         <div className="space-y-2">
-                                            <h3 className="text-sm font-semibold text-tertiary-foreground px-1">User Lists</h3>
+                                            <h3 className="text-sm font-semibold text-tertiary-foreground px-1">
+                                                User Lists
+                                            </h3>
                                             <div className="space-y-2">
                                                 {userLists.map(list => renderListRow(list))}
                                             </div>
