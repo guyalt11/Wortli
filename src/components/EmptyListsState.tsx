@@ -1,18 +1,39 @@
 
 import { Button } from "@/components/ui/button";
-
+import { Plus, BookOpen, Sparkles } from "lucide-react";
 interface EmptyListsStateProps {
   onAddList: () => void;
   onLibrary: () => void;
+  onOpenChange: (open: boolean) => void;
 }
 
-const EmptyListsState = ({ onAddList, onLibrary }: EmptyListsStateProps) => {
+const EmptyListsState = ({ onAddList, onLibrary, onOpenChange }: EmptyListsStateProps) => {
   return (
-    <div className="text-center py-12">
-      <h1 className="text-2xl mb-10">Welcome to Wörtli!</h1>
-      <Button title="Create first list" onClick={onAddList}>Create a list</Button>
-      <p className="my-2">- or -</p>
-      <Button title="Browse shared lists" onClick={onLibrary}>Browse our library</Button>
+    <div className="flex flex-col sm:flex-row justify-center items-center gap-6 border-light">
+      <Button
+        variant="outline"
+        className="w-full text-light h-24 border-2 border-dashed flex flex-col border-tertiary !bg-secondary hover:text-light"
+        onClick={onAddList}
+      >
+        <Plus className="h-6 w-6 transition-none" />
+        <span>Create your first list</span>
+      </Button>
+      <Button
+        variant="outline"
+        className="w-full text-light h-24 border-2 border-dashed flex flex-col border-tertiary !bg-secondary hover:text-light"
+        onClick={() => onOpenChange(true)}
+      >
+        <Sparkles className="h-6 w-6 transition-none" />
+        <span>Use our AI generator</span>
+      </Button>
+      <Button
+        variant="outline"
+        className="w-full text-light h-24 border-2 border-dashed flex flex-col border-tertiary !bg-secondary hover:text-light"
+        onClick={onLibrary}
+      >
+        <BookOpen className="h-6 w-6 transition-none" />
+        <span>Browse our library</span>
+      </Button>
     </div>
   );
 };

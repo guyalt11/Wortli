@@ -196,7 +196,7 @@ const Index = () => {
           <LoadingSpinner size="lg" />
         </div>
       ) : showEmptyState ? (
-        <EmptyListsState onAddList={handleAddList} onLibrary={handleLibraryClick} />
+        <EmptyListsState onAddList={handleAddList} onLibrary={handleLibraryClick} onOpenChange={setChatOpen} />
       ) : (
         <VocabListGrid
           lists={lists.filter(list => list.name.toLowerCase().includes(searchQuery.toLowerCase()))}
