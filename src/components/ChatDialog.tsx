@@ -257,7 +257,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
             <Dialog open={open} onOpenChange={onOpenChange}>
                 <DialogContent
                     style={{ height: viewportHeight }}
-                    className="sm:max-w-full md:max-w-3xl flex flex-col p-0 gap-0 border-0 sm:border animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-4 duration-300 sm:rounded-lg rounded-none fixed top-0 left-0 translate-x-0 translate-y-0 sm:fixed sm:left-[50%] sm:top-[50%] sm:-translate-x-1/2 sm:-translate-y-1/2"
+                    className="sm:max-w-full md:max-w-3xl flex flex-col p-0 gap-0 border-0 sm:border animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-4 duration-300 sm:rounded-lg rounded-none fixed top-0 left-0 translate-x-0 translate-y-0 sm:fixed sm:left-[50%] sm:-translate-x-1/2"
                 >
                     <DialogHeader className="px-6 pt-5 pb-5 border-b-0 sm:border-b border-white/20 bg-gradient-dark">
                         <DialogTitle className="flex items-center gap-2 text-xl">
