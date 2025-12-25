@@ -81,8 +81,6 @@ const Index = () => {
     const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
     while (retryCount < maxRetries) {
-      const allListIds = listsRef.current.map(list => list.id);
-
       const exists = listsRef.current.some(l => l.id === list.id);
       if (exists) {
         setImportDialogOpen(false);
@@ -211,9 +209,9 @@ const Index = () => {
           }}
           onShareToggle={handleShareToggle}
           onPinToggle={handlePinToggle}
-          urlDirection=""
-          listId=""
           showOnlyDue={showOnlyDue}
+          onAddList={handleAddList}
+          onLibrary={handleLibraryClick}
         />
       )}
 

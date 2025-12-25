@@ -1,7 +1,8 @@
 
 import { useAppNavigation } from "@/hooks/useAppNavigation";
-import { VocabList, PracticeDirection } from "@/types/vocabulary";
+import { VocabList } from "@/types/vocabulary";
 import ListCard from "@/components/ListCard";
+import { Button } from "@/components/ui/button";
 
 interface VocabListGridProps {
   lists: VocabList[];
@@ -12,9 +13,9 @@ interface VocabListGridProps {
   onImportWords: (file: File, listName: string) => Promise<void>;
   onShareToggle: (id: string, share: boolean) => void;
   onPinToggle: (id: string, pinned: boolean) => void;
-  urlDirection: string;
-  listId: string;
   showOnlyDue: boolean;
+  onAddList: () => void;
+  onLibrary: () => void;
 }
 
 const VocabListGrid = ({
@@ -26,15 +27,11 @@ const VocabListGrid = ({
   onImportWords,
   onShareToggle,
   onPinToggle,
-  urlDirection,
-  listId,
   showOnlyDue,
+  onAddList,
+  onLibrary,
 }: VocabListGridProps) => {
-  const { goToList, goToPractice } = useAppNavigation();
-
-  const handlePractice = (direction: string, id: string) => {
-    goToPractice(id, direction as PracticeDirection);
-  };
+  const { goToList } = useAppNavigation();
 
   return (
     <div className="space-y-4">
@@ -79,6 +76,15 @@ const VocabListGrid = ({
             />
           </div>
         ))}
+      <div key="add-list" className="flex justify-center items-center border-dashed rounded-lg border-2 border-light px-6 py-14">
+        <Button className="w-fit text-lg px-10 rounded-full border-2 border-tertiary !bg-secondary !text-light" onClick={onAddList}>
+          Add a new list
+        </Button>
+        <p className="text-center mx-6">or</p>
+        <Button className="w-fit text-lg px-10 rounded-full border-2 border-tertiary !bg-secondary !text-light" onClick={onLibrary}>
+          Browse library
+        </Button>
+      </div>
     </div>
   );
 };

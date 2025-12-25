@@ -282,19 +282,19 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
                                     <Button
                                         variant="outline"
-                                        className="h-24 flex flex-col gap-2 bg-dark/50 border-white/10 hover:bg-light transition-all"
+                                        className="group h-24 flex flex-col gap-2"
                                         onClick={() => setImportMode('new')}
                                     >
-                                        <Plus className="h-6 w-6 text-secondary" />
+                                        <Plus className="h-6 w-6 text-light group-hover:text-light-foreground transition-none" />
                                         <span>Create New List</span>
                                     </Button>
                                     <Button
                                         variant="outline"
-                                        className="h-24 flex flex-col gap-2 bg-dark/50 border-white/10 hover:bg-light transition-all"
+                                        className="group h-24 flex flex-col gap-2"
                                         onClick={() => setImportMode('existing')}
                                         disabled={lists.length === 0}
                                     >
-                                        <ListPlus className="h-6 w-6 text-primary" />
+                                        <ListPlus className="h-6 w-6 text-light group-hover:text-light-foreground transition-none" />
                                         <span>Add to Existing</span>
                                     </Button>
                                 </div>
