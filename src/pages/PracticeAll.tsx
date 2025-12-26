@@ -12,11 +12,13 @@ import FlagIcon from '@/components/FlagIcon';
 import RightArrow from '@/components/Icon';
 import { ChevronLeft, ChevronRight, RefreshCcw } from 'lucide-react';
 import DeleteWordDialog from '@/components/DeleteWordDialog';
+import { useAuth } from '@/context/AuthContext';
 
 const PracticeAll: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { updateWordDifficulty, deleteWord, isLoading, lists } = useVocab();
+  const { updateDailyProgress } = useAuth();
   const [direction, setDirection] = useState<PracticeDirection>('translateFrom');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
@@ -142,6 +144,13 @@ const PracticeAll: React.FC = () => {
       updateWordDifficulty(currentWord.id, difficulty, direction).catch(error => {
         console.error('Error updating word difficulty:', error);
       });
+
+      // Update daily progress (streak and daily count)
+      setTimeout(() => {
+        updateDailyProgress().catch(error => {
+          console.error('Error updating daily progress:', error);
+        });
+      }, 200);
 
       // Move to the next card after a short delay
       setTimeout(() => {

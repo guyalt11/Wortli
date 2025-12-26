@@ -13,6 +13,7 @@ type UserPreferences = {
     defaultTransl: string;
     aiRules: string;
     aiInclude: boolean;
+    dailyGoal: number;
 };
 
 type PreferencesContextType = {
@@ -25,6 +26,7 @@ type PreferencesContextType = {
     updateDefaultTransl: (transl: string) => Promise<boolean>;
     updateAiRules: (rules: string) => Promise<boolean>;
     updateAiInclude: (include: boolean) => Promise<boolean>;
+    updateDailyGoal: (goal: number) => Promise<boolean>;
     isLoading: boolean;
 };
 
@@ -37,6 +39,7 @@ const defaultPreferences: UserPreferences = {
     defaultTransl: '',
     aiRules: '',
     aiInclude: true,
+    dailyGoal: 0,
 };
 
 const PreferencesContext = createContext<PreferencesContextType | undefined>(undefined);
@@ -75,6 +78,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                             default_origin: defaultPreferences.defaultOrigin,
                             default_transl: defaultPreferences.defaultTransl,
                             ai_rules: defaultPreferences.aiRules,
+                            daily_goal: defaultPreferences.dailyGoal,
                             ai_include: defaultPreferences.aiInclude,
                         }])
                         .select()
@@ -94,6 +98,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                             defaultTransl: newData.default_transl || '',
                             aiRules: newData.ai_rules || '',
                             aiInclude: newData.ai_include ?? true,
+                            dailyGoal: newData.daily_goal || 0,
                         };
                         setPreferences(mappedData);
                     }
@@ -112,6 +117,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
                     defaultTransl: data.default_transl || '',
                     aiRules: data.ai_rules || '',
                     aiInclude: data.ai_include ?? true,
+                    dailyGoal: data.daily_goal || 0,
                 };
                 setPreferences(mappedData);
             }
@@ -305,6 +311,27 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const updateDailyGoal = async (goal: number): Promise<boolean> => {
+        if (!currentUser) return false;
+
+        try {
+            const { error } = await supabase
+                .from('preferences')
+                .update({
+                    daily_goal: goal
+                })
+                .eq('user_id', currentUser.id);
+
+            if (error) throw error;
+
+            setPreferences(prev => prev ? { ...prev, dailyGoal: goal } : null);
+            return true;
+        } catch (error) {
+            console.error('Error updating daily goal:', error);
+            return false;
+        }
+    };
+
     return (
         <PreferencesContext.Provider value={{
             preferences,
@@ -316,6 +343,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
             updateDefaultTransl,
             updateAiRules,
             updateAiInclude,
+            updateDailyGoal,
             isLoading,
         }}>
             {children}

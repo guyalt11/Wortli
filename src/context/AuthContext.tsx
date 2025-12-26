@@ -19,6 +19,9 @@ type AuthContextType = {
   checkAndRefreshToken: () => void;
   streak: number;
   setStreak: (streak: number) => void;
+  dailyCount: number;
+  setDailyCount: (count: number) => void;
+  updateDailyProgress: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,6 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [streak, setStreak] = useState<number>(0);
+  const [dailyCount, setDailyCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -40,17 +44,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data, error } = await supabase
         .from('user_data')
-        .select('streak')
+        .select('streak, daily_count')
         .eq('user_id', userId)
         .single();
 
       if (error) {
-        console.error('Error fetching streak:', error);
+        console.error('Error fetching user data:', error);
         return;
       }
 
       if (data) {
         setStreak(data.streak || 0);
+        setDailyCount(data.daily_count || 0);
       }
     } catch (error) {
       console.error('Error in fetchUserStreak:', error);
@@ -79,6 +84,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setCurrentUser(null);
         setToken(null);
         setStreak(0);
+        setDailyCount(0);
       }
       setIsLoading(false);
     });
@@ -104,6 +110,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       await supabase.auth.signOut();
       setStreak(0);
+      setDailyCount(0);
       navigate('/login');
     } catch (error) {
       console.error('Logout failed:', error);
@@ -181,6 +188,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setCurrentUser(null);
       setToken(null);
       setStreak(0);
+      setDailyCount(0);
 
       return true;
     } catch (error) {
@@ -193,8 +201,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const checkAndRefreshToken = () => { }; // Optional if Supabase handles it
 
+  const updateDailyProgress = async (): Promise<void> => {
+    if (!currentUser) return;
+    // Backend automatically updates daily_count and streak when word difficulty is updated
+    // We just need to refetch the latest values
+    await fetchUserStreak(currentUser.id);
+  };
+
   return (
-    <AuthContext.Provider 
+    <AuthContext.Provider
       value={{
         currentUser,
         token,
@@ -208,7 +223,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         deleteUser,
         checkAndRefreshToken,
         streak,
-        setStreak
+        setStreak,
+        dailyCount,
+        setDailyCount,
+        updateDailyProgress
       }}
     >
       {children}

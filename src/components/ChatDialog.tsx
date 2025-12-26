@@ -297,12 +297,6 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                         <span>Add to Existing</span>
                                     </Button>
                                 </div>
-
-                                {lists.length === 0 && (
-                                    <p className="text-xs text-tertiary-foreground/60 italic">
-                                        (You don't have any lists yet. Create a new one first!)
-                                    </p>
-                                )}
                             </div>
                         ) : messages.length === 0 && importMode === 'existing' && !selectedListId ? (
                             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">

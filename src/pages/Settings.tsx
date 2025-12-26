@@ -46,7 +46,8 @@ const Settings = () => {
         updateDefaultOrigin,
         updateDefaultTransl,
         updateAiRules,
-        updateAiInclude
+        updateAiInclude,
+        updateDailyGoal
     } = usePreferences();
     const navigate = useNavigate();
     const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
@@ -61,6 +62,7 @@ const Settings = () => {
     const [isUpdatingTheme, setIsUpdatingTheme] = useState(false);
     const [editedUsername, setEditedUsername] = useState("");
     const [isEditingUsername, setIsEditingUsername] = useState(false);
+    const options = [0, 10, 20, 30, 40, 50];
 
     const handleChangePassword = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -287,35 +289,22 @@ const Settings = () => {
                             </div>
                             <div>
                                 <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    value={currentUser?.email || ''}
-                                    disabled
-                                    className="bg-dark mt-2"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="border-t border-border/40" />
-
-                    {/* Security Section */}
-                    <div>
-                        <h2 className="text-xl font-semibold mb-4">Security</h2>
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <Label>Change Password</Label>
-                                    <p className="text-sm text-tertiary-foreground">Update your account password</p>
+                                <div className="flex items-center justify-between gap-2 mt-2">
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        value={currentUser?.email || ''}
+                                        disabled
+                                        className="bg-dark"
+                                    />
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => setIsPasswordDialogOpen(true)}
+                                    >
+                                        Change Password
+                                    </Button>
                                 </div>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => setIsPasswordDialogOpen(true)}
-                                >
-                                    Change Password
-                                </Button>
                             </div>
                         </div>
                     </div>
@@ -326,58 +315,6 @@ const Settings = () => {
                     <div>
                         <h2 className="text-xl font-semibold mb-4">Preferences</h2>
                         <div className="space-y-4">
-                            <div>
-                                <Label>Color Scheme</Label>
-                                <p className="text-sm text-tertiary-foreground mb-3">Choose your preferred color theme</p>
-                                <div className="grid grid-cols-1 gap-3">
-                                    {[
-                                        { value: 'dark', label: 'Dark (Teal)', description: 'Default theme' },
-                                        { value: 'light', label: 'Light', description: 'Clean & bright' },
-                                        { value: 'neubrutalism', label: 'Neubrutalism', description: 'Bold & high-contrast' },
-                                    ].map((theme) => (
-                                        <label
-                                            key={theme.value}
-                                            className="flex items-center gap-3 p-3 border border-border rounded-lg cursor-pointer hover:bg-secondary/20 transition-colors"
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="colorScheme"
-                                                value={theme.value}
-                                                checked={colorScheme === theme.value}
-                                                onChange={() => handleColorSchemeChange(theme.value as any)}
-                                                disabled={isUpdatingTheme}
-                                                className="w-4 h-4"
-                                            />
-                                            <div className="flex items-center gap-3 flex-1">
-                                                <div className="flex gap-1" data-theme={theme.value}>
-                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--primary)' }} />
-                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--secondary)' }} />
-                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--tertiary)' }} />
-                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--background)' }} />
-                                                </div>
-                                                <div>
-                                                    <div className="font-medium">{theme.label}</div>
-                                                    <div className="text-xs text-tertiary-foreground">{theme.description}</div>
-                                                </div>
-                                            </div>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <Label>Hide Empty Lists by Default</Label>
-                                    <p className="text-sm text-tertiary-foreground">Show only lists with words ready for review by default</p>
-                                </div>
-                                <Button
-                                    size="sm"
-                                    onClick={handleHideEmptyListsToggle}
-                                    variant={preferences?.hideEmptyLists ? "default" : "outline"}
-                                >
-                                    {preferences?.hideEmptyLists ? 'Enabled' : 'Disabled'}
-                                </Button>
-                            </div>
-                            <div className="border-t border-border/20 my-2" />
                             <div>
                                 <Label>Default Creation Languages</Label>
                                 <p className="text-sm text-tertiary-foreground mb-3">Default languages when creating a new list</p>
@@ -417,6 +354,26 @@ const Settings = () => {
                                         </Select>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="border-t border-border/20 my-2" />
+                            <div id="daily-progress">
+                                <Label>Daily Goal</Label>
+                                <p className="text-sm text-tertiary-foreground mb-3">Set a daily practice target</p>
+                                <Select
+                                    value={preferences?.dailyGoal?.toString()}
+                                    onValueChange={(value) => updateDailyGoal(parseInt(value))}
+                                >
+                                    <SelectTrigger className="bg-secondary border-none">
+                                        <SelectValue placeholder="Select daily goal" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-secondary border-border/40">
+                                        {options.map(v => (
+                                            <SelectItem key={v} value={String(v)}>
+                                                {v === 0 ? '---' : `${v} words`}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                             </div>
                             <div className="border-t border-border/20 my-2" />
                             <div>
@@ -481,18 +438,60 @@ const Settings = () => {
                             <div className="border-t border-border/20 my-2" />
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <Label>Daily Goal</Label>
-                                    <p className="text-sm text-tertiary-foreground">Set a daily practice target</p>
+                                    <Label>Hide Empty Lists by Default</Label>
+                                    <p className="text-sm text-tertiary-foreground">Show only lists with words ready for review by default</p>
                                 </div>
-                                <Button variant="outline" size="sm" disabled>
-                                    Coming Soon
+                                <Button
+                                    size="sm"
+                                    onClick={handleHideEmptyListsToggle}
+                                    variant={preferences?.hideEmptyLists ? "default" : "outline"}
+                                >
+                                    {preferences?.hideEmptyLists ? 'Enabled' : 'Disabled'}
                                 </Button>
+                            </div>
+                            <div className="border-t border-border/20 my-2" />
+                            <div>
+                                <Label>Color Scheme</Label>
+                                <p className="text-sm text-tertiary-foreground mb-3">Choose your preferred color theme</p>
+                                <div className="grid grid-cols-1 gap-3">
+                                    {[
+                                        { value: 'dark', label: 'Dark (Teal)', description: 'Default theme' },
+                                        { value: 'light', label: 'Light', description: 'Clean & bright' },
+                                        { value: 'neubrutalism', label: 'Neubrutalism', description: 'Bold & high-contrast' },
+                                    ].map((theme) => (
+                                        <label
+                                            key={theme.value}
+                                            className="flex items-center gap-3 p-3 border border-border rounded-lg cursor-pointer hover:bg-secondary/20 transition-colors"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="colorScheme"
+                                                value={theme.value}
+                                                checked={colorScheme === theme.value}
+                                                onChange={() => handleColorSchemeChange(theme.value as any)}
+                                                disabled={isUpdatingTheme}
+                                                className="w-4 h-4"
+                                            />
+                                            <div className="flex items-center gap-3 flex-1">
+                                                <div className="flex gap-1" data-theme={theme.value}>
+                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--primary)' }} />
+                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--secondary)' }} />
+                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--tertiary)' }} />
+                                                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--background)' }} />
+                                                </div>
+                                                <div>
+                                                    <div className="font-medium">{theme.label}</div>
+                                                    <div className="text-xs text-tertiary-foreground">{theme.description}</div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div className="border-t border-border/40" />
-
                     {/* Data & Privacy Section */}
                     <div>
                         <h2 className="text-xl font-semibold mb-4">Data & Privacy</h2>
@@ -623,7 +622,7 @@ const Settings = () => {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-        </div>
+        </div >
     );
 };
 

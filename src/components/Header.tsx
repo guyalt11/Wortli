@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, LogOut, LogIn, Flame } from 'lucide-react';
+import { User, LogOut, LogIn, Flame, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LibraryDialog from '@/components/LibraryDialog';
 import {
@@ -19,7 +19,7 @@ const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
-    const { currentUser, logout, isAuthenticated, streak } = useAuth();
+    const { currentUser, logout, isAuthenticated, streak, dailyCount } = useAuth();
     const { preferences } = usePreferences();
     const { isLibraryOpen, setIsLibraryOpen } = useVocab();
     const navigate = useNavigate();
@@ -57,6 +57,23 @@ const Header = () => {
     const handleNavigation = (path: string) => {
         navigate(path);
         setIsMobileMenuOpen(false);
+    };
+
+    const handleDailyProgressClick = () => {
+        navigate('/settings');
+        setIsMobileMenuOpen(false);
+        // Wait for navigation and DOM update, then scroll to the element
+        setTimeout(() => {
+            const element = document.getElementById('daily-progress');
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Add a highlight animation
+                element.classList.add('highlight-pulse');
+                setTimeout(() => {
+                    element.classList.remove('highlight-pulse');
+                }, 2000);
+            }
+        }, 100);
     };
 
     const getHomeLink = () => {
@@ -121,9 +138,17 @@ const Header = () => {
                         </div>
                         {/* Streak Counter (Desktop) */}
                         {isAuthenticated && (
-                            <div className="hidden md:flex items-center gap-1 mr-2 px-2 py-1 rounded-full bg-secondary/20 border border-secondary/30" title="Current Streak">
-                                <Flame className="h-4 w-4 text-orange-500 fill-orange-500" />
-                                <span className="text-sm font-bold text-foreground">{streak}</span>
+                            <div className="flex items-center gap-2">
+                                <button className="flex items-center gap-1 px-2 py-1 rounded-full bg-secondary/20 border border-secondary/30"
+                                    title="Daily Progress"
+                                    onClick={handleDailyProgressClick}>
+                                    <Target className="h-4 w-4 text-light" />
+                                    <span className="text-sm font-bold text-foreground">{dailyCount}{preferences?.dailyGoal !== 0 ? `/${preferences?.dailyGoal}` : ''}</span>
+                                </button>
+                                <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-secondary/20 border border-secondary/30" title="Current Streak">
+                                    <Flame className="h-4 w-4 text-orange-500 fill-orange-500" />
+                                    <span className="text-sm font-bold text-foreground">{streak}</span>
+                                </div>
                             </div>
                         )}
 
@@ -235,12 +260,6 @@ const Header = () => {
                                 <div className="px-4 py-2 text-sm text-muted-foreground flex items-center gap-2">
                                     <User className="h-4 w-4" />
                                     <span className="flex-1">{preferences?.username || currentUser?.email}</span>
-                                    {isAuthenticated && (
-                                        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/20 border border-secondary/30">
-                                            <Flame className="h-3 w-3 text-orange-500 fill-orange-500" />
-                                            <span className="text-xs font-bold text-foreground">{streak}</span>
-                                        </div>
-                                    )}
                                 </div>
                                 <Button
                                     variant="ghost"

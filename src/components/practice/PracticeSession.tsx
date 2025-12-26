@@ -12,6 +12,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import DeleteWordDialog from '@/components/DeleteWordDialog';
 import { Button } from '@/components/ui/button';
 import FlagIcon from '@/components/FlagIcon';
+import { useAuth } from '@/context/AuthContext';
 
 interface PracticeSessionProps {
   direction: PracticeDirection;
@@ -23,6 +24,7 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
   onDirectionChange
 }) => {
   const { currentList, updateWordDifficulty, selectList, deleteWord, isLoading } = useVocab();
+  const { updateDailyProgress } = useAuth();
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
@@ -113,6 +115,11 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
       // Call updateWordDifficulty in the background
       updateWordDifficulty(currentWord.id, difficulty, direction).catch(error => {
         console.error('Error updating word difficulty:', error);
+      });
+
+      // Update daily progress (streak and daily count)
+      updateDailyProgress().catch(error => {
+        console.error('Error updating daily progress:', error);
       });
 
       // Move to the next card after a short delay
