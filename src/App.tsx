@@ -2,9 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { VocabProvider } from "@/context/VocabContext";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { PreferencesProvider } from "@/context/PreferencesContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -22,6 +22,73 @@ import TokenExpiryChecker from "./components/TokenExpiryChecker";
 
 const queryClient = new QueryClient();
 
+const AppContent = () => {
+  const location = useLocation();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  const isHomePath = location.pathname === "/home";
+  const isAuthPath = ["/login", "/register"].includes(location.pathname);
+
+  const showHeader = !isHomePath && (isAuthPath || (isAuthenticated && !isLoading));
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Toaster />
+      <Sonner />
+      {showHeader && <Header />}
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Index />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/list/:listId"
+            element={
+              <ProtectedRoute>
+                <VocabList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/practice/:listId"
+            element={
+              <ProtectedRoute>
+                <Practice />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/practice-all"
+            element={
+              <ProtectedRoute>
+                <PracticeAll />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -30,45 +97,7 @@ const App = () => (
           <TokenExpiryChecker />
           <PreferencesProvider>
             <VocabProvider>
-              <div className="min-h-screen flex flex-col">
-                <Toaster />
-                <Sonner />
-                <Header />
-                <main className="flex-grow">
-                  <Routes>
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/" element={
-                      <ProtectedRoute>
-                        <Index />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/list/:listId" element={
-                      <ProtectedRoute>
-                        <VocabList />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/practice/:listId" element={
-                      <ProtectedRoute>
-                        <Practice />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/practice-all" element={
-                      <ProtectedRoute>
-                        <PracticeAll />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/settings" element={
-                      <ProtectedRoute>
-                        <Settings />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </main>
-                <Footer />
-              </div>
+              <AppContent />
             </VocabProvider>
           </PreferencesProvider>
         </AuthProvider>

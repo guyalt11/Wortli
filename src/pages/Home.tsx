@@ -7,6 +7,13 @@ const Home = () => {
     const navigate = useNavigate();
     const { scrollY } = useScroll();
 
+    const scrollToFeatures = () => {
+        const featuresSection = document.getElementById('features-section');
+        if (featuresSection) {
+            featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
     // Parallax effect for background elements
     const y1 = useTransform(scrollY, [0, 500], [0, 200]);
     const y2 = useTransform(scrollY, [0, 500], [0, -150]);
@@ -74,7 +81,7 @@ const Home = () => {
             </div>
 
             {/* Hero Section */}
-            <section className="relative z-10 min-h-[90vh] flex flex-col justify-center items-center py-10 px-4">
+            <section className="relative z-10 h-screen flex flex-col justify-center items-center px-4">
                 <div className="container mx-auto max-w-6xl text-center">
                     <motion.div
                         initial="hidden"
@@ -88,15 +95,8 @@ const Home = () => {
                             <img
                                 src="/logo.webp"
                                 alt="Wörtli Logo"
-                                className="w-20 h-20 sm:w-28 sm:h-28 relative z-10 drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                                className="w-20 h-20 sm:w-28 sm:h-28 relative z-10 drop-shadow-2xl hover:scale-110 transition-transform duration-500"
                             />
-                        </motion.div>
-
-                        <motion.div variants={itemVariants} className="mb-8">
-                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/30 border border-light/20 backdrop-blur-md text-light text-sm font-medium shadow-lg shadow-primary/5">
-                                <Sparkles className="w-3.5 h-3.5" />
-                                <span>The Future of Vocabulary</span>
-                            </span>
                         </motion.div>
 
                         {/* Updated Typography - Cleaner 'Heathers' (Headers) */}
@@ -104,16 +104,19 @@ const Home = () => {
                             <span className="text-6xl md:text-8xl mb-2 home-title tracking-tighter drop-shadow-sm">
                                 Wörtli
                             </span>
-                            <span className="text-3xl md:text-5xl lg:text-6xl text-muted-foreground/80 font-bold max-w-4xl mx-auto leading-tight">
-                                <span className="btn-2 bg-clip-text text-transparent">
-                                    Master Any Language Naturally & Effortlessly
-                                </span>
-                            </span>
                         </motion.h1>
 
+                        <motion.div variants={itemVariants} className="mb-8">
+                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/30 border border-light/20 backdrop-blur-md text-light text-sm font-medium shadow-lg shadow-primary/5">
+                                <Sparkles className="w-3.5 h-3.5" />
+                                <span>AI-Powered flashcards</span>
+                            </span>
+                        </motion.div>
+
                         <motion.p variants={itemVariants} className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-                            Combine the power of spaced repetition and AI generation.
-                            Built to make flashcards easy and fun.
+                            <span className="md:text-2xl lg:text-4xl text-tertiary font-bold max-w-4xl mx-auto leading-tight">
+                                Master Any Language Naturally & Effortlessly
+                            </span>
                         </motion.p>
 
                         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 justify-center items-center w-full sm:w-auto">
@@ -135,18 +138,20 @@ const Home = () => {
                             </Button>
                         </motion.div>
 
-                        <motion.div
+                        <motion.button
                             variants={itemVariants}
-                            className="mt-16 sm:mt-24 animate-bounce opacity-50"
+                            onClick={scrollToFeatures}
+                            className="mt-16 sm:mt-24 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+                            aria-label="Scroll to features"
                         >
                             <ChevronDown className="w-8 h-8 text-muted-foreground" />
-                        </motion.div>
+                        </motion.button>
                     </motion.div>
                 </div>
             </section>
 
             {/* Features Section */}
-            <section className="relative z-10 py-10 bg-background/50">
+            <section id="features-section" className="relative z-10 py-10 bg-background/50">
 
                 <div className="container mx-auto px-4">
                     <motion.div
