@@ -136,9 +136,9 @@ const Header = () => {
                                 </button>
                             </nav>
                         </div>
-                        {/* Streak Counter (Desktop) */}
+                        {/* Streak Counter*/}
                         {isAuthenticated && (
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 pe-2 sm:pe-0">
                                 <button className="flex items-center gap-1 px-2 py-1 rounded-full bg-secondary/20 border border-secondary/30"
                                     title="Daily Progress"
                                     onClick={handleDailyProgressClick}>

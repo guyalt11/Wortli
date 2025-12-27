@@ -4,14 +4,14 @@ interface WordCompletionCounterProps {
   totalWords: number;
 }
 
-const WordCompletionCounter: React.FC<WordCompletionCounterProps> = ({ 
-  completedCount, 
-  totalWords 
+const WordCompletionCounter: React.FC<WordCompletionCounterProps> = ({
+  completedCount,
+  totalWords
 }) => {
   const wordsLeft = totalWords - completedCount;
-  
+
   return (
-    <div className="text-sm text-muted-foreground text-center mt-2">
+    <div className="text-sm text-muted-foreground text-center">
       {wordsLeft} {wordsLeft === 1 ? 'word' : 'words'} left
     </div>
   );
