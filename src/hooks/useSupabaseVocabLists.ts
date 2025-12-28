@@ -16,7 +16,7 @@ export const useSupabaseVocabLists = () => {
   const lastSentTimezoneRef = useRef<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { currentUser, token, setStreak } = useAuth();
+  const { currentUser, token, setStreak, setDailyCount } = useAuth();
 
   // Update user's timezone in preferences and reset streak if needed
   const updateUserTimezone = useCallback(async () => {
@@ -37,12 +37,14 @@ export const useSupabaseVocabLists = () => {
 
       const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/reset_streak`, {
         method: 'POST',
-        headers: getAuthHeaders(token)
+        headers: getAuthHeaders(token),
+        body: JSON.stringify({})
       });
 
       if (!res.ok) throw new Error('Failed to reset streak');
       const streakReset = await res.json();
-      streakReset === true && currentUser?.id && setStreak?.(0);
+      streakReset === 2 && currentUser?.id && setTimeout(() => (setStreak?.(0), setDailyCount?.(0)), 200);
+      streakReset === 1 && setTimeout(() => currentUser?.id && setDailyCount?.(0), 200);
 
     } catch (e) {
       console.error('Failed to update timezone or reset streak:', e);
@@ -60,7 +62,7 @@ export const useSupabaseVocabLists = () => {
     try {
       if (lists.length === 0) setIsLoading(true);
       setError(null);
-      
+
       // Update timezone on page load
       await updateUserTimezone();
 
@@ -124,7 +126,7 @@ export const useSupabaseVocabLists = () => {
   useEffect(() => {
     fetchLists();
   }, [fetchLists]);
-  
+
   const location = useLocation();
   useEffect(() => {
     updateUserTimezone();
