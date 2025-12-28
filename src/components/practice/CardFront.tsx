@@ -55,7 +55,6 @@ const CardFront: React.FC<CardFrontProps> = ({ word, direction, flipped, onDelet
         )}</span>
       </div>
 
-      {/* TODO: Add language-specific audio button */}
       {direction === 'translateTo' && (currentList?.language === 'de' || currentList?.language === 'en') && (
         <Button
           variant="ghost"
@@ -69,13 +68,11 @@ const CardFront: React.FC<CardFrontProps> = ({ word, direction, flipped, onDelet
           🔊 Listen
         </Button>
       )}
-
       {direction === 'translateTo' && word.notes && (
         <div className="mt-4 text-sm text-tertiary-foreground">
           <p>{word.notes}</p>
         </div>
       )}
-
       <div className="mt-6 border-b border-white pb-4">
         <Button
           variant="ghost"

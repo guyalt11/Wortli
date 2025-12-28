@@ -5,9 +5,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { VocabProvider } from "@/context/VocabContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
-import { PreferencesProvider } from "@/context/PreferencesContext";
+import { PreferencesProvider, usePreferences } from "@/context/PreferencesContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import GoalCelebration from "@/components/GoalCelebration";
+import { useState, useEffect } from "react";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
@@ -24,7 +26,23 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, dailyCount, currentUser } = useAuth();
+  const { preferences } = usePreferences();
+  const [showGoalCelebration, setShowGoalCelebration] = useState(false);
+
+  // Goal celebration logic
+  useEffect(() => {
+    if (!isAuthenticated || !preferences || preferences.dailyGoal <= 0 || !currentUser) return;
+
+    const today = new Date().toISOString().split('T')[0];
+    const celebrationKey = `goal_celebrated_${currentUser.id}_${today}`;
+    const alreadyCelebrated = localStorage.getItem(celebrationKey);
+
+    if (dailyCount >= preferences.dailyGoal && !alreadyCelebrated) {
+      setShowGoalCelebration(true);
+      localStorage.setItem(celebrationKey, 'true');
+    }
+  }, [dailyCount, preferences?.dailyGoal, isAuthenticated, currentUser?.id]);
 
   const isHomePath = location.pathname === "/home";
   const isAuthPath = ["/login", "/register"].includes(location.pathname);
@@ -36,6 +54,11 @@ const AppContent = () => {
       <Toaster />
       <Sonner />
       {showHeader && <Header />}
+      <GoalCelebration
+        isOpen={showGoalCelebration}
+        onClose={() => setShowGoalCelebration(false)}
+        dailyGoal={preferences?.dailyGoal || 0}
+      />
       <main className="flex-grow">
         <Routes>
           <Route path="/home" element={<Home />} />
