@@ -5,7 +5,7 @@ import PracticeCard from '@/components/practice/PracticeCard';
 import PracticeHeader from './PracticeHeader';
 import PracticeComplete from './PracticeComplete';
 import WordCompletionCounter from './WordCompletionCounter';
-import PracticeProgressBar from '@/components/PracticeProgressBar';
+import PracticeProgressBar from './PracticeProgressBar';
 import { DifficultyLevel, PracticeDirection } from '@/types/vocabulary';
 import { usePracticeWords } from '@/hooks/usePracticeWords';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -57,13 +57,6 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
     initialWordsRef.current = [];
     totalWordsRef.current = 0;
     setRefreshCounter(prev => prev + 1); // Increment refresh counter
-  };
-
-  // Reset only the session state without fetching new words
-  const resetSessionState = () => {
-    setCurrentIndex(0);
-    setCompletedCount(0);
-    setIsAnswered(false);
   };
 
   useEffect(() => {
@@ -203,7 +196,7 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
         <button
           onClick={handleBack}
           disabled={currentIndex === 0}
-          className="inline-flex items-center gap-1 px-2 text-tertiary-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-1 px-2 text-muted-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="h-4 w-4" />
           <span>Back</span>
@@ -217,7 +210,7 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
         <button
           onClick={handleSkip}
           disabled={isComplete || currentIndex >= totalWords - 1}
-          className="inline-flex items-center gap-1 px-2 text-tertiary-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-1 px-2 text-muted-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <span>Skip</span>
           <ChevronRight className="h-4 w-4" />

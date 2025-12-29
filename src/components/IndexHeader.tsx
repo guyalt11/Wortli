@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Plus, Upload, Eye, EyeOff, Search, X, Play, BookOpen } from "lucide-react";
+import { Plus, Upload, Eye, EyeOff, X, Play, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { VocabList } from "@/types/vocabulary";
 

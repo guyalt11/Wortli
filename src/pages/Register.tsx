@@ -111,14 +111,15 @@ const Register = () => {
             <div className="flex items-start gap-3 p-4 bg-tertiary rounded-lg">
               <Mail className="h-5 w-5 mt-0.5 text-tertiary-foreground flex-shrink-0" />
               <div className="space-y-1">
-                <p className="text-sm font-medium">Check your email</p>
+                <p className="text-sm font-bold text-tertiary-foreground">Check your email</p>
                 <p className="text-sm text-tertiary-foreground">
-                  We've sent a verification link to <span className="font-semibold">{email}</span>.
+                  We've sent a verification link to <span className="font-semibold">{email}</span> from <span className="font-semibold">Supabase Auth</span> (our auth provider).
+                  <br />
                   Please verify your email address to activate your account.
                 </p>
               </div>
             </div>
-            <div className="text-sm text-tertiary-foreground text-center">
+            <div className="text-sm text-muted-foreground text-center">
               <p>Didn't receive the email? Check your spam folder or try registering again.</p>
             </div>
           </CardContent>
@@ -202,7 +203,7 @@ const Register = () => {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="px-2 text-tertiary-foreground">
+              <span className="px-2 text-muted-foreground">
                 Or continue with
               </span>
             </div>

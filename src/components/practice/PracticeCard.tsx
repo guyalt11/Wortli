@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { VocabWord, PracticeDirection, DifficultyLevel } from '@/types/vocabulary';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import CardFront from './CardFront';
 import CardBack from './CardBack';
 import DifficultyButtons from './DifficultyButtons';
@@ -91,7 +90,7 @@ const PracticeCard: React.FC<PracticeCardProps> = ({
           )}
 
           {!flipped && (
-            <div className={`text-sm text-tertiary-foreground pb-1 mb-20 mt-24`}>
+            <div className={`text-sm text-muted-foreground pb-1 mb-20 mt-24`}>
               Click to reveal the answer
             </div>
           )}

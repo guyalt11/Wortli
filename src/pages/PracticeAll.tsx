@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import PracticeCard from '@/components/practice/PracticeCard';
 import PracticeComplete from '@/components/practice/PracticeComplete';
 import WordCompletionCounter from '@/components/practice/WordCompletionCounter';
-import PracticeProgressBar from '@/components/PracticeProgressBar';
+import PracticeProgressBar from '@/components/practice/PracticeProgressBar';
 import { DifficultyLevel, PracticeDirection } from '@/types/vocabulary';
 import { usePracticeAllWords, WordWithListInfo } from '@/hooks/usePracticeAllWords';
 import { Button } from '@/components/ui/button';
@@ -257,7 +257,7 @@ const PracticeAll: React.FC = () => {
         <button
           onClick={handleBack}
           disabled={currentIndex === 0}
-          className="inline-flex items-center gap-1 px-2 text-tertiary-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-1 px-2 text-muted-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="h-4 w-4" />
           <span>Back</span>
@@ -271,7 +271,7 @@ const PracticeAll: React.FC = () => {
         <button
           onClick={handleSkip}
           disabled={isComplete || currentIndex >= totalWords - 1}
-          className="inline-flex items-center gap-1 px-2 text-tertiary-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-1 px-2 text-muted-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <span>Skip</span>
           <ChevronRight className="h-4 w-4" />
@@ -294,7 +294,7 @@ const PracticeAll: React.FC = () => {
             isAnswered={isAnswered}
             onDelete={() => setShowDeleteDialog(true)}
           />
-          <div className="mt-4 text-sm text-tertiary-foreground text-center">
+          <div className="mt-4 text-sm text-muted-foreground text-center">
             From list: <span className="font-semibold">{currentWord.listName}</span>
           </div>
         </>

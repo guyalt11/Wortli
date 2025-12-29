@@ -272,7 +272,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                     <MessageCircle className="h-8 w-8 text-light" />
                                 </div>
                                 <div className="space-y-2">
-                                    <p className="text-xl text-tertiary-foreground font-bold">AI Assistant</p>
+                                    <p className="text-xl text-muted-foreground font-bold">AI Assistant</p>
                                     <p className="text-sm max-w-md">
                                         What would you like me to help you with?
                                     </p>
@@ -304,7 +304,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                     <div className="w-16 h-16 mb-4 rounded-full bg-secondary flex items-center justify-center animate-pulse">
                                         <MessageCircle className="h-8 w-8 text-light" />
                                     </div>
-                                    <p className="text-lg text-tertiary-foreground font-semibold">Which list should I add to?</p>
+                                    <p className="text-lg text-muted-foreground font-semibold">Which list should I add to?</p>
                                 </div>
 
                                 <div className="w-full max-w-xs">
@@ -336,10 +336,10 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                     <MessageCircle className="h-8 w-8 text-light" />
                                 </div>
                                 <div className="space-y-1">
-                                    <p className="text-lg text-tertiary-foreground font-semibold">
+                                    <p className="text-lg text-muted-foreground font-semibold">
                                         {importMode === 'new' ? 'Creating a New List' : `Adding to: ${lists.find(l => l.id === selectedListId)?.name}`}
                                     </p>
-                                    <p className="text-sm text-tertiary-foreground max-w-md">
+                                    <p className="text-sm text-muted-foreground max-w-md">
                                         Tell me what vocabulary you'd like to generate!
                                     </p>
                                 </div>

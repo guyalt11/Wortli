@@ -317,7 +317,7 @@ const VocabList = () => {
             </div>
           </div>
           {currentList.description && (
-            <p className="text-tertiary-foreground mt-2 max-w-lg line-clamp-3">
+            <p className="text-muted-foreground mt-2 max-w-lg line-clamp-3">
               {currentList.description}
             </p>
           )}

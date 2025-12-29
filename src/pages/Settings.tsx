@@ -313,9 +313,9 @@ const Settings = () => {
                                     <div className="rounded-lg border min-w-24 text-center ">
                                         {totalTokens.toLocaleString()}
                                     </div>
-                                    <span className="text-sm font-normal text-tertiary-foreground">tokens total</span>
+                                    <span className="text-sm font-normal text-muted-foreground">tokens total</span>
                                 </div>
-                                <p className="text-xs text-tertiary-foreground mt-2 italic">
+                                <p className="text-xs text-muted-foreground mt-2 italic">
                                     *Includes monthly + purchased tokens
                                 </p>
                             </div>
@@ -330,10 +330,10 @@ const Settings = () => {
                         <div className="space-y-4">
                             <div>
                                 <Label>Default Creation Languages</Label>
-                                <p className="text-sm text-tertiary-foreground mb-3">Default languages when creating a new list</p>
+                                <p className="text-sm text-muted-foreground mb-3">Default languages when creating a new list</p>
                                 <div className="grid grid-cols-2 gap-4 mt-2">
                                     <div className="space-y-2">
-                                        <Label className="text-xs text-tertiary-foreground">Translate From</Label>
+                                        <Label className="text-xs text-muted-foreground">Translate From</Label>
                                         <Select
                                             value={preferences?.defaultOrigin}
                                             onValueChange={updateDefaultOrigin}
@@ -350,7 +350,7 @@ const Settings = () => {
                                         </Select>
                                     </div>
                                     <div className="space-y-2">
-                                        <Label className="text-xs text-tertiary-foreground">To</Label>
+                                        <Label className="text-xs text-muted-foreground">To</Label>
                                         <Select
                                             value={preferences?.defaultTransl}
                                             onValueChange={updateDefaultTransl}
@@ -371,7 +371,7 @@ const Settings = () => {
                             <div className="border-t my-2" />
                             <div id="daily-progress">
                                 <Label>Daily Goal</Label>
-                                <p className="text-sm text-tertiary-foreground mb-3">Set a daily practice target</p>
+                                <p className="text-sm text-muted-foreground mb-3">Set a daily practice target</p>
                                 <Select
                                     value={preferences?.dailyGoal?.toString()}
                                     onValueChange={(value) => updateDailyGoal(parseInt(value))}
@@ -393,7 +393,7 @@ const Settings = () => {
                                 <div className="flex items-center justify-between mb-2">
                                     <div>
                                         <Label>AI Instructions & Rules</Label>
-                                        <p className="text-sm text-tertiary-foreground">
+                                        <p className="text-sm text-muted-foreground">
                                             Custom instructions for the AI vocabulary assistant
                                         </p>
                                     </div>
@@ -436,7 +436,7 @@ const Settings = () => {
                             <div className="flex items-center justify-between gap-2">
                                 <div>
                                     <Label>Improve AI Context</Label>
-                                    <p className="text-sm text-tertiary-foreground">
+                                    <p className="text-sm text-muted-foreground">
                                         Allow AI to see your existing words so it can avoid duplicates. <strong>May consume a lot of tokens!</strong>
                                     </p>
                                 </div>
@@ -452,7 +452,7 @@ const Settings = () => {
                             <div className="flex items-center justify-between">
                                 <div>
                                     <Label>Hide Empty Lists by Default</Label>
-                                    <p className="text-sm text-tertiary-foreground">Show only lists with words ready for review by default</p>
+                                    <p className="text-sm text-muted-foreground">Show only lists with words ready for review by default</p>
                                 </div>
                                 <Button
                                     size="sm"
@@ -465,7 +465,7 @@ const Settings = () => {
                             <div className="border-t my-2" />
                             <div>
                                 <Label>Color Scheme</Label>
-                                <p className="text-sm text-tertiary-foreground mb-3">Choose your preferred color theme</p>
+                                <p className="text-sm text-muted-foreground mb-3">Choose your preferred color theme</p>
                                 <div className="grid grid-cols-1 gap-3">
                                     {[
                                         { value: 'dark', label: 'Dark (Teal)', description: 'Default theme' },
@@ -494,7 +494,7 @@ const Settings = () => {
                                                 </div>
                                                 <div>
                                                     <div className="font-medium">{theme.label}</div>
-                                                    <div className="text-xs text-tertiary-foreground">{theme.description}</div>
+                                                    <div className="text-xs text-muted-foreground">{theme.description}</div>
                                                 </div>
                                             </div>
                                         </label>
@@ -512,7 +512,7 @@ const Settings = () => {
                             <div className="flex items-center justify-between">
                                 <div>
                                     <Label>Export Data</Label>
-                                    <p className="text-sm text-tertiary-foreground">Download all your vocabulary lists</p>
+                                    <p className="text-sm text-muted-foreground">Download all your vocabulary lists</p>
                                 </div>
                                 <Button variant="outline" size="sm" disabled>
                                     Coming Soon
@@ -533,7 +533,7 @@ const Settings = () => {
                             <div className="flex items-center justify-between">
                                 <div>
                                     <Label className="text-destructive">Delete Account</Label>
-                                    <p className="text-sm text-tertiary-foreground">Permanently delete your account and all data</p>
+                                    <p className="text-sm text-muted-foreground">Permanently delete your account and all data</p>
                                 </div>
                                 <Button
                                     variant="destructive"
@@ -551,7 +551,7 @@ const Settings = () => {
                     {/* About Section */}
                     <div>
                         <h2 className="text-xl font-semibold mb-4">About</h2>
-                        <div className="space-y-2 text-sm text-tertiary-foreground">
+                        <div className="space-y-2 text-sm text-muted-foreground">
                             <p>Wörtli - Vocabulary Learning App</p>
                             <p>Version 1.0.0</p>
                         </div>

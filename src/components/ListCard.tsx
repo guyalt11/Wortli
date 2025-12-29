@@ -111,7 +111,7 @@ const ListCard = ({ list, onSelect, onShareToggle, onPinToggle, onEdit, onDelete
         </div>
         <CardDescription className="!mt-3 md:!mt-1 text-left">
           {list.description && (
-            <p className="text-tertiary-foreground mb-2">
+            <p className="text-muted-foreground mb-2">
               {list.description}
             </p>
           )}

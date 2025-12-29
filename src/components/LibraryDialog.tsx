@@ -114,11 +114,11 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                 >
                     <div className="font-medium">{list.name}</div>
                     {list.description && (
-                        <div className="text-sm text-tertiary-foreground line-clamp-1">
+                        <div className="text-sm text-muted-foreground line-clamp-1">
                             {list.description}
                         </div>
                     )}
-                    <div className="text-xs text-tertiary-foreground">
+                    <div className="text-xs text-muted-foreground">
                         {list.words.length} words
                     </div>
                 </div>
@@ -141,7 +141,7 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                     <div className="p-3 border-t overflow-y-auto" style={{ maxHeight: '15rem' }}>
                         <div className="space-y-1">
                             {list.words.length === 0 ? (
-                                <div className="text-sm text-tertiary-foreground text-center py-2">
+                                <div className="text-sm text-muted-foreground text-center py-2">
                                     No words in this list
                                 </div>
                             ) : (
@@ -151,10 +151,10 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                                         className="text-sm flex items-center gap-2 py-1 px-2 hover:bg-secondary rounded"
                                     >
                                         <span className="font-medium">{word.origin}</span>
-                                        <span className="text-tertiary-foreground">|</span>
+                                        <span className="text-muted-foreground">|</span>
                                         <span>{word.transl}</span>
                                         {word.gender && (
-                                            <span className="text-xs text-tertiary-foreground ml-auto">
+                                            <span className="text-xs text-muted-foreground ml-auto">
                                                 ({word.gender})
                                             </span>
                                         )}
@@ -271,22 +271,22 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                         {/* Lists */}
                         <div className="flex-1 overflow-y-auto border rounded-md p-2 space-y-2 relative">
                             {isLoading ? (
-                                <div className="absolute inset-0 flex items-center justify-center text-center text-tertiary-foreground">
+                                <div className="absolute inset-0 flex items-center justify-center text-center text-muted-foreground">
                                     Loading shared lists...
                                 </div>
                             ) : !renderLists ? (
-                                <div className="absolute inset-0 flex items-center justify-center text-tertiary-foreground">
+                                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
                                     Loading shared lists...
                                 </div>
                             ) : filteredLists.length === 0 ? (
-                                <div className="absolute inset-0 flex items-center justify-center text-tertiary-foreground">
+                                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
                                     No shared lists available.
                                 </div>
                             ) : (
                                 <div className="space-y-6">
                                     {systemLists.length > 0 && (
                                         <div className="space-y-2">
-                                            <h3 className="text-sm font-semibold text-tertiary-foreground px-1">
+                                            <h3 className="text-sm font-semibold text-muted-foreground px-1">
                                                 Wörtli Lists
                                             </h3>
                                             <div className="space-y-2">
@@ -297,7 +297,7 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
 
                                     {userLists.length > 0 && (
                                         <div className="space-y-2">
-                                            <h3 className="text-sm font-semibold text-tertiary-foreground px-1">
+                                            <h3 className="text-sm font-semibold text-muted-foreground px-1">
                                                 User Lists
                                             </h3>
                                             <div className="space-y-2">
