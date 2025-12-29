@@ -22,6 +22,7 @@ type AuthContextType = {
   dailyCount: number;
   setDailyCount: (count: number | ((prev: number) => number)) => void;
   updateDailyProgress: () => Promise<void>;
+  totalTokens: number;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -37,14 +38,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [streak, setStreak] = useState<number>(0);
   const [dailyCount, setDailyCount] = useState<number>(0);
+  const [totalTokens, setTotalTokens] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchUserStreak = async (userId: string) => {
+  const fetchUserData = async (userId: string) => {
     try {
       const { data, error } = await supabase
         .from('user_data')
-        .select('streak, daily_count')
+        .select('streak, daily_count, monthly_tokens, purchased_tokens')
         .eq('user_id', userId)
         .single();
 
@@ -56,9 +58,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (data) {
         setStreak(data.streak || 0);
         setDailyCount(data.daily_count || 0);
+        const monthly = data.monthly_tokens || 0;
+        const purchased = data.purchased_tokens || 0;
+        setTotalTokens(monthly + purchased);
       }
     } catch (error) {
-      console.error('Error in fetchUserStreak:', error);
+      console.error('Error in fetchUserData:', error);
     }
   };
 
@@ -67,7 +72,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (session) {
         setCurrentUser(session.user);
         setToken(session.access_token);
-        fetchUserStreak(session.user.id);
+        fetchUserData(session.user.id);
       }
       setIsLoading(false);
     });
@@ -78,13 +83,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setToken(prev => prev !== session.access_token ? session.access_token : prev);
         // Only fetch if user changed or was just set
         if (!currentUser || currentUser.id !== session.user.id) {
-          fetchUserStreak(session.user.id);
+          fetchUserData(session.user.id);
         }
       } else {
         setCurrentUser(null);
         setToken(null);
         setStreak(0);
         setDailyCount(0);
+        setTotalTokens(0);
       }
       setIsLoading(false);
     });
@@ -97,7 +103,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { data, error } = await supabase.auth.signInWithPassword(credentials);
       if (error) throw error;
       if (data.user) {
-        fetchUserStreak(data.user.id);
+        fetchUserData(data.user.id);
       }
       return true;
     } catch (error) {
@@ -189,6 +195,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setToken(null);
       setStreak(0);
       setDailyCount(0);
+      setTotalTokens(0);
 
       return true;
     } catch (error) {
@@ -205,7 +212,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (!currentUser) return;
     // Backend automatically updates daily_count and streak when word difficulty is updated
     // We just need to refetch the latest values
-    await fetchUserStreak(currentUser.id);
+    await fetchUserData(currentUser.id);
   };
 
   return (
@@ -226,7 +233,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setStreak,
         dailyCount,
         setDailyCount,
-        updateDailyProgress
+        updateDailyProgress,
+        totalTokens
       }}
     >
       {children}

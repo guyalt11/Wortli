@@ -273,7 +273,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                 </div>
                                 <div className="space-y-2">
                                     <p className="text-xl text-tertiary-foreground font-bold">AI Assistant</p>
-                                    <p className="text-sm text-tertiary-foreground/80 max-w-md">
+                                    <p className="text-sm max-w-md">
                                         What would you like me to help you with?
                                     </p>
                                 </div>
@@ -309,7 +309,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
 
                                 <div className="w-full max-w-xs">
                                     <Select onValueChange={setSelectedListId}>
-                                        <SelectTrigger className="bg-dark/50 border-white/10">
+                                        <SelectTrigger>
                                             <SelectValue placeholder="Select a list..." />
                                         </SelectTrigger>
                                         <SelectContent className="max-h-60 overflow-y-auto">
@@ -321,11 +321,10 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                         </SelectContent>
                                     </Select>
                                 </div>
-
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="bg-secondary text-tertiary-foreground/60"
+                                    className=""
                                     onClick={() => setImportMode(null)}
                                 >
                                     Back
@@ -347,13 +346,13 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="text-tertiary-foreground/40 h-7 text-[10px]"
+                                    className=""
                                     onClick={() => {
                                         setImportMode(null);
                                         setSelectedListId('');
                                     }}
                                 >
-                                    Change Destination
+                                    Back
                                 </Button>
                             </div>
                         ) : (

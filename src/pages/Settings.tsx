@@ -36,7 +36,7 @@ import {
 import { LANGUAGES } from "@/constants/languages";
 
 const Settings = () => {
-    const { currentUser, updatePassword, deleteUser } = useAuth();
+    const { currentUser, updatePassword, deleteUser, totalTokens } = useAuth();
     const {
         colorScheme,
         updateColorScheme,
@@ -279,6 +279,7 @@ const Settings = () => {
                                                 onClick={() => {
                                                     setEditedUsername(preferences?.username || '');
                                                     setIsEditingUsername(true);
+                                                    // Add a timeout to focus the input if needed, but simple state change is fine
                                                 }}
                                             >
                                                 Edit
@@ -306,10 +307,22 @@ const Settings = () => {
                                     </Button>
                                 </div>
                             </div>
+                            <div>
+                                <Label htmlFor="tokens">Available AI Tokens</Label>
+                                <div className="mt-2 text-2xl font-bold text-tertiary flex items-center gap-2">
+                                    <div className="rounded-lg border min-w-24 text-center ">
+                                        {totalTokens.toLocaleString()}
+                                    </div>
+                                    <span className="text-sm font-normal text-tertiary-foreground">tokens total</span>
+                                </div>
+                                <p className="text-xs text-tertiary-foreground mt-2 italic">
+                                    *Includes monthly + purchased tokens
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="border-t border-border/40" />
+                    <div className="border-t" />
 
                     {/* Preferences Section */}
                     <div>
@@ -328,7 +341,7 @@ const Settings = () => {
                                             <SelectTrigger className="bg-secondary border-none">
                                                 <SelectValue placeholder="Select a language" />
                                             </SelectTrigger>
-                                            <SelectContent className="max-h-60 bg-secondary border-border/40">
+                                            <SelectContent className="max-h-60 bg-secondary">
                                                 <SelectItem value="none">---</SelectItem>
                                                 {LANGUAGES.map(lang => (
                                                     <SelectItem key={lang.code} value={lang.code}>{lang.name}</SelectItem>
@@ -345,7 +358,7 @@ const Settings = () => {
                                             <SelectTrigger className="bg-secondary border-none">
                                                 <SelectValue placeholder="Select a language" />
                                             </SelectTrigger>
-                                            <SelectContent className="max-h-60 bg-secondary border-border/40">
+                                            <SelectContent className="max-h-60 bg-secondary">
                                                 <SelectItem value="none">---</SelectItem>
                                                 {LANGUAGES.map(lang => (
                                                     <SelectItem key={lang.code} value={lang.code}>{lang.name}</SelectItem>
@@ -355,7 +368,7 @@ const Settings = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="border-t border-border/20 my-2" />
+                            <div className="border-t my-2" />
                             <div id="daily-progress">
                                 <Label>Daily Goal</Label>
                                 <p className="text-sm text-tertiary-foreground mb-3">Set a daily practice target</p>
@@ -366,7 +379,7 @@ const Settings = () => {
                                     <SelectTrigger className="bg-secondary border-none">
                                         <SelectValue placeholder="Select daily goal" />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-secondary border-border/40">
+                                    <SelectContent className="bg-secondary">
                                         {options.map(v => (
                                             <SelectItem key={v} value={String(v)}>
                                                 {v === 0 ? '---' : `${v} words`}
@@ -375,7 +388,7 @@ const Settings = () => {
                                     </SelectContent>
                                 </Select>
                             </div>
-                            <div className="border-t border-border/20 my-2" />
+                            <div className="border-t my-2" />
                             <div>
                                 <div className="flex items-center justify-between mb-2">
                                     <div>
@@ -419,7 +432,7 @@ const Settings = () => {
                                     className="bg-secondary border-none resize-none min-h-[100px]"
                                 />
                             </div>
-                            <div className="border-t border-border/20 my-2" />
+                            <div className="border-t my-2" />
                             <div className="flex items-center justify-between gap-2">
                                 <div>
                                     <Label>Improve AI Context</Label>
@@ -435,7 +448,7 @@ const Settings = () => {
                                     {preferences?.aiInclude ? 'Enabled' : 'Disabled'}
                                 </Button>
                             </div>
-                            <div className="border-t border-border/20 my-2" />
+                            <div className="border-t my-2" />
                             <div className="flex items-center justify-between">
                                 <div>
                                     <Label>Hide Empty Lists by Default</Label>
@@ -449,7 +462,7 @@ const Settings = () => {
                                     {preferences?.hideEmptyLists ? 'Enabled' : 'Disabled'}
                                 </Button>
                             </div>
-                            <div className="border-t border-border/20 my-2" />
+                            <div className="border-t my-2" />
                             <div>
                                 <Label>Color Scheme</Label>
                                 <p className="text-sm text-tertiary-foreground mb-3">Choose your preferred color theme</p>
@@ -461,7 +474,7 @@ const Settings = () => {
                                     ].map((theme) => (
                                         <label
                                             key={theme.value}
-                                            className="flex items-center gap-3 p-3 border border-border rounded-lg cursor-pointer hover:bg-secondary/20 transition-colors"
+                                            className="flex items-center gap-3 p-3 border border-border rounded-lg cursor-pointer hover:bg-secondary transition-colors"
                                         >
                                             <input
                                                 type="radio"
@@ -491,7 +504,7 @@ const Settings = () => {
                         </div>
                     </div>
 
-                    <div className="border-t border-border/40" />
+                    <div className="border-t" />
                     {/* Data & Privacy Section */}
                     <div>
                         <h2 className="text-xl font-semibold mb-4">Data & Privacy</h2>
@@ -508,7 +521,7 @@ const Settings = () => {
                         </div>
                     </div>
 
-                    <div className="border-t border-border/40" />
+                    <div className="border-t" />
 
                     {/* Danger Zone Section */}
                     <div>
@@ -533,7 +546,7 @@ const Settings = () => {
                         </div>
                     </div>
 
-                    <div className="border-t border-border/40" />
+                    <div className="border-t" />
 
                     {/* About Section */}
                     <div>
@@ -614,7 +627,7 @@ const Settings = () => {
                         <AlertDialogAction
                             onClick={handleDeleteAccount}
                             disabled={isDeleting}
-                            className="bg-danger text-danger-foreground hover:bg-danger/90"
+                            className="bg-danger text-danger-foreground"
                         >
                             {isDeleting ? 'Deleting...' : 'Delete Account'}
                         </AlertDialogAction>

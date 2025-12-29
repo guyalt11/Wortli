@@ -52,7 +52,6 @@ const AppContent = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Toaster />
-      <Sonner />
       {showHeader && <Header />}
       <GoalCelebration
         isOpen={showGoalCelebration}

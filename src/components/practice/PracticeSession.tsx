@@ -203,7 +203,7 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
         <button
           onClick={handleBack}
           disabled={currentIndex === 0}
-          className="all-[unset] inline-flex items-center gap-1 px-2 text-tertiary-foreground cursor-pointer rounded hover:bg-muted/50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-1 px-2 text-tertiary-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="h-4 w-4" />
           <span>Back</span>
@@ -217,7 +217,7 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
         <button
           onClick={handleSkip}
           disabled={isComplete || currentIndex >= totalWords - 1}
-          className="all-[unset] inline-flex items-center gap-1 px-2 text-tertiary-foreground cursor-pointer rounded hover:bg-muted/50 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-1 px-2 text-tertiary-foreground cursor-pointer rounded bg-transparent !hover:bg-transparent !active:bg-transparent !focus:bg-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <span>Skip</span>
           <ChevronRight className="h-4 w-4" />

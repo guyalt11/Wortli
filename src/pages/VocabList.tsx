@@ -484,7 +484,7 @@ const VocabList = () => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDeleteList} className="bg-danger text-danger-foreground hover:bg-danger/90">
+            <AlertDialogAction onClick={confirmDeleteList} className="bg-danger text-danger-foreground">
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

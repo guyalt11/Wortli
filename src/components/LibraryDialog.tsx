@@ -95,8 +95,8 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
     };
 
     const renderListRow = (list: VocabList) => (
-        <div key={list.id} className="border rounded-md overflow-hidden bg-dark/20">
-            <div className="flex items-center gap-3 p-2 hover:bg-tertiary/50">
+        <div key={list.id} className="border rounded-md overflow-hidden">
+            <div className="flex items-center gap-3 p-2 hover:bg-primary">
                 <button
                     onClick={() => toggleExpanded(list.id)}
                     className="p-1 hover:bg-tertiary rounded transition-transform duration-200"
@@ -138,7 +138,7 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                 }}
             >
                 {expandedListId === list.id && (
-                    <div className="bg-tertiary/30 p-3 border-t overflow-y-auto" style={{ maxHeight: '15rem' }}>
+                    <div className="p-3 border-t overflow-y-auto" style={{ maxHeight: '15rem' }}>
                         <div className="space-y-1">
                             {list.words.length === 0 ? (
                                 <div className="text-sm text-tertiary-foreground text-center py-2">
@@ -148,7 +148,7 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                                 list.words.map((word, index) => (
                                     <div
                                         key={index}
-                                        className="text-sm flex items-center gap-2 py-1 px-2 hover:bg-tertiary/50 rounded"
+                                        className="text-sm flex items-center gap-2 py-1 px-2 hover:bg-secondary rounded"
                                     >
                                         <span className="font-medium">{word.origin}</span>
                                         <span className="text-tertiary-foreground">|</span>

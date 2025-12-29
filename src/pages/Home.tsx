@@ -66,7 +66,7 @@ const Home = () => {
     };
 
     return (
-        <div className="min-h-screen bg-background overflow-x-hidden font-sans selection:bg-primary/30">
+        <div className="min-h-screen bg-background overflow-x-hidden font-sans">
             {/* Animated Background Gradients */}
             <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
                 <motion.div
@@ -107,7 +107,7 @@ const Home = () => {
                         </motion.h1>
 
                         <motion.div variants={itemVariants} className="mb-8">
-                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary/30 border border-light/20 backdrop-blur-md text-light text-sm font-medium shadow-lg shadow-primary/5">
+                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary border backdrop-blur-md text-light text-sm font-medium shadow-lg shadow-primary/5">
                                 <Sparkles className="w-3.5 h-3.5" />
                                 <span>AI-Powered flashcards</span>
                             </span>
@@ -132,7 +132,7 @@ const Home = () => {
                                 size="lg"
                                 variant="outline"
                                 onClick={() => navigate('/login')}
-                                className="w-full sm:w-auto text-lg h-14 px-10 rounded-full border-2 border-dashed border-border hover:border-tertiary hover:bg-secondary hover:text-light transition-all duration-300 relative bg-background/50 backdrop-blur-sm"
+                                className="w-full sm:w-auto text-lg h-14 px-10 rounded-full border-2 border-dashed border-tertiary hover:border-tertiary hover:bg-secondary hover:text-light transition-all duration-300 relative bg-background backdrop-blur-sm"
                             >
                                 Have an account?
                             </Button>
@@ -151,7 +151,7 @@ const Home = () => {
             </section>
 
             {/* Features Section */}
-            <section id="features-section" className="relative z-10 py-10 bg-background/50">
+            <section id="features-section" className="relative z-10 py-10">
 
                 <div className="container mx-auto px-4">
                     <motion.div
@@ -199,7 +199,7 @@ const Home = () => {
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="bg-gradient-dark to-secondary rounded-[2.5rem] p-8 md:p-20 text-center text-white shadow-2xl shadow-primary/20 relative overflow-hidden"
+                        className="bg-gradient-dark to-secondary rounded-[2.5rem] p-8 md:p-20 text-center text-white shadow-2xl relative overflow-hidden"
                     >
                         {/* Decorative background circles */}
                         <div className="absolute top-0 left-0 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 mix-blend-overlay" />
