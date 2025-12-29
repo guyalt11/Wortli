@@ -177,7 +177,7 @@ export const NLFlag: React.FC<FlagProps> = ({ }) => (
 
 // Poland (Polish)
 export const PLFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m512 256c0 141.384-114.616 256-256 256s-256-114.616-256-256" fill="#d80027" />
     </svg>
@@ -194,7 +194,7 @@ export const RUFlag: React.FC<FlagProps> = ({ }) => (
 
 // Greece (Greek)
 export const ELFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <g fill="#338af3">
             <path d="m256 189.217h247.181c-6.419-23.814-16.175-46.255-28.755-66.783h-218.426z" />
@@ -219,7 +219,7 @@ export const TRFlag: React.FC<FlagProps> = ({ }) => (
 
 // Sweden (Swedish)
 export const SVFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#ffda44" r="256" />
         <g fill="#0052b4">
             <path d="m200.349 222.609h309.484c-16.363-125.607-123.766-222.609-253.833-222.609-19.114 0-37.733 2.113-55.652 6.085v216.524z" />
@@ -232,7 +232,7 @@ export const SVFlag: React.FC<FlagProps> = ({ }) => (
 
 // Norway (Norwegian)
 export const NOFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <g fill="#d80027">
             <path d="m8.819 322.783c14.812 54.959 47.457 102.593 91.355 136.322v-136.322z" />
@@ -246,7 +246,7 @@ export const NOFlag: React.FC<FlagProps> = ({ }) => (
 
 // Denmark (Danish)
 export const DAFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <g fill="#d80027">
             <path d="m200.349 222.609h309.484c-16.363-125.607-123.766-222.609-253.833-222.609-19.115 0-37.732 2.113-55.652 6.085v216.524z" />
@@ -259,7 +259,7 @@ export const DAFlag: React.FC<FlagProps> = ({ }) => (
 
 // Finland (Finnish)
 export const FIFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m509.833 222.609h-309.484-.001v-216.524c-23.658 5.246-46.087 13.749-66.783 25.042v191.48.001h-131.398c-1.425 10.931-2.167 22.075-2.167 33.392s.742 22.461 2.167 33.391h131.397.001v191.481c20.696 11.292 43.125 19.797 66.783 25.042v-216.52-.002h309.485c1.423-10.931 2.167-22.075 2.167-33.392s-.744-22.461-2.167-33.391z" fill="#0052b4" />
     </svg>
@@ -267,7 +267,7 @@ export const FIFlag: React.FC<FlagProps> = ({ }) => (
 
 // Iceland (Icelandic)
 export const ISFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <g fill="#0052b4"><path d="m8.819 322.783c14.812 54.959 47.457 102.593 91.355 136.322v-136.322z" /><path d="m233.739 511.026c7.338.632 14.759.974 22.261.974 118.279 0 217.805-80.221 247.181-189.217h-269.442z" /><path d="m503.181 189.217c-29.376-108.996-128.902-189.217-247.181-189.217-7.502 0-14.923.342-22.261.974v188.243z" /><path d="m100.174 52.895c-43.898 33.73-76.543 81.363-91.355 136.322h91.355z" /></g><path d="m509.833 222.609h-309.484-.001v-216.524c-23.658 5.246-46.087 13.749-66.783 25.042v191.481h-131.398c-1.425 10.931-2.167 22.075-2.167 33.392s.742 22.461 2.167 33.391h131.397.001v191.481c20.696 11.292 43.125 19.797 66.783 25.042v-216.52-.002h309.485c1.423-10.931 2.167-22.075 2.167-33.392s-.744-22.461-2.167-33.391z" fill="#d80027" />
     </svg>
@@ -275,7 +275,7 @@ export const ISFlag: React.FC<FlagProps> = ({ }) => (
 
 // Czech Republic (Czech)
 export const CSFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m233.739 256s-158.609 181.055-158.759 181.019c46.326 46.327 110.327 74.981 181.02 74.981 141.384 0 256-114.616 256-256z" fill="#d80027" />
         <path d="m74.98 74.98c-99.974 99.974-99.974 262.065 0 362.04 41.313-41.313 81.046-81.046 181.02-181.02z" fill="#0052b4" />
@@ -302,7 +302,7 @@ export const ROFlag: React.FC<FlagProps> = ({ }) => (
 
 // Ukraine (Ukrainian)
 export const UKFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#ffda44" r="256" />
         <path d="m0 256c0-141.384 114.616-256 256-256s256 114.616 256 256" fill="#338af3" />
     </svg>
@@ -310,7 +310,7 @@ export const UKFlag: React.FC<FlagProps> = ({ }) => (
 
 // Israel (Hebrew)
 export const ILFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <g fill="#0052b4"><path d="m352.393 200.348h-64.263l-32.13-55.652-32.129 55.652h-64.264l32.134 55.652-32.134 55.652h64.264l32.129 55.652 32.13-55.652h64.263l-32.134-55.652zm-56.918 55.652-19.736 34.188h-39.475l-19.739-34.188 19.738-34.188h39.475zm-39.475-68.377 7.346 12.724h-14.69zm-59.214 34.189h14.692l-7.346 12.724zm0 68.376 7.347-12.724 7.346 12.724zm59.214 34.188-7.345-12.724h14.691zm59.214-34.188h-14.692l7.347-12.724zm-14.692-68.376h14.692l-7.346 12.724z" />
             <path d="m415.357 55.652h-318.714c-23.363 18.608-43.399 41.21-59.069 66.783h436.852c-15.671-25.572-35.707-48.175-59.069-66.783z" />
@@ -328,7 +328,7 @@ export const JAFlag: React.FC<FlagProps> = ({ }) => (
 
 // China (Chinese)
 export const ZHFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new -49 141 512 512" viewBox="-49 141 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new -49 141 512 512" viewBox="-49 141 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="207" cy="397" fill="#d80027" r="256" />
         <g fill="#ffda44">
             <path d="m91.1 296.8 22.1 68h71.5l-57.8 42.1 22.1 68-57.9-42-57.9 42 22.2-68-57.9-42.1h71.5z" />
@@ -342,7 +342,7 @@ export const ZHFlag: React.FC<FlagProps> = ({ }) => (
 
 // South Korea (Korean)
 export const KOFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m345.043 256c0 22.261-39.866 77.913-89.043 77.913s-89.043-55.652-89.043-77.913c0-49.178 39.866-89.043 89.043-89.043s89.043 39.865 89.043 89.043z" fill="#d80027" />
         <path d="m345.043 256c0 49.178-39.866 89.043-89.043 89.043s-89.043-39.865-89.043-89.043" fill="#0052b4" />
@@ -369,7 +369,7 @@ export const KOFlag: React.FC<FlagProps> = ({ }) => (
 
 // Saudi Arabia (Arabic)
 export const SAFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#6da544" r="256" />
         <g fill="#f0f0f0">
             <path d="m144.696 306.087c0 18.441 14.95 33.391 33.391 33.391h100.174c0 15.368 12.458 27.826 27.826 27.826h33.391c15.368 0 27.826-12.458 27.826-27.826v-33.391z" />
@@ -384,7 +384,7 @@ export const SAFlag: React.FC<FlagProps> = ({ }) => (
 
 // Thailand (Thai)
 export const THFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m496.077 166.957h-480.154c-10.291 27.733-15.923 57.729-15.923 89.043s5.632 61.31 15.923 89.043h480.155c10.29-27.733 15.922-57.729 15.922-89.043s-5.632-61.31-15.923-89.043z" fill="#0052b4" />
         <g fill="#d80027">
@@ -404,7 +404,7 @@ export const VIFlag: React.FC<FlagProps> = ({ }) => (
 
 // Indonesia (Indonesian)
 export const IDFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m0 256c0-141.384 114.616-256 256-256s256 114.616 256 256" fill="#a2001d" />
     </svg>
@@ -412,7 +412,7 @@ export const IDFlag: React.FC<FlagProps> = ({ }) => (
 
 // Bulgarian (Bulgarian)
 export const BGFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <path d="m512 256c0-31.314-5.632-61.311-15.923-89.043l-240.077-11.131-240.077 11.13c-10.29 27.733-15.923 57.73-15.923 89.044s5.633 61.311 15.923 89.043l240.077 11.131 240.077-11.13c10.291-27.733 15.923-57.73 15.923-89.044z" fill="#496e2d" />
         <path d="m256 512c110.071 0 203.906-69.472 240.077-166.957h-480.154c36.171 97.485 130.006 166.957 240.077 166.957z" fill="#d80027" />
         <path d="m15.923 166.957h480.155c-36.172-97.485-130.007-166.957-240.078-166.957s-203.906 69.472-240.077 166.957z" fill="#f0f0f0" />
@@ -421,7 +421,7 @@ export const BGFlag: React.FC<FlagProps> = ({ }) => (
 
 // Croatian (Croatia)
 export const HRFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <path d="m512 256c0-31.314-5.633-61.311-15.923-89.043l-240.077-11.131-240.077 11.13c-10.29 27.733-15.923 57.73-15.923 89.044s5.633 61.311 15.923 89.043l240.077 11.131 240.077-11.13c10.29-27.733 15.923-57.73 15.923-89.044z" fill="#f0f0f0" />
         <path d="m256 512c110.071 0 203.906-69.472 240.077-166.957h-480.154c36.171 97.485 130.006 166.957 240.077 166.957z" fill="#0052b4" />
         <path d="m15.923 166.957h480.155c-36.172-97.485-130.007-166.957-240.078-166.957s-203.906 69.472-240.077 166.957z" fill="#d80027" />
@@ -453,7 +453,7 @@ export const HRFlag: React.FC<FlagProps> = ({ }) => (
 
 // Estonian (Estonia)
 export const ETFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <path d="m0 256c0 31.314 5.633 61.31 15.923 89.043l240.077 11.131 240.077-11.13c10.291-27.734 15.923-57.73 15.923-89.044s-5.632-61.31-15.923-89.043l-240.077-11.131-240.077 11.13c-10.29 27.734-15.923 57.73-15.923 89.044z" />
         <path d="m256 0c-110.071 0-203.906 69.472-240.077 166.957h480.155c-36.172-97.485-130.007-166.957-240.078-166.957z" fill="#0052b4" />
         <path d="m496.077 345.043h-480.154c36.171 97.484 130.006 166.957 240.077 166.957s203.906-69.473 240.077-166.957z" fill="#f0f0f0" />
@@ -462,7 +462,7 @@ export const ETFlag: React.FC<FlagProps> = ({ }) => (
 
 // Latvian (Latvia)
 export const LVFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <g fill="#a2001d">
             <path d="m256 0c-118.279 0-217.805 80.221-247.181 189.217h494.363c-29.377-108.996-128.903-189.217-247.182-189.217z" />
@@ -473,7 +473,7 @@ export const LVFlag: React.FC<FlagProps> = ({ }) => (
 
 // Lithuanian (Lithuania)
 export const LTFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <path d="m496.077 345.043c10.291-27.732 15.923-57.729 15.923-89.043s-5.632-61.311-15.923-89.043l-240.077-22.261-240.077 22.261c-10.291 27.732-15.923 57.729-15.923 89.043s5.632 61.311 15.923 89.043l240.077 22.261z" fill="#6da544" />
         <path d="m496.077 166.957c-36.171-97.485-130.006-166.957-240.077-166.957s-203.906 69.472-240.077 166.957z" fill="#ffda44" />
         <path d="m256 512c110.071 0 203.906-69.472 240.077-166.957h-480.154c36.171 97.485 130.006 166.957 240.077 166.957z" fill="#d80027" />
@@ -482,7 +482,7 @@ export const LTFlag: React.FC<FlagProps> = ({ }) => (
 
 // Slovak (Slovakia)
 export const SKFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m256 512c141.384 0 256-114.616 256-256 0-31.314-5.632-61.311-15.923-89.043h-480.154c-10.29 27.732-15.923 57.729-15.923 89.043 0 141.384 114.616 256 256 256z" fill="#0052b4" />
         <path d="m256 512c110.071 0 203.906-69.472 240.077-166.957h-480.154c36.171 97.485 130.006 166.957 240.077 166.957z" fill="#d80027" />
@@ -495,7 +495,7 @@ export const SKFlag: React.FC<FlagProps> = ({ }) => (
 
 // Slovenian (Slovenia)
 export const SLFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m496.077 166.957h-273.468v-66.783h-133.566v66.783h-73.12c-10.29 27.732-15.923 57.729-15.923 89.043s5.633 61.31 15.923 89.043l240.077 22.261 240.077-22.261c10.29-27.733 15.923-57.729 15.923-89.043s-5.633-61.311-15.923-89.043z" fill="#0052b4" />
         <path d="m256 512c110.071 0 203.906-69.472 240.077-166.957h-480.154c36.171 97.485 130.006 166.957 240.077 166.957z" fill="#d80027" />
@@ -505,7 +505,7 @@ export const SLFlag: React.FC<FlagProps> = ({ }) => (
 
 // Serbian (Serbia)
 export const SRFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m256 0c-141.384 0-256 114.616-256 256 0 31.314 5.633 61.311 15.923 89.043h480.155c10.29-27.732 15.922-57.729 15.922-89.043 0-141.384-114.616-256-256-256z" fill="#0052b4" />
         <g fill="#d80027">
@@ -522,7 +522,7 @@ export const SRFlag: React.FC<FlagProps> = ({ }) => (
 
 // Macedonian (North Macedonia)
 export const MKFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#ffda44" r="256" />
         <g fill="#d80027">
             <path d="m294.932 509.057c41.636-6.352 79.962-22.748 112.456-46.618l-151.388-206.439z" />
@@ -541,7 +541,7 @@ export const MKFlag: React.FC<FlagProps> = ({ }) => (
 
 // Albanian (Albania)
 export const SQFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#d80027" r="256" />
         <path d="m400.696 190.009h-92.726c5.724-5.994 9.247-14.109 9.247-23.052 0-18.441-14.95-33.391-33.391-33.391-11.618 0-21.845 5.936-27.826 14.937-5.981-9.001-16.209-14.937-27.826-14.937-18.441 0-33.391 14.95-33.391 33.391 0 8.943 3.523 17.059 9.247 23.052h-92.725c0 24.589 21.417 44.521 46.004 44.521h-1.484c0 24.59 19.933 44.523 44.523 44.523 0 7.964 2.099 15.43 5.763 21.894l-36.93 36.931 28.334 28.332 40.192-40.191c1.574.577 3.203 1.04 4.885 1.355l-24.287 54.835 37.695 40.748 37.695-40.75-24.287-54.835c1.683-.315 3.311-.777 4.885-1.355l40.192 40.191 28.334-28.333-36.931-36.931c3.665-6.463 5.764-13.93 5.764-21.894 24.589 0 44.522-19.932 44.522-44.523h-1.483c24.587.002 46.005-19.929 46.005-44.518z" />
     </svg>
@@ -549,7 +549,7 @@ export const SQFlag: React.FC<FlagProps> = ({ }) => (
 
 // Hindi (India)
 export const HIFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m256 0c-101.494 0-189.19 59.065-230.598 144.696h461.195c-41.407-85.631-129.104-144.696-230.597-144.696z" fill="#ff9811" />
         <path d="m256 512c101.493 0 189.19-59.065 230.598-144.696h-461.196c41.408 85.631 129.104 144.696 230.598 144.696z" fill="#6da544" />
@@ -561,7 +561,7 @@ export const HIFlag: React.FC<FlagProps> = ({ }) => (
 
 // Bengali (Bangladesh)
 export const BNFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#496e2d" r="256" />
         <circle cx="200.348" cy="256" fill="#d80027" r="111.304" />
     </svg>
@@ -569,7 +569,7 @@ export const BNFlag: React.FC<FlagProps> = ({ }) => (
 
 // Urdu (Pakistan)
 export const URFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <g fill="#f0f0f0">
             <circle cx="256" cy="256" r="256" />
             <path d="m0 256c0 97.035 53.989 181.454 133.565 224.873v-449.746c-79.576 43.419-133.565 127.838-133.565 224.873z" />
@@ -584,7 +584,7 @@ export const URFlag: React.FC<FlagProps> = ({ }) => (
 
 // Persian/Farsi (Iran)
 export const FAFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m339.147 189.217h-33.494c.277 3.681.434 7.395.434 11.13 0 24.764-6.19 48.767-16.981 65.853-3.329 5.27-8.923 12.712-16.411 17.732v-94.716h-33.391v94.716c-7.487-5.02-13.082-12.461-16.411-17.732-10.792-17.086-16.981-41.089-16.981-65.853 0-3.735.158-7.45.434-11.13h-33.494c-.215 3.663-.332 7.373-.332 11.13 0 68.656 36.668 122.435 83.478 122.435s83.478-53.779 83.478-122.435c.002-3.757-.115-7.467-.329-11.13z" fill="#d80027" />
         <path d="m105.739 122.435h33.391v22.261h33.391v-22.261h33.391v22.261h33.391v-22.261h33.391v22.261h33.391v-22.261h33.391v22.261h33.391v-22.261h33.391v22.261h80.337c-41.405-85.631-129.102-144.696-230.595-144.696s-189.19 59.065-230.598 144.696h80.337z" fill="#6da544" />
@@ -594,7 +594,7 @@ export const FAFlag: React.FC<FlagProps> = ({ }) => (
 
 // Malay (Malaysia)
 export const MSFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <g fill="#d80027">
             <path d="m244.87 256h267.13c0-23.107-3.08-45.489-8.819-66.783h-258.311z" />
@@ -612,7 +612,7 @@ export const MSFlag: React.FC<FlagProps> = ({ }) => (
 
 // Tagalog/Filipino (Philippines)
 export const TLFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m256 0v256l-181.02 181.02c46.327 46.326 110.327 74.98 181.02 74.98 141.384 0 256-114.616 256-256s-256-256-256-256z" fill="#d80027" />
         <path d="m256 0c-70.693 0-134.693 28.654-181.02 74.98 62.81 62.81 85.107 85.108 181.02 181.02h256c0-141.384-114.616-256-256-256z" fill="#0052b4" />
@@ -627,7 +627,7 @@ export const TLFlag: React.FC<FlagProps> = ({ }) => (
 
 // Khmer (Cambodia)
 export const KMFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <path d="m0 256c0 44.35 11.283 86.064 31.127 122.435l224.873 22.261 224.873-22.261c19.844-36.371 31.127-78.085 31.127-122.435s-11.283-86.064-31.127-122.435l-224.873-22.261-224.873 22.261c-19.844 36.371-31.127 78.085-31.127 122.435z" fill="#d80027" />
         <g fill="#0052b4">
             <path d="m31.127 133.565h449.745c-43.418-79.576-127.837-133.565-224.872-133.565s-181.454 53.989-224.873 133.565z" />
@@ -639,7 +639,7 @@ export const KMFlag: React.FC<FlagProps> = ({ }) => (
 
 // Lao (Laos)
 export const LOFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <g fill="#d80027">
             <path d="m486.598 144.696c-41.408-85.631-129.104-144.696-230.598-144.696s-189.19 59.065-230.598 144.696l230.598 22.261z" />
             <path d="m25.402 367.304c41.408 85.631 129.104 144.696 230.598 144.696s189.19-59.065 230.598-144.696l-230.598-22.261z" />
@@ -651,7 +651,7 @@ export const LOFlag: React.FC<FlagProps> = ({ }) => (
 
 // Burmese (Myanmar)
 export const MYFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <path d="m496.077 345.043c10.291-27.732 15.923-57.729 15.923-89.043s-5.632-61.311-15.923-89.043l-240.077-22.261-240.077 22.261c-10.29 27.732-15.923 57.729-15.923 89.043s5.633 61.311 15.923 89.043l240.077 22.261z" fill="#6da544" />
         <path d="m496.077 166.957c-36.171-97.485-130.006-166.957-240.077-166.957s-203.906 69.472-240.077 166.957z" fill="#ffda44" />
         <path d="m256 512c110.071 0 203.906-69.472 240.077-166.957h-480.154c36.171 97.485 130.006 166.957 240.077 166.957z" fill="#d80027" />
@@ -661,7 +661,7 @@ export const MYFlag: React.FC<FlagProps> = ({ }) => (
 
 // Mongolian (Mongolia)
 export const MNFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <path d="m256 512c31.314 0 61.311-5.632 89.043-15.923l11.131-240.077-11.13-240.077c-27.733-10.29-57.73-15.923-89.044-15.923s-61.311 5.633-89.043 15.923l-11.131 240.077 11.13 240.077c27.733 10.291 57.73 15.923 89.044 15.923z" fill="#0052b4" />
         <g fill="#a2001d">
             <path d="m0 256c0 110.071 69.472 203.906 166.957 240.077v-480.154c-97.485 36.171-166.957 130.006-166.957 240.077z" />
@@ -681,7 +681,7 @@ export const MNFlag: React.FC<FlagProps> = ({ }) => (
 
 // Afrikaans/Zulu (South Africa)
 export const ZUFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#f0f0f0" r="256" />
         <path d="m74.98 437.02c-99.974-99.975-99.974-262.065 0-362.04-.007.011 147.629 181.02 147.629 181.02z" />
         <path d="m222.609 256-188.656-127.487c-5.849 10.167-11.007 20.779-15.439 31.763l95.509 95.725-95.506 95.73c4.428 10.976 9.581 21.581 15.426 31.741z" fill="#ffda44" />
@@ -693,7 +693,7 @@ export const ZUFlag: React.FC<FlagProps> = ({ }) => (
 
 // Amharic (Ethiopia)
 export const AMFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <path d="m0 256c0 31.316 5.633 61.312 15.924 89.046l240.076 22.258 240.076-22.259c10.292-27.733 15.924-57.73 15.924-89.045 0-30.885-5.471-60.492-15.494-87.905l-240.506-23.399-240.506 23.4c-10.023 27.412-15.494 57.019-15.494 87.904z" fill="#ffda44" />
         <path d="m256 512c110.071 0 203.906-69.472 240.077-166.957h-480.154c36.171 97.485 130.006 166.957 240.077 166.957z" fill="#d80027" />
         <path d="m256 0c-110.071 0-203.906 69.472-240.077 166.957h480.155c-36.172-97.485-130.007-166.957-240.078-166.957z" fill="#6da544" />
@@ -707,7 +707,7 @@ export const AMFlag: React.FC<FlagProps> = ({ }) => (
 
 // Swahili (Tanzania)
 export const SWFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#ffda44" r="256" />
         <path d="m74.98 437.02c10.739 10.739 22.197 20.316 34.216 28.748l356.57-356.571c-8.43-12.019-18.008-23.477-28.747-34.216-10.74-10.739-22.197-20.315-34.216-28.747l-356.569 356.571c8.43 12.016 18.008 23.475 28.746 34.215z" />
         <path d="m74.98 74.98c-80.762 80.764-96.267 202.055-46.544 298.398l344.942-344.941c-96.343-49.723-217.635-34.217-298.398 46.543z" fill="#6da544" />
@@ -717,7 +717,7 @@ export const SWFlag: React.FC<FlagProps> = ({ }) => (
 
 // Somali (Somalia)
 export const SOFlag: React.FC<FlagProps> = ({ }) => (
-    <svg className="w-12 h-12" enable-background="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <svg className="w-12 h-12" enableBackground="new 0 0 512 512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
         <circle cx="256" cy="256" fill="#338af3" r="256" />
         <path d="m256 133.565 27.628 85.029h89.404l-72.33 52.55 27.628 85.03-72.33-52.551-72.33 52.551 27.628-85.03-72.331-52.55h89.405z" fill="#f0f0f0" />
         <g />
