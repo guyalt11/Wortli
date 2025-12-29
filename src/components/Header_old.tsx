@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, LogOut, LogIn, Flame, Target, Home, Brain, BookOpen, Settings as SettingsIcon } from 'lucide-react';
+import { User, LogOut, LogIn, Flame, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LibraryDialog from '@/components/LibraryDialog';
 import {
@@ -16,7 +16,7 @@ import { usePreferences } from '@/context/PreferencesContext';
 import { useVocab } from '@/context/VocabContext';
 
 const Header = () => {
-    const [setIsMobileMenuOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const { currentUser, logout, isAuthenticated, streak, dailyCount } = useAuth();
@@ -35,6 +35,7 @@ const Header = () => {
             } else if (currentScrollY > lastScrollY) {
                 // Scrolling down - hide header
                 setIsVisible(false);
+                setIsMobileMenuOpen(false); // Close mobile menu when hiding
             } else {
                 // Scrolling up - show header
                 setIsVisible(true);
@@ -50,14 +51,17 @@ const Header = () => {
     const handleLogout = () => {
         logout();
         navigate('/login');
+        setIsMobileMenuOpen(false);
     };
 
     const handleNavigation = (path: string) => {
         navigate(path);
+        setIsMobileMenuOpen(false);
     };
 
     const handleDailyProgressClick = () => {
         navigate('/settings');
+        setIsMobileMenuOpen(false);
         // Wait for navigation and DOM update, then scroll to the element
         setTimeout(() => {
             const element = document.getElementById('daily-progress');
@@ -78,6 +82,7 @@ const Header = () => {
 
     const handleLibraryClick = () => {
         setIsLibraryOpen(true);
+        setIsMobileMenuOpen(false);
     };
 
     const handleLibraryClose = (listsAdded: boolean) => {
@@ -90,7 +95,7 @@ const Header = () => {
     return (
         <>
             <header
-                className={`fixed top-0 left-0 right-0 z-50 w-full border-b bg-background transition-transform duration-300 ${isVisible ? 'translate-y-0' : 'translate-y-0 md:-translate-y-full'
+                className={`fixed top-0 left-0 right-0 z-50 w-full border-b bg-background transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'
                     }`}
             >
                 <div className="container max-w-3xl">
@@ -102,7 +107,7 @@ const Header = () => {
                         >
                             <img src="/logo.webp" alt="Wörtli Logo" className="h-10 w-10" />
                         </button>
-                        <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
+                        <div className="flex items-center gap-6 flex-1 justify-center">
                             {/* Desktop Navigation */}
                             <nav className="hidden md:flex items-center gap-8">
                                 <button
@@ -131,24 +136,24 @@ const Header = () => {
                                 </button>
                             </nav>
                         </div>
-                        <div className="flex items-center gap-2">
-                            {/* Streak Counter*/}
-                            {isAuthenticated && (
-                                <div className="flex items-center gap-2">
-                                    <button className="flex items-center gap-1 px-2 py-1 rounded-full border border-border"
-                                        title="Daily Progress"
-                                        onClick={handleDailyProgressClick}>
-                                        <Target className="h-4 w-4 text-light" />
-                                        <span className="text-sm font-bold text-foreground">{dailyCount}{preferences?.dailyGoal ? `/${preferences?.dailyGoal}` : ''}</span>
-                                    </button>
-                                    <div className="flex items-center gap-1 px-2 py-1 rounded-full border border-border" title="Current Streak">
-                                        <Flame className="h-4 w-4 text-orange-500 fill-orange-500" />
-                                        <span className="text-sm font-bold text-foreground">{streak}</span>
-                                    </div>
+                        {/* Streak Counter*/}
+                        {isAuthenticated && (
+                            <div className="flex items-center gap-2 pe-2 sm:pe-0">
+                                <button className="flex items-center gap-1 px-2 py-1 rounded-full border"
+                                    title="Daily Progress"
+                                    onClick={handleDailyProgressClick}>
+                                    <Target className="h-4 w-4 text-light" />
+                                    <span className="text-sm font-bold text-foreground">{dailyCount}{preferences?.dailyGoal ? `/${preferences?.dailyGoal}` : ''}</span>
+                                </button>
+                                <div className="flex items-center gap-1 px-2 py-1 rounded-full border" title="Current Streak">
+                                    <Flame className="h-4 w-4 text-orange-500 fill-orange-500" />
+                                    <span className="text-sm font-bold text-foreground">{streak}</span>
                                 </div>
-                            )}
+                            </div>
+                        )}
 
-                            {/* User Menu (Visible on both Mobile and Desktop) */}
+                        {/* Desktop User Menu */}
+                        <div className="hidden md:flex items-center">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="ghost" size="icon" className="h-9 w-9">
@@ -182,44 +187,101 @@ const Header = () => {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
+
+                        {/* Mobile Hamburger Button with Animation */}
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="md:hidden p-2 focus:outline-none rounded relative w-10 h-10"
+                            aria-label="Toggle menu"
+                        >
+                            <div className="flex flex-col items-center justify-center w-full h-full gap-1.5">
+                                <span
+                                    className={`block h-0.5 w-6 bg-current transition-all duration-300 ease-out ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
+                                        }`}
+                                />
+                                <span
+                                    className={`block h-0.5 w-6 bg-current transition-all duration-300 ease-out ${isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
+                                        }`}
+                                />
+                                <span
+                                    className={`block h-0.5 w-6 bg-current transition-all duration-300 ease-out ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
+                                        }`}
+                                />
+                            </div>
+                        </button>
                     </div>
                 </div>
             </header>
 
-            {/* Mobile Bottom Navigation */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background border-t">
-                <div className="flex items-center justify-around h-16">
-                    <button
-                        onClick={() => handleNavigation(getHomeLink())}
-                        className="flex flex-col items-center justify-center gap-1 text-muted-foreground hover:text-tertiary transition-colors flex-1"
-                    >
-                        <Home className="h-6 w-6" />
-                        <span className="text-[10px] font-medium">Home</span>
-                    </button>
-                    <button
-                        onClick={() => isAuthenticated ? handleNavigation('/practice-all') : handleNavigation('/login')}
-                        className="flex flex-col items-center justify-center gap-1 text-muted-foreground hover:text-tertiary transition-colors flex-1"
-                    >
-                        <Brain className="h-6 w-6" />
-                        <span className="text-[10px] font-medium">Practice</span>
-                    </button>
-                    <button
-                        onClick={handleLibraryClick}
-                        className="flex flex-col items-center justify-center gap-1 text-muted-foreground hover:text-tertiary transition-colors flex-1"
-                    >
-                        <BookOpen className="h-6 w-6" />
-                        <span className="text-[10px] font-medium">Library</span>
-                    </button>
-                    <button
-                        onClick={() => isAuthenticated ? handleNavigation('/settings') : handleNavigation('/login')}
-                        className="flex flex-col items-center justify-center gap-1 text-muted-foreground hover:text-tertiary transition-colors flex-1"
-                    >
-                        <SettingsIcon className="h-6 w-6" />
-                        <span className="text-[10px] font-medium">Settings</span>
-                    </button>
+            {/* Mobile Menu Overlay */}
+            <div
+                className={`md:hidden fixed left-0 right-0 z-40 bg-background border-b transition-all duration-300 ease-in-out ${isMobileMenuOpen
+                    ? 'opacity-100 pointer-events-auto'
+                    : 'opacity-0 pointer-events-none'
+                    }`}
+                style={{ top: '64px' }} // Height of header (h-16 = 64px)
+            >
+                <div className={`container max-w-3xl py-4 transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-y-0' : '-translate-y-4'
+                    }`}>
+                    <nav className="flex flex-col gap-2">
+                        <Button
+                            variant="ghost"
+                            onClick={() => handleNavigation(getHomeLink())}
+                            className="justify-start text-foreground hover:header-hover"
+                        >
+                            Home
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            onClick={() => isAuthenticated ? handleNavigation('/practice-all') : handleNavigation('/login')}
+                            className="justify-start text-foreground hover:header-hover"
+                        >
+                            Practice
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            onClick={handleLibraryClick}
+                            className="justify-start text-foreground hover:header-hover"
+                        >
+                            Library
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            onClick={() => isAuthenticated ? handleNavigation('/settings') : handleNavigation('/login')}
+                            className="justify-start text-foreground hover:header-hover"
+                        >
+                            Settings
+                        </Button>
+
+                        <div className="border-t my-2" />
+
+                        {isAuthenticated ? (
+                            <>
+                                <div className="px-4 py-2 text-sm text-muted-foreground flex items-center gap-2">
+                                    <User className="h-4 w-4" />
+                                    <span className="flex-1">{preferences?.username || currentUser?.email}</span>
+                                </div>
+                                <Button
+                                    variant="ghost"
+                                    onClick={handleLogout}
+                                    className="justify-start text-foreground flex items-center gap-2"
+                                >
+                                    <LogOut className="h-4 w-4" />
+                                    <span>Logout</span>
+                                </Button>
+                            </>
+                        ) : (
+                            <Button
+                                variant="ghost"
+                                onClick={() => handleNavigation('/login')}
+                                className="justify-start text-foreground flex items-center gap-2"
+                            >
+                                <LogIn className="h-4 w-4" />
+                                <span>Login</span>
+                            </Button>
+                        )}
+                    </nav>
                 </div>
-                {/* Safe area inset for mobile devices with notches */}
-                <div className="h-[env(safe-area-inset-bottom)] bg-background" />
             </div>
 
             {/* Spacer to prevent content jump when header becomes fixed */}

@@ -604,6 +604,7 @@ const Settings = () => {
                         <div className="space-y-2 text-sm text-muted-foreground">
                             <p>Wörtli - Vocabulary Learning App</p>
                             <p>Version 1.0.0</p>
+                            <p>2026 © Wörtli - All rights reserved</p>
                         </div>
                     </div>
                 </div>

@@ -69,7 +69,7 @@ const AppContent = () => {
         onClose={() => setShowGoalCelebration(false)}
         dailyGoal={preferences?.dailyGoal || 0}
       />
-      <main className="flex-grow">
+      <main className="flex-grow pb-[calc(5rem+env(safe-area-inset-bottom)-1rem)] md:pb-0">
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
