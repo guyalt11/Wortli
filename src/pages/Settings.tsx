@@ -47,7 +47,7 @@ const Settings = () => {
         updateDefaultTransl,
         updateAiRules,
         updateAiInclude,
-        updateDailyGoal
+        updateDailyGoal,
     } = usePreferences();
     const navigate = useNavigate();
     const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
@@ -62,6 +62,9 @@ const Settings = () => {
     const [isUpdatingTheme, setIsUpdatingTheme] = useState(false);
     const [editedUsername, setEditedUsername] = useState("");
     const [isEditingUsername, setIsEditingUsername] = useState(false);
+    const [dailyGoal, setDailyGoal] = useState(preferences?.dailyGoal || 0);
+    const [isEditingDailyGoal, setIsEditingDailyGoal] = useState(false);
+    const [isUpdatingDailyGoal, setIsUpdatingDailyGoal] = useState(false);
     const options = [0, 10, 20, 30, 40, 50];
 
     const handleChangePassword = async (e: React.FormEvent) => {
@@ -194,6 +197,7 @@ const Settings = () => {
     useEffect(() => {
         if (preferences) {
             setAiRules(preferences.aiRules || '');
+            setDailyGoal(preferences.dailyGoal || 0);
         }
     }, [preferences]);
 
@@ -207,6 +211,25 @@ const Settings = () => {
                 variant: "destructive",
             });
         }
+    };
+
+    const handleDailyGoalSave = async () => {
+        setIsUpdatingDailyGoal(true);
+        const success = await updateDailyGoal(dailyGoal);
+        if (success) {
+            toast({
+                title: "Success",
+                description: "Daily goal updated successfully",
+            });
+            setIsEditingDailyGoal(false);
+        } else {
+            toast({
+                title: "Update failed",
+                description: "Unable to update daily goal. Please try again.",
+                variant: "destructive",
+            });
+        }
+        setIsUpdatingDailyGoal(false);
     };
 
     const handleAiIncludeToggle = async () => {
@@ -370,11 +393,51 @@ const Settings = () => {
                             </div>
                             <div className="border-t my-2" />
                             <div id="daily-progress">
-                                <Label>Daily Goal</Label>
-                                <p className="text-sm text-muted-foreground mb-3">Set a daily practice target</p>
+                                <div className="flex items-center justify-between mb-2">
+                                    <div>
+                                        <Label>Daily Goal</Label>
+                                        <p className="text-sm text-muted-foreground">
+                                            <span className='font-bold'>Reach your daily goal and earn 10× your goal in tokens!</span><br />*Can be claimed only once per day
+                                        </p>
+                                    </div>
+
+                                    <div className="flex gap-2">
+                                        {!isEditingDailyGoal ? (
+                                            <Button
+                                                size="sm"
+                                                onClick={() => setIsEditingDailyGoal(true)}
+                                            >
+                                                Edit
+                                            </Button>
+                                        ) : (
+                                            <div className="flex gap-2">
+                                                <Button
+                                                    size="sm"
+                                                    onClick={handleDailyGoalSave}
+                                                    disabled={isUpdatingDailyGoal || dailyGoal === (preferences?.dailyGoal || 0)}
+                                                >
+                                                    {isUpdatingDailyGoal ? 'Saving...' : 'Save'}
+                                                </Button>
+                                                <Button
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    onClick={() => {
+                                                        setIsEditingDailyGoal(false);
+                                                        setDailyGoal(preferences?.dailyGoal || 0);
+                                                    }}
+                                                    disabled={isUpdatingDailyGoal}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                            </div>
+
+                                        )}
+                                    </div>
+                                </div>
                                 <Select
-                                    value={preferences?.dailyGoal?.toString()}
-                                    onValueChange={(value) => updateDailyGoal(parseInt(value))}
+                                    value={dailyGoal.toString()}
+                                    onValueChange={(value) => setDailyGoal(parseInt(value))}
+                                    disabled={!isEditingDailyGoal}
                                 >
                                     <SelectTrigger className="bg-secondary border-none">
                                         <SelectValue placeholder="Select daily goal" />
@@ -399,29 +462,44 @@ const Settings = () => {
                                     </div>
 
                                     <div className="flex gap-2">
-                                        <Button
-                                            size="sm"
-                                            onClick={() => setIsEditingAiRules(true)}
-                                        >
-                                            Edit
-                                        </Button>
-
-                                        <Button
-                                            size="sm"
-                                            onClick={async () => {
-                                                setIsUpdatingAiRules(true);
-                                                await updateAiRules(aiRules);
-                                                setIsUpdatingAiRules(false);
-                                                setIsEditingAiRules(false);
-                                                toast({
-                                                    title: "Success",
-                                                    description: "AI rules updated successfully",
-                                                });
-                                            }}
-                                            disabled={isUpdatingAiRules || aiRules === (preferences?.aiRules || '')}
-                                        >
-                                            {isUpdatingAiRules ? 'Saving...' : 'Save'}
-                                        </Button>
+                                        {!isEditingAiRules ? (
+                                            <Button
+                                                size="sm"
+                                                onClick={() => setIsEditingAiRules(true)}
+                                            >
+                                                Edit
+                                            </Button>
+                                        ) : (
+                                            <>
+                                                <Button
+                                                    size="sm"
+                                                    onClick={async () => {
+                                                        setIsUpdatingAiRules(true);
+                                                        await updateAiRules(aiRules);
+                                                        setIsUpdatingAiRules(false);
+                                                        setIsEditingAiRules(false);
+                                                        toast({
+                                                            title: "Success",
+                                                            description: "AI rules updated successfully",
+                                                        });
+                                                    }}
+                                                    disabled={isUpdatingAiRules || aiRules === (preferences?.aiRules || '')}
+                                                >
+                                                    {isUpdatingAiRules ? 'Saving...' : 'Save'}
+                                                </Button>
+                                                <Button
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    onClick={() => {
+                                                        setIsEditingAiRules(false);
+                                                        setAiRules(preferences?.aiRules || '');
+                                                    }}
+                                                    disabled={isUpdatingAiRules}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                                 <Textarea

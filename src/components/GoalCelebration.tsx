@@ -9,22 +9,26 @@ interface GoalCelebrationProps {
     dailyGoal: number;
 }
 
-const GoalCelebration: React.FC<GoalCelebrationProps> = ({ isOpen, onClose, dailyGoal }) => {
+const GoalCelebration: React.FC<GoalCelebrationProps> = ({
+    isOpen,
+    onClose,
+    dailyGoal,
+}) => {
     const [showConfetti, setShowConfetti] = useState(false);
 
     useEffect(() => {
-        if (isOpen) {
-            setShowConfetti(true);
-            const timer = setTimeout(() => setShowConfetti(false), 5000);
-            return () => clearTimeout(timer);
-        }
+        isOpen ? setShowConfetti(true) : setShowConfetti(false);
     }, [isOpen]);
 
-    // Simple pure CSS/Framer Motion confetti
+    const handleClose = () => {
+        setShowConfetti(false);
+        onClose();
+    };
+
     const Confetti = () => {
         const colors = ['#f59e0b', '#ef4444', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'];
         return (
-            <div className="fixed inset-0 pointer-events-none z-[100] overflow-hidden">
+            <div className="fixed inset-0 pointer-events-none z-[120] overflow-hidden">
                 {Array.from({ length: 50 }).map((_, i) => (
                     <motion.div
                         key={i}
@@ -33,19 +37,19 @@ const GoalCelebration: React.FC<GoalCelebrationProps> = ({ isOpen, onClose, dail
                             left: `${Math.random() * 100}%`,
                             scale: Math.random() * 0.5 + 0.5,
                             rotate: 0,
-                            opacity: 1
+                            opacity: 1,
                         }}
                         animate={{
                             top: '120%',
-                            left: `${(Math.random() * 20 - 10) + (i * 2)}%`,
+                            left: `${(Math.random() * 20 - 10) + i * 2}%`,
                             rotate: 360 * (Math.random() > 0.5 ? 1 : -1),
-                            opacity: 0
+                            opacity: 0,
                         }}
                         transition={{
                             duration: Math.random() * 2 + 2,
                             repeat: Infinity,
                             delay: Math.random() * 5,
-                            ease: "linear"
+                            ease: 'linear',
                         }}
                         style={{
                             position: 'absolute',
@@ -76,7 +80,7 @@ const GoalCelebration: React.FC<GoalCelebrationProps> = ({ isOpen, onClose, dail
                             className="relative bg-gradient-dark border border-light/20 p-8 rounded-[2.5rem] max-w-md w-full text-center shadow-2xl"
                         >
                             <button
-                                onClick={onClose}
+                                onClick={handleClose}
                                 className="absolute top-6 right-6 p-2 rounded-full hover:bg-white transition-colors"
                             >
                                 <X className="w-5 h-5 text-muted-foreground" />
@@ -85,35 +89,33 @@ const GoalCelebration: React.FC<GoalCelebrationProps> = ({ isOpen, onClose, dail
                             <motion.div
                                 initial={{ rotate: -10, scale: 0 }}
                                 animate={{ rotate: 0, scale: 1 }}
-                                transition={{ type: "spring", delay: 0.2 }}
-                                className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 relative"
+                                transition={{ type: 'spring', delay: 0.2 }}
+                                className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 relative"
                             >
                                 <Trophy className="w-12 h-12 text-light" />
-                                <motion.div
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 2 }}
-                                    className="absolute -top-1 -right-1"
-                                >
-                                    <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
-                                </motion.div>
-                                <Sparkles className="absolute -bottom-1 -left-1 w-6 h-6 text-blue-400" />
                             </motion.div>
 
-                            <h2 className="text-3xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-tertiary">
+                            <h2 className="text-3xl font-bold mb-2 text-light">
                                 Goal Reached!
                             </h2>
-                            <p className="text-muted-foreground mb-8">
-                                Amazing work! You've mastered {dailyGoal} words today. Keep up the fantastic momentum!
+
+                            <p className="text-muted-foreground mb-4">
+                                Amazing work! You've mastered {dailyGoal} words today.
                             </p>
 
-                            <div className="space-y-4">
-                                <Button
-                                    onClick={onClose}
-                                    className="w-full h-14 rounded-full text-lg font-bold btn-1 hover:scale-105 transition-transform"
-                                >
-                                    Continue Learning
-                                </Button>
+                            <div className="bg-primary/10 rounded-2xl p-4 mb-8">
+                                <p className="text-lg font-bold text-light flex items-center justify-center gap-2">
+                                    <Sparkles className="w-5 h-5" />
+                                    You earned {dailyGoal * 10} tokens!
+                                </p>
                             </div>
+
+                            <Button
+                                onClick={handleClose}
+                                className="w-full h-14 rounded-full text-lg font-bold btn-1 hover:scale-105 transition-transform"
+                            >
+                                Continue Learning
+                            </Button>
                         </motion.div>
                     </div>
                 )}

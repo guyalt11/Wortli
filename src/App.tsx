@@ -1,5 +1,4 @@
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -9,6 +8,7 @@ import { PreferencesProvider, usePreferences } from "@/context/PreferencesContex
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GoalCelebration from "@/components/GoalCelebration";
+import { supabase } from "@/lib/supabase";
 import { useState, useEffect } from "react";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
@@ -35,12 +35,23 @@ const AppContent = () => {
     if (!isAuthenticated || !preferences || preferences.dailyGoal <= 0 || !currentUser || isLoading) return;
 
     const today = new Date().toISOString().split('T')[0];
-    const celebrationKey = `goal_celebrated_${currentUser.id}_${today}`;
-    const alreadyCelebrated = localStorage.getItem(celebrationKey);
+    if (dailyCount === preferences.dailyGoal) {
+      const claimReward = async () => {
+        try {
+          const { data, error } = await supabase.rpc('claim_daily_reward');
+          if (error) {
+            console.error('Error claiming daily reward:', error);
+            return;
+          }
+          if (data === true) {
+            setShowGoalCelebration(true);
+          }
+        } catch (err) {
+          console.error('Exception in claimReward:', err);
+        }
+      };
 
-    if (dailyCount >= preferences.dailyGoal && !alreadyCelebrated) {
-      setShowGoalCelebration(true);
-      localStorage.setItem(celebrationKey, 'true');
+      claimReward();
     }
   }, [dailyCount, preferences?.dailyGoal, isAuthenticated, currentUser, isLoading]);
 

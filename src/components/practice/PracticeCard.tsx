@@ -63,7 +63,7 @@ const PracticeCard: React.FC<PracticeCardProps> = ({
   }
 
   return (
-    <div className="w-full light:shadow-2xl max-w-md mx-auto practice-card rounded-3xl">
+    <div className="w-full light:shadow-2xl max-w-md mx-auto light:practice-card rounded-3xl">
       <Card
         className={`min-h-[200px] flex flex-col border-none cursor-pointer transition-transform practice-card ${flipped ? 'animate-flip' : ''}`}
         onClick={handleFlip}
