@@ -18,6 +18,8 @@ import FlagIcon from '@/components/FlagIcon';
 import { VocabList } from '@/types/vocabulary';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { getLanguageName } from '@/constants/languages';
+import LoadingOverlay from '@/components/LoadingOverlay';
+
 
 interface LibraryDialogProps {
     open: boolean;
@@ -178,10 +180,8 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
             return;
         }
 
-        // Close dialog first
-        onOpenChange(false);
-
         setIsImporting(true);
+        onOpenChange(false);
         let successCount = 0;
         let errorCount = 0;
 
@@ -240,6 +240,7 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
 
     return (
         <>
+            {isImporting && <LoadingOverlay message="Importing lists..." />}
             <Dialog open={open} onOpenChange={onOpenChange}>
                 <DialogContent className="w-[90%] sm:max-w-[600px] h-[85vh] flex flex-col">
                     <DialogHeader>
