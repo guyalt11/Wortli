@@ -46,7 +46,6 @@ const Settings = () => {
         updateDefaultOrigin,
         updateDefaultTransl,
         updateAiRules,
-        updateAiInclude,
         updateDailyGoal,
     } = usePreferences();
     const navigate = useNavigate();
@@ -232,17 +231,6 @@ const Settings = () => {
         setIsUpdatingDailyGoal(false);
     };
 
-    const handleAiIncludeToggle = async () => {
-        const newValue = !preferences?.aiInclude;
-        const success = await updateAiInclude(newValue);
-        if (!success) {
-            toast({
-                title: "Update failed",
-                description: "Unable to update AI preference. Please try again.",
-                variant: "destructive",
-            });
-        }
-    };
 
     return (
         <div className="min-h-screen bg-background">
@@ -509,22 +497,6 @@ const Settings = () => {
                                     placeholder="e.g. Always respond only in my default origin language."
                                     className="bg-secondary border-none resize-none min-h-[100px]"
                                 />
-                            </div>
-                            <div className="border-t my-2" />
-                            <div className="flex items-center justify-between gap-2">
-                                <div>
-                                    <Label>Improve AI Context</Label>
-                                    <p className="text-sm text-muted-foreground">
-                                        Allow AI to see your existing words so it can avoid duplicates. <strong>May consume a lot of tokens!</strong>
-                                    </p>
-                                </div>
-                                <Button
-                                    size="sm"
-                                    onClick={handleAiIncludeToggle}
-                                    variant={preferences?.aiInclude ? "default" : "outline"}
-                                >
-                                    {preferences?.aiInclude ? 'Enabled' : 'Disabled'}
-                                </Button>
                             </div>
                             <div className="border-t my-2" />
                             <div className="flex items-center justify-between">

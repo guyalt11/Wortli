@@ -12,6 +12,8 @@ import { toast } from '@/components/ui/use-toast';
 import { useVocab } from '@/context/VocabContext';
 import TypingIndicator from '@/components/ui/TypingIndicator';
 import { useNavigate } from 'react-router-dom';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import { useAuth } from '@/context/AuthContext';
 import { usePreferences } from '@/context/PreferencesContext';
@@ -43,6 +45,9 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     const { preferences } = usePreferences();
     const navigate = useNavigate();
 
+    const [includeAllWords, setIncludeAllWords] = useState(false);
+    const [includeListWords, setIncludeListWords] = useState(true);
+
     // Mobile keyboard not to cover input
     useEffect(() => {
         if (!window.visualViewport) return;
@@ -63,6 +68,8 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
             setMessages([]);
             setImportMode(null);
             setSelectedListId('');
+            setIncludeAllWords(false);
+            setIncludeListWords(false);
         }
     }, [open]);
 
@@ -144,17 +151,20 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
             // Find context for the selected list if in 'existing' mode
             const selectedList = effectiveImportMode === 'existing' ? lists.find(l => l.id === selectedListId) : null;
 
-            // Determine words to exclude (prioritize selected list words, then all words if preference is on)
+            // Determine words to exclude based on checkboxes
             let existingWordStrings: string[] | undefined = undefined;
-            if (preferences?.aiInclude ?? true) {
-                if (selectedList) {
-                    // Combine selected list words and all words for better context
-                    const listWords = selectedList.words.map(w => w.origin.toLowerCase());
-                    const otherWords = allWords.map(w => w.origin.toLowerCase());
-                    existingWordStrings = Array.from(new Set([...listWords, ...otherWords]));
-                } else {
-                    existingWordStrings = Array.from(new Set(allWords.map(w => w.origin.toLowerCase())));
-                }
+            const wordsToExclude = new Set<string>();
+
+            if (effectiveImportMode === 'existing' && selectedList && includeListWords) {
+                selectedList.words.forEach(w => wordsToExclude.add(w.origin.toLowerCase()));
+            }
+
+            if (includeAllWords) {
+                allWords.forEach(w => wordsToExclude.add(w.origin.toLowerCase()));
+            }
+
+            if (wordsToExclude.size > 0) {
+                existingWordStrings = Array.from(wordsToExclude);
             }
 
             const response = await sendChatMessage(
@@ -321,6 +331,42 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                         </SelectContent>
                                     </Select>
                                 </div>
+
+                                <div className="space-y-4 w-full max-w-xs">
+                                    <div className="flex items-start space-x-3 text-left p-3 rounded-lg">
+                                        <Checkbox
+                                            id="includeList-select"
+                                            checked={includeListWords}
+                                            onCheckedChange={(checked) => setIncludeListWords(checked as boolean)}
+                                            className="mt-1"
+                                        />
+                                        <div className="grid gap-1.5 leading-none">
+                                            <Label htmlFor="includeList-select" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                                Include this list's words
+                                            </Label>
+                                            <p className="text-xs text-muted-foreground">
+                                                AI will avoid duplicates from this list
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-start space-x-3 text-left p-3 rounded-lg">
+                                        <Checkbox
+                                            id="includeAll-select"
+                                            checked={includeAllWords}
+                                            onCheckedChange={(checked) => setIncludeAllWords(checked as boolean)}
+                                            className="mt-1"
+                                        />
+                                        <div className="grid gap-1.5 leading-none">
+                                            <Label htmlFor="includeAll-select" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                                Include all my words
+                                            </Label>
+                                            <p className="text-xs text-muted-foreground">
+                                                AI will be aware of your existing words. <strong className="font-bold">May consume a lot of tokens!</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                                 <Button
                                     variant="ghost"
                                     size="sm"
@@ -343,6 +389,45 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                         Tell me what vocabulary you'd like to generate!
                                     </p>
                                 </div>
+
+                                <div className="space-y-4 w-full max-w-xs">
+                                    {importMode === 'existing' && (
+                                        <div className="flex items-start space-x-3 text-left pt-3 rounded-lg">
+                                            <Checkbox
+                                                id="includeList"
+                                                checked={includeListWords}
+                                                onCheckedChange={(checked) => setIncludeListWords(checked as boolean)}
+                                                className="mt-1"
+                                            />
+                                            <div className="grid gap-1.5 leading-none">
+                                                <Label htmlFor="includeList" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                                    Include this list's words
+                                                </Label>
+                                                <p className="text-xs text-muted-foreground">
+                                                    AI will be aware of words from this list
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <div className="flex items-start space-x-3 text-left pt-3 rounded-lg">
+                                        <Checkbox
+                                            id="includeAll"
+                                            checked={includeAllWords}
+                                            onCheckedChange={(checked) => setIncludeAllWords(checked as boolean)}
+                                            className="mt-1"
+                                        />
+                                        <div className="grid gap-1.5 leading-none">
+                                            <Label htmlFor="includeAll" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                                Include all my words
+                                            </Label>
+                                            <p className="text-xs text-muted-foreground">
+                                                AI will be aware of your existing words. <strong className="font-bold">May consume a lot of tokens!</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <Button
                                     variant="ghost"
                                     size="sm"
