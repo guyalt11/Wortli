@@ -52,7 +52,7 @@ const ListCard = ({ list, onSelect, onShareToggle, onPinToggle, onEdit, onDelete
               {list.name}
             </CardTitle>
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-2 py-1 rounded-md backdrop-blur bg-white/10">
+              <div className="flex items-center gap-2 px-2 py-1 rounded-md backdrop-blur bg-white/10 light:bg-[#d0e4ec]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-share-fill" viewBox="0 0 16 16">
                   <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
                 </svg>
@@ -60,7 +60,7 @@ const ListCard = ({ list, onSelect, onShareToggle, onPinToggle, onEdit, onDelete
                   id={`share-${list.id}`}
                   checked={list.share || false}
                   onCheckedChange={(checked) => onShareToggle(list.id, checked)}
-                  className="data-[state=unchecked]:!bg-toggle"
+                  className="data-[state=unchecked]:!bg-toggle bg-dark"
                 />
               </div>
               <Button

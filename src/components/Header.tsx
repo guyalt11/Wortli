@@ -135,13 +135,13 @@ const Header = () => {
                             {/* Streak Counter*/}
                             {isAuthenticated && (
                                 <div className="flex items-center gap-2">
-                                    <button className="flex items-center gap-1 px-2 py-1 rounded-full border border-border"
+                                    <button className="flex items-center gap-1 px-2 py-1 rounded-full border border-border light:bg-[#b8f6f3]"
                                         title="Daily Progress"
                                         onClick={handleDailyProgressClick}>
                                         <Target className="h-4 w-4 text-light" />
                                         <span className="text-sm font-bold text-foreground">{dailyCount}{preferences?.dailyGoal ? `/${preferences?.dailyGoal}` : ''}</span>
                                     </button>
-                                    <div className="flex items-center gap-1 px-2 py-1 rounded-full border border-border" title="Current Streak">
+                                    <div className="flex items-center gap-1 px-2 py-1 rounded-full border border-border light:border-[#ffa262] light:bg-[#ffe5cb]" title="Current Streak">
                                         <Flame className="h-4 w-4 text-orange-500 fill-orange-500" />
                                         <span className="text-sm font-bold text-foreground">{streak}</span>
                                     </div>

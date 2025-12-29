@@ -9,7 +9,7 @@
 
     /* Secondary - Light teal */
     --secondary: #FFFFFF;
-    --secondary-foreground: #FFFFFF;
+    --secondary-foreground: #020b0b;
 
     /* Tertiary - Pale teal */
     --tertiary: #234b45;
@@ -24,15 +24,16 @@
     --dark-foreground: #FFFFFF;
 
     /* Light - Main background for subtle elements */
-    --light: #00e5bf;
+    --light: #A6E0DD;
     --light-foreground: #020b0b;
 
     /* Utility colors */
     --border: #92d3e3;
-    --input: var(--secondary);
+    --input: #ffffff;
     --ring: var(--light);
     --radius: 0.5rem;
     --toggle-bg: #033533;
+    --direction-bg: #d0e4ec;
     --muted-foreground: #2b2b2b;
 
     /* Button colors - Pure HEX */
@@ -53,7 +54,7 @@
     --a-end: 1;
 
     /* Gradient colors */
-    --gradient-from: #A6E0DD;
+    --gradient-from: #b8f6f3;
     --gradient-to: #82CCC5;
 
     /* Difficulty colors */
@@ -88,7 +89,7 @@
     }
 
     .direction-button {
-        background-color: #d0e4ec;
+        background-color: var(--direction-bg);
 
         &:hover {
             background-color: #a0c4ce;

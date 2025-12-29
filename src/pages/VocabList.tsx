@@ -289,6 +289,7 @@ const VocabList = () => {
                     <span className="flex-1 mr-2">Share List</span>
                     <Switch
                       id="share-toggle-dropdown"
+                      className="data-[state=unchecked]:!bg-toggle"
                       checked={currentList.share || false}
                       onCheckedChange={(checked) => {
                         updateList(currentList.id, { share: checked });
@@ -383,7 +384,7 @@ const VocabList = () => {
             size="icon"
             onClick={() => setShowReviewTimes(!showReviewTimes)}
             title={showReviewTimes ? "Hide review times" : "Show review times"}
-            className='border-none light:hover:bg-primary'
+            className='border-none'
           >
             ⏱️
           </Button>

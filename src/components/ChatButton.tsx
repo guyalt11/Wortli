@@ -12,7 +12,7 @@ const ChatButton = ({ open, onOpenChange }: ChatButtonProps) => {
             <Button
                 onClick={() => onOpenChange(true)}
                 size="icon"
-                className="fixed md:bottom-6 bottom-[calc(5rem+env(safe-area-inset-bottom))] right-6 h-14 w-14 rounded-full shadow-lg hover:scale-110 transition-transform z-40"
+                className="fixed md:bottom-6 bottom-[calc(5rem+env(safe-area-inset-bottom))] right-6 h-14 w-14 rounded-full shadow-2xl hover:scale-110 transition-transform z-40"
                 aria-label="Open chat"
             >
                 <svg
