@@ -32,7 +32,7 @@ const AppContent = () => {
 
   // Goal celebration logic
   useEffect(() => {
-    if (!isAuthenticated || !preferences || preferences.dailyGoal <= 0 || !currentUser) return;
+    if (!isAuthenticated || !preferences || preferences.dailyGoal <= 0 || !currentUser || isLoading) return;
 
     const today = new Date().toISOString().split('T')[0];
     const celebrationKey = `goal_celebrated_${currentUser.id}_${today}`;
@@ -42,7 +42,7 @@ const AppContent = () => {
       setShowGoalCelebration(true);
       localStorage.setItem(celebrationKey, 'true');
     }
-  }, [dailyCount, preferences?.dailyGoal, isAuthenticated, currentUser?.id]);
+  }, [dailyCount, preferences?.dailyGoal, isAuthenticated, currentUser, isLoading]);
 
   const isHomePath = location.pathname === "/home";
   const isAuthPath = ["/login", "/register"].includes(location.pathname);

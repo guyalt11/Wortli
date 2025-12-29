@@ -18,9 +18,9 @@ type AuthContextType = {
   deleteUser: () => Promise<boolean>;
   checkAndRefreshToken: () => void;
   streak: number;
-  setStreak: (streak: number) => void;
+  setStreak: (streak: number | ((prev: number) => number)) => void;
   dailyCount: number;
-  setDailyCount: (count: number) => void;
+  setDailyCount: (count: number | ((prev: number) => number)) => void;
   updateDailyProgress: () => Promise<void>;
 };
 

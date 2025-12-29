@@ -88,7 +88,7 @@ const GoalCelebration: React.FC<GoalCelebrationProps> = ({ isOpen, onClose, dail
                                 transition={{ type: "spring", delay: 0.2 }}
                                 className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 relative"
                             >
-                                <Trophy className="w-12 h-12 text-primary" />
+                                <Trophy className="w-12 h-12 text-light" />
                                 <motion.div
                                     animate={{ scale: [1, 1.2, 1] }}
                                     transition={{ repeat: Infinity, duration: 2 }}
@@ -113,9 +113,6 @@ const GoalCelebration: React.FC<GoalCelebrationProps> = ({ isOpen, onClose, dail
                                 >
                                     Continue Learning
                                 </Button>
-                                <p className="text-xs text-muted-foreground italic">
-                                    "Knowledge is power. Information is liberating."
-                                </p>
                             </div>
                         </motion.div>
                     </div>

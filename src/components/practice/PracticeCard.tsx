@@ -97,7 +97,7 @@ const PracticeCard: React.FC<PracticeCardProps> = ({
           )}
         </CardContent>
 
-        {flipped && !isAnswered && (
+        {flipped && (
           <CardFooter className="flex-col space-y-2 pt-0">
             <div className="font-medium text-center w-full mb-2">How well did you know this word?</div>
             <DifficultyButtons

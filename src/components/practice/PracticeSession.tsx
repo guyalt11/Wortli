@@ -10,8 +10,6 @@ import { DifficultyLevel, PracticeDirection } from '@/types/vocabulary';
 import { usePracticeWords } from '@/hooks/usePracticeWords';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import DeleteWordDialog from '@/components/DeleteWordDialog';
-import { Button } from '@/components/ui/button';
-import FlagIcon from '@/components/FlagIcon';
 import { useAuth } from '@/context/AuthContext';
 
 interface PracticeSessionProps {
@@ -98,7 +96,7 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
   const totalWords = totalWordsRef.current > 0 ? totalWordsRef.current : wordsToUse.length;
   const isComplete = currentIndex >= wordsToUse.length || wordsToUse.length === 0;
 
-  const handleAnswered = (difficulty: DifficultyLevel) => {
+  const handleAnswered = async (difficulty: DifficultyLevel) => {
     if (currentWord) {
       // Track processing without mutating initialWordsRef.current
       if (!processedStatus[currentIndex]) {
@@ -112,20 +110,20 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
 
       setIsAnswered(true);
 
-      // Call updateWordDifficulty in the background
-      updateWordDifficulty(currentWord.id, difficulty, direction).catch(error => {
-        console.error('Error updating word difficulty:', error);
-      });
-
-      // Update daily progress (streak and daily count)
-      updateDailyProgress().catch(error => {
-        console.error('Error updating daily progress:', error);
-      });
-
-      // Move to the next card after a short delay
+      // Move to the next card after a short delay for feedback
       setTimeout(() => {
         handleNext();
       }, 100);
+
+      try {
+        // Wait for word difficulty update to complete in the database
+        await updateWordDifficulty(currentWord.id, difficulty, direction);
+
+        // Then update daily progress (streak and daily count) - now it has the latest data
+        await updateDailyProgress();
+      } catch (error) {
+        console.error('Error in handling answer:', error);
+      }
     }
   };
 
