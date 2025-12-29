@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, Send, Loader2 } from 'lucide-react';
+import { MessageCircle, Send, Loader2, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -17,6 +17,7 @@ import { Label } from '@/components/ui/label';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import { useAuth } from '@/context/AuthContext';
 import { usePreferences } from '@/context/PreferencesContext';
+import { supabase } from '@/lib/supabase';
 import {
     Select,
     SelectContent,
@@ -41,9 +42,11 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     const [viewportHeight, setViewportHeight] = useState('100dvh');
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { importList, addWord, lists, allWords } = useVocab();
-    const { token } = useAuth();
+    const { token, currentUser } = useAuth();
     const { preferences } = usePreferences();
     const navigate = useNavigate();
+
+    const [isRestoring, setIsRestoring] = useState(false);
 
     const [includeAllWords, setIncludeAllWords] = useState(false);
     const [includeListWords, setIncludeListWords] = useState(true);
@@ -174,7 +177,13 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                 selectedList?.language || preferences?.defaultOrigin,
                 selectedList?.target || preferences?.defaultTransl,
                 preferences?.aiRules,
-                existingWordStrings
+                existingWordStrings,
+                {
+                    importMode: effectiveImportMode,
+                    selectedListId: selectedListId,
+                    includeAllWords: includeAllWords,
+                    includeListWords: includeListWords
+                }
             );
 
             const jsonData = extractJSON(response);
@@ -253,6 +262,48 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
         }
     };
 
+    const handleRestoreLastChat = async () => {
+        if (!currentUser) return;
+        setIsRestoring(true);
+        try {
+            const { data, error } = await supabase
+                .from('user_data')
+                .select('last_chat')
+                .eq('user_id', currentUser.id)
+                .single();
+
+            if (error) {
+                if (error.code === 'PGRST116') {
+                    toast({
+                        title: "No chat found",
+                        description: "There's no previous chat session to restore.",
+                    });
+                } else {
+                    throw error;
+                }
+                return;
+            }
+
+            if (data?.last_chat) {
+                const lastChat = data.last_chat;
+                setMessages(lastChat.ai_request.history || []);
+                setImportMode(lastChat.ui_state.importMode);
+                setSelectedListId(lastChat.ui_state.selectedListId);
+                setIncludeAllWords(lastChat.ui_state.includeAllWords);
+                setIncludeListWords(lastChat.ui_state.includeListWords);
+            }
+        } catch (error) {
+            console.error('Error restoring chat:', error);
+            toast({
+                title: "Error",
+                description: "Failed to restore last chat. Please try again.",
+                variant: "destructive"
+            });
+        } finally {
+            setIsRestoring(false);
+        }
+    };
+
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -307,6 +358,20 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                         <span>Add to Existing</span>
                                     </Button>
                                 </div>
+
+                                <Button
+                                    variant="outline"
+                                    className="w-auto max-w-md h-12 flex items-center justify-center gap-2 border-none"
+                                    onClick={handleRestoreLastChat}
+                                    disabled={isRestoring}
+                                >
+                                    {isRestoring ? (
+                                        <Loader2 className="h-5 w-5 animate-spin" />
+                                    ) : (
+                                        <History className="h-5 w-5" />
+                                    )}
+                                    <span>Restore Last Chat</span>
+                                </Button>
                             </div>
                         ) : messages.length === 0 && importMode === 'existing' && !selectedListId ? (
                             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">

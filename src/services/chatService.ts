@@ -10,6 +10,12 @@ export interface ChatRequest {
   defaultTransl?: string;
   aiRules?: string;
   existingWords?: string[];
+  uiState?: {
+    importMode: 'new' | 'existing' | null;
+    selectedListId: string;
+    includeAllWords: boolean;
+    includeListWords: boolean;
+  };
 }
 
 export interface ChatResponse {
@@ -29,7 +35,8 @@ export const sendChatMessage = async (
   defaultOrigin?: string,
   defaultTransl?: string,
   aiRules?: string,
-  existingWords?: string[]
+  existingWords?: string[],
+  uiState?: ChatRequest['uiState']
 ): Promise<string> => {
   try {
     const response = await fetch(API_URL, {
@@ -45,6 +52,7 @@ export const sendChatMessage = async (
         defaultTransl,
         aiRules,
         existingWords,
+        uiState,
       } as ChatRequest),
     });
 
