@@ -43,7 +43,7 @@ const ListCard = ({ list, onSelect, onShareToggle, onPinToggle, onEdit, onDelete
   const totalDueCount = translateFromCount + translateToCount;
 
   return (
-    <Card className="h-full flex flex-col list-card">
+    <Card className="h-full flex flex-col list-card border-none light:shadow-lg">
       {/*<Card className="h-full flex flex-col" style={{ background: 'linear-gradient(135deg, rgba(8, 35, 38, 1) 0%, rgba(21, 76, 82, 1) 100%)' }}>*/}
       <CardHeader className="pb-2">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">

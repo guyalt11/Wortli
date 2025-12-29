@@ -13,7 +13,7 @@ const PracticeComplete: React.FC<PracticeCompleteProps> = ({
 }) => {
 
   return (
-    <Card className="mb-6">
+    <Card className="mb-6 light:shadow-2xl">
       <CardHeader>
         <CardTitle>Practice Complete!</CardTitle>
       </CardHeader>

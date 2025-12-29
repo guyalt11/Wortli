@@ -256,7 +256,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
             <Dialog open={open} onOpenChange={onOpenChange}>
                 <DialogContent
                     style={{ height: viewportHeight }}
-                    className="sm:max-w-full md:max-w-3xl flex flex-col p-0 gap-0 border-0 sm:border animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-4 duration-300 sm:rounded-lg rounded-none fixed top-0 left-0 translate-x-0 translate-y-0 sm:fixed sm:left-[50%] sm:-translate-x-1/2"
+                    className="sm:max-w-full md:max-w-3xl flex flex-col p-0 gap-0 animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-4 duration-300 border-none fixed top-0 left-0 translate-x-0 translate-y-0 sm:fixed sm:left-[50%] sm:-translate-x-1/2"
                 >
                     <DialogHeader className="px-6 pt-5 pb-5 border-b-0 sm:border-b border-white/20 bg-gradient-dark">
                         <DialogTitle className="flex items-center gap-2 text-xl">
@@ -265,7 +265,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                         </DialogTitle>
                     </DialogHeader>
 
-                    <div className="flex-1 flex flex-col overflow-y-auto px-6 py-3 space-y-3 bg-dark">
+                    <div className="flex-1 flex flex-col overflow-y-auto px-6 py-3 space-y-3 dark:bg-dark background">
                         {messages.length === 0 && !importMode ? (
                             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">
                                 <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center animate-pulse">
@@ -281,19 +281,19 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
                                     <Button
                                         variant="outline"
-                                        className="group h-24 flex flex-col gap-2"
+                                        className="group h-24 flex flex-col gap-2 light:bg-gradient-dark"
                                         onClick={() => setImportMode('new')}
                                     >
-                                        <Plus className="h-6 w-6 text-light group-hover:text-light-foreground transition-none" />
+                                        <Plus className="h-6 w-6 dark:text-light group-hover:text-light-foreground transition-none" />
                                         <span>Create New List</span>
                                     </Button>
                                     <Button
                                         variant="outline"
-                                        className="group h-24 flex flex-col gap-2"
+                                        className="group h-24 flex flex-col gap-2 light:bg-gradient-dark"
                                         onClick={() => setImportMode('existing')}
                                         disabled={lists.length === 0}
                                     >
-                                        <ListPlus className="h-6 w-6 text-light group-hover:text-light-foreground transition-none" />
+                                        <ListPlus className="h-6 w-6 dark:text-light group-hover:text-light-foreground transition-none" />
                                         <span>Add to Existing</span>
                                     </Button>
                                 </div>

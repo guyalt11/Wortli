@@ -20,7 +20,7 @@ const DifficultyButtons: React.FC<DifficultyButtonsProps> = ({
   return (
     <div className="flex justify-between w-full gap-2">
       <Button
-        className="flex-1 bg-difficulty-hard text-center min-w-0"
+        className="flex-1 bg-difficulty-hard text-black text-center min-w-0"
         onClick={() => onSelectDifficulty('hard')}
         title="Next review in 1 minute"
       >
@@ -40,7 +40,7 @@ const DifficultyButtons: React.FC<DifficultyButtonsProps> = ({
         </div>
       </Button>
       <Button
-        className="flex-1 bg-difficulty-good text-center min-w-0"
+        className="flex-1 bg-difficulty-good text-black text-center min-w-0"
         onClick={() => onSelectDifficulty('good')}
         title={`Next review in ${getReviewTimeEstimate(word, 'good', direction)}`}
       >

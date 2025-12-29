@@ -63,7 +63,7 @@ const WordCard = ({ word, onEdit, onDelete, showReviewTimes }: WordCardProps) =>
   };
 
   return (
-    <Card className="word-card">
+    <Card className="word-card light:shadow-xl border-none">
       <CardContent className="p-4">
         <div className="flex justify-between items-start">
           <div className="flex-1">

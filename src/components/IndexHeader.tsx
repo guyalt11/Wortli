@@ -60,21 +60,21 @@ const IndexHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, on
               title="Practice all words"
               onClick={onPracticeAll}
               disabled={totalDueWords === 0}
-              className={`gap-1 transition-all ${totalDueWords === 0 ? 'cursor-not-allowed opacity-50' : 'btn-1'}`}
+              className={`gap-1 transition-all light:shadow-xl ${totalDueWords === 0 ? 'cursor-not-allowed opacity-50' : 'btn-1'}`}
             >
               <Play className="h-4 w-4 text-black" />
             </Button>
           )}
 
-          <Button title="Add new list" onClick={onAddList} className="gap-1 transition-all btn-2 text-foreground">
+          <Button title="Add new list" onClick={onAddList} className="gap-1 transition-all btn-2 text-foreground light:shadow-xl">
             <Plus className="h-4 w-4 text-black" />
           </Button>
 
-          <Button title="Import lists" onClick={onImport} className="gap-1 transition-all btn-3 text-foreground">
+          <Button title="Import lists" onClick={onImport} className="gap-1 transition-all btn-3 text-foreground light:shadow-xl">
             <Upload className="h-4 w-4 text-black" />
           </Button>
 
-          <Button title="Browse shared lists" onClick={onLibrary} className="gap-1 transition-all btn-4 text-foreground">
+          <Button title="Browse shared lists" onClick={onLibrary} className="gap-1 transition-all btn-4 text-foreground light:shadow-xl">
             <BookOpen className="h-4 w-4 text-black" />
           </Button>
 
@@ -85,7 +85,7 @@ const IndexHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, on
               if (!isControlled) setInternalShowOnlyDue(newValue);
               onFilterChange(newValue);
             }}
-            className={`gap-1 transition-all ${effectiveShowOnlyDue ? 'btn-1' : 'btn-5'} text-foreground`}
+            className={`gap-1 transition-all light:shadow-xl ${effectiveShowOnlyDue ? 'btn-1' : 'btn-5'} text-foreground`}
           >
             {effectiveShowOnlyDue ? (
               <Eye className="h-4 w-4 text-black" />
@@ -104,7 +104,7 @@ const IndexHeader = ({ onAddList, onImport, onLibrary, lists, onFilterChange, on
       </div>
 
       <div className="w-full mb-6">
-        <div className="relative">
+        <div className="relative light:shadow-lg">
           <input
             type="text"
             placeholder={`Search lists... (Total: ${lists.length})`}

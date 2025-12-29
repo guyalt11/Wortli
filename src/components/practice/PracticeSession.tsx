@@ -230,7 +230,6 @@ const PracticeSession: React.FC<PracticeSessionProps> = ({
           word={currentWord}
           direction={direction}
           onAnswer={handleAnswered}
-          onNext={handleNext}
           isAnswered={isAnswered}
           onDelete={() => setShowDeleteDialog(true)}
         />

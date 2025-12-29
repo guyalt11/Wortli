@@ -9,7 +9,6 @@ interface PracticeCardProps {
   word: VocabWord;
   direction: PracticeDirection;
   onAnswer: (difficulty: DifficultyLevel) => void;
-  onNext: () => void;
   isAnswered: boolean;
   onDelete: () => void;
 }
@@ -18,7 +17,6 @@ const PracticeCard: React.FC<PracticeCardProps> = ({
   word,
   direction,
   onAnswer,
-  onNext,
   isAnswered,
   onDelete,
 }) => {
@@ -56,7 +54,7 @@ const PracticeCard: React.FC<PracticeCardProps> = ({
   // Safeguard against undefined word
   if (!word || !word.origin) {
     return (
-      <Card className="min-h-[200px] flex flex-col justify-center items-center">
+      <Card className="min-h-[200px] flex flex-col justify-center items-center rounded-3xl">
         <CardContent className="text-center">
           <p>No word available for practice.</p>
         </CardContent>
@@ -65,9 +63,9 @@ const PracticeCard: React.FC<PracticeCardProps> = ({
   }
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full light:shadow-2xl max-w-md mx-auto practice-card rounded-3xl">
       <Card
-        className={`min-h-[200px] flex flex-col cursor-pointer transition-transform practice-card ${flipped ? 'animate-flip' : ''}`}
+        className={`min-h-[200px] flex flex-col border-none cursor-pointer transition-transform practice-card ${flipped ? 'animate-flip' : ''}`}
         onClick={handleFlip}
       >
         <CardContent className="flex-1 flex flex-col justify-center items-center p-6">

@@ -1,6 +1,6 @@
 [data-theme="light"] {
     /* Background & Foreground */
-    --background: #f3f3f3;
+    --background: #e6f5f9;
     --foreground: #020b0b;
 
     /* Primary - Bright cyan/turquoise */
@@ -8,7 +8,7 @@
     --primary-foreground: #020b0b;
 
     /* Secondary - Light teal */
-    --secondary: #1d695e;
+    --secondary: #FFFFFF;
     --secondary-foreground: #FFFFFF;
 
     /* Tertiary - Pale teal */
@@ -20,27 +20,27 @@
     --danger-foreground: #FFFFFF;
 
     /* Dark - Accents on text or elements */
-    --dark: #0e333c;
+    --dark: #4d99ac;
     --dark-foreground: #FFFFFF;
 
     /* Light - Main background for subtle elements */
-    --light: #00A39C;
-    --light-foreground: #FFFFFF;
+    --light: #00e5bf;
+    --light-foreground: #020b0b;
 
     /* Utility colors */
-    --border: var(--secondary);
+    --border: #92d3e3;
     --input: var(--secondary);
     --ring: var(--light);
     --radius: 0.5rem;
     --toggle-bg: #033533;
-    --muted-foreground: #B3B3B3;
+    --muted-foreground: #2b2b2b;
 
     /* Button colors - Pure HEX */
-    --btn-1: #00A39C;
-    --btn-2: #00C4B4;
-    --btn-3: #00E5CC;
-    --btn-4: #00F0D8;
-    --btn-5: #00FFF0;
+    --btn-1: #00e5bf;
+    --btn-2: #00e5bf;
+    --btn-3: #00e5bf;
+    --btn-4: #00e5bf;
+    --btn-5: #00e5bf;
 
     /* Progress bar colors */
     --r-start: 0;
@@ -64,9 +64,9 @@
 
     /* Gender colors */
     --gender-male: #5AAEFF;
-    --gender-male-foreground: #FFFFFF;
+    --gender-male-foreground: #b20202;
     --gender-female: #FF8C8C;
-    --gender-female-foreground: #FFFFFF;
+    --gender-female-foreground: #414141;
     --gender-neuter: #80FF80;
     --gender-neuter-foreground: #414141;
     --gender-common: #FFFF99;
@@ -77,18 +77,23 @@
 
     /* Specifications */
     .list-card {
-        background-color: var(--primary);
-        color: var(--primary-foreground);
+        background: #ffffff;
+        color: var(--foreground);
     }
 
     .word-card,
     .practice-card {
-        background: var(--gradient-dark);
+        background: #ffffff;
         color: var(--foreground);
     }
 
     .direction-button {
-        background-color: var(--secondary);
+        background-color: #d0e4ec;
+
+        &:hover {
+            background-color: #a0c4ce;
+        }
+
         color: var(--secondary-foreground);
     }
 

@@ -255,7 +255,7 @@ const LibraryDialog = ({ open, onOpenChange }: LibraryDialogProps) => {
                         <div className="flex items-center gap-2 pt-1">
                             <Label htmlFor="language-filter">Language:</Label>
                             <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
-                                <SelectTrigger id="language-filter" className="w-[180px]">
+                                <SelectTrigger id="language-filter" className="w-[180px] bg-input">
                                     <SelectValue placeholder="Any" />
                                 </SelectTrigger>
                                 <SelectContent>

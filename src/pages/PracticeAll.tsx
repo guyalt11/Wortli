@@ -224,7 +224,7 @@ const PracticeAll: React.FC = () => {
           <Button
             variant="default"
             onClick={toggleDirection}
-            className={`relative px-[6px] sm:px-2 bg-secondary ${(direction !== 'translateTo' && translateToDue === 0) ||
+            className={`relative px-[6px] sm:px-2 direction-button ${(direction !== 'translateTo' && translateToDue === 0) ||
               (direction !== 'translateFrom' && translateFromDue === 0) ? 'cursor-not-allowed' : ''}`}
             disabled={
               (direction !== 'translateTo' && translateToDue === 0) ||
@@ -290,7 +290,6 @@ const PracticeAll: React.FC = () => {
             word={currentWord}
             direction={direction}
             onAnswer={handleAnswered}
-            onNext={handleNext}
             isAnswered={isAnswered}
             onDelete={() => setShowDeleteDialog(true)}
           />

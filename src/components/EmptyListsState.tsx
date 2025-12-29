@@ -12,7 +12,7 @@ const EmptyListsState = ({ onAddList, onLibrary, onOpenChange }: EmptyListsState
     <div className="flex flex-col sm:flex-row justify-center items-center gap-6 border-light">
       <Button
         variant="outline"
-        className="w-full text-light h-24 border-2 border-dashed flex flex-col border-tertiary !bg-secondary hover:text-light"
+        className="w-full text-light light:!text-dark h-24 border-2 border-dashed flex flex-col border-tertiary light:border-dark !bg-secondary hover:text-light light:shadow-xl"
         onClick={onAddList}
       >
         <Plus className="h-6 w-6 transition-none" />
@@ -20,7 +20,7 @@ const EmptyListsState = ({ onAddList, onLibrary, onOpenChange }: EmptyListsState
       </Button>
       <Button
         variant="outline"
-        className="w-full text-light h-24 border-2 border-dashed flex flex-col border-tertiary !bg-secondary hover:text-light"
+        className="w-full text-light light:!text-dark h-24 border-2 border-dashed flex flex-col border-tertiary light:border-dark !bg-secondary hover:text-light light:shadow-xl"
         onClick={() => onOpenChange(true)}
       >
         <Sparkles className="h-6 w-6 transition-none" />
@@ -28,7 +28,7 @@ const EmptyListsState = ({ onAddList, onLibrary, onOpenChange }: EmptyListsState
       </Button>
       <Button
         variant="outline"
-        className="w-full text-light h-24 border-2 border-dashed flex flex-col border-tertiary !bg-secondary hover:text-light"
+        className="w-full text-light light:!text-dark h-24 border-2 border-dashed flex flex-col border-tertiary light:border-dark !bg-secondary hover:text-light light:shadow-xl"
         onClick={onLibrary}
       >
         <BookOpen className="h-6 w-6 transition-none" />

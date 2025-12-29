@@ -1,5 +1,6 @@
-
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
 	darkMode: ["class"],
@@ -149,5 +150,12 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		tailwindcssAnimate,
+		plugin(function ({ addVariant }) {
+			addVariant("light", ['[data-theme="light"] &', '[data-theme="light"]&']);
+			addVariant("dark", ['[data-theme="dark"] &', '[data-theme="dark"]&']);
+			addVariant("neubrutalism", ['[data-theme="neubrutalism"] &', '[data-theme="neubrutalism"]&']);
+		}),
+	],
 } satisfies Config;

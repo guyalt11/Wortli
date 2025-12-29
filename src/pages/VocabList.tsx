@@ -324,14 +324,14 @@ const VocabList = () => {
         </div>
       </div>
       <div className="flex items-center mb-6">
-        <Button className="mr-4" onClick={handleAddWord}>
+        <Button className="mr-4 light:shadow-xl" onClick={handleAddWord}>
           <Plus className="h-4 w-4 text-black" />
         </Button>
         <div className="flex gap-2">
           <Button
             variant="default"
             onClick={() => goToPractice(currentList.id, 'translateFrom')}
-            className={`relative overflow-hidden truncate transition-all bg-secondary ${translateFromDue === 0 ? 'cursor-not-allowed' : ''} px-3`}
+            className={`relative overflow-hidden truncate transition-all light:shadow-lg direction-button ${translateFromDue === 0 ? 'cursor-not-allowed' : ''} px-3`}
             disabled={translateFromDue === 0}
           >
             <FlagIcon country={currentList.target || 'globe'} size={20} />
@@ -341,7 +341,7 @@ const VocabList = () => {
           <Button
             variant="default"
             onClick={() => goToPractice(currentList.id, 'translateTo')}
-            className={`relative overflow-hidden truncate transition-all bg-secondary ${translateToDue === 0 ? 'cursor-not-allowed' : ''} px-3`}
+            className={`relative overflow-hidden truncate transition-all light:shadow-lg direction-button ${translateToDue === 0 ? 'cursor-not-allowed' : ''} px-3`}
             disabled={translateToDue === 0}
           >
             <FlagIcon country={currentList.language} size={20} />
@@ -359,7 +359,7 @@ const VocabList = () => {
       </div>
       <div className="w-full mb-6">
         <div className="relative flex items-center gap-2">
-          <div className="relative flex-1">
+          <div className="relative flex-1 light:shadow-xl">
             <Input
               placeholder="Search words..."
               value={searchTerm}
@@ -383,6 +383,7 @@ const VocabList = () => {
             size="icon"
             onClick={() => setShowReviewTimes(!showReviewTimes)}
             title={showReviewTimes ? "Hide review times" : "Show review times"}
+            className='border-none light:hover:bg-primary'
           >
             ⏱️
           </Button>

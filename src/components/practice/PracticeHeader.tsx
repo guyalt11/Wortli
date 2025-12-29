@@ -48,7 +48,7 @@ const PracticeHeader: React.FC<PracticeHeaderProps> = ({
         <Button
           variant="default"
           onClick={toggleDirection}
-          className={`relative px-[6px] sm:px-2 transition-all bg-secondary ${(direction !== 'translateTo' && dueTranslateTo === 0) ||
+          className={`relative px-[6px] sm:px-2 transition-all direction-button ${(direction !== 'translateTo' && dueTranslateTo === 0) ||
             (direction !== 'translateFrom' && dueTranslateFrom === 0) ? 'cursor-not-allowed' : ''}`}
           disabled={
             (direction !== 'translateTo' && dueTranslateTo === 0) ||
