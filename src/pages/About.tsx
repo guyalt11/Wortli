@@ -45,7 +45,7 @@ const About = () => {
                             We believe that language learning shouldn't be about memorizing random lists. It should be about context, relevance, and consistency.
                         </p>
                     </div>
-                    <div className="bg-secondary/20 rounded-2xl p-8 border">
+                    <div className="p-8">
                         <div className="aspect-square flex items-center justify-center">
                             <img src="/logo.webp" alt="Wörtli Logo" className="w-48 h-48 drop-shadow-2xl" />
                         </div>
@@ -57,7 +57,7 @@ const About = () => {
                     <div className="text-center space-y-4">
                         <h2 className="text-3xl font-bold">Who is it for?</h2>
                         <p className="text-muted-foreground max-w-2xl mx-auto">
-                            Whether you're a casual traveler or a dedicated polyglot, Wörtli scales with your needs.
+                            Whether you're a casual traveler or building a new life in a different country, Wörtli scales with your needs.
                         </p>
                     </div>
                     <div className="grid sm:grid-cols-3 gap-8">
@@ -74,11 +74,11 @@ const About = () => {
                             },
                             {
                                 icon: <Shield className="w-8 h-8 text-tertiary" />,
-                                title: "Polyglots",
-                                desc: "Manage dozens of languages in one clean interface with advanced tracking and statistics."
+                                title: "Newcomers",
+                                desc: "Build your new life with confidence by mastering the local language for work, home, and community."
                             }
                         ].map((item, id) => (
-                            <div key={id} className="p-6 rounded-xl border bg-card hover:shadow-lg transition-shadow">
+                            <div key={id} className="p-6 rounded-xl border bg-card border-tertiary hover:shadow-lg transition-shadow">
                                 <div className="mb-4">{item.icon}</div>
                                 <h3 className="text-xl font-bold mb-2">{item.title}</h3>
                                 <p className="text-sm text-muted-foreground">{item.desc}</p>
@@ -88,7 +88,7 @@ const About = () => {
                 </section>
 
                 {/* Section: How it works */}
-                <section className="space-y-12 bg-secondary/10 p-12 rounded-3xl border border-dashed border-tertiary/30">
+                <section className="space-y-12 bg-secondary/10 p-12 rounded-3xl border border-tertiary">
                     <div className="max-w-3xl mx-auto space-y-8">
                         <h2 className="text-3xl font-bold text-center">How it Works</h2>
                         <div className="space-y-8">
@@ -110,7 +110,7 @@ const About = () => {
                                 }
                             ].map((step, id) => (
                                 <div key={id} className="flex gap-6">
-                                    <div className="text-4xl font-black text-tertiary/20 select-none">{step.step}</div>
+                                    <div className="text-4xl font-black text-tertiary select-none">{step.step}</div>
                                     <div className="space-y-2">
                                         <h3 className="text-xl font-bold">{step.title}</h3>
                                         <p className="text-muted-foreground">{step.desc}</p>
@@ -132,6 +132,15 @@ const About = () => {
                         Data security is a priority. User progress and lists are stored securely, allowing for cross-device synchronization while maintaining privacy.
                         Our spaced repetition algorithm is modeled after the SuperMemo SM-2 training methodology, adapted for modern language learning needs.
                     </p>
+                    <div className="mt-12 pt-8 border-t">
+                        <h2 className="text-2xl font-bold mb-4">Get in Touch</h2>
+                        <p>
+                            Have questions, feedback, or need support? We'd love to hear from you.
+                        </p>
+                        <p className="mt-2">
+                            Email: <a href="mailto:wortli.app@gmail.com" className="text-tertiary font-bold hover:underline">wortli.app@gmail.com</a>
+                        </p>
+                    </div>
                 </section>
             </main>
 
