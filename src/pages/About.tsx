@@ -147,9 +147,9 @@ const About = () => {
             {/* CTA Footer */}
             <section className="py-20 bg-gradient-dark text-white text-center">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold mb-6">Ready to start learning?</h2>
-                    <p className="mb-8 text-white/80 max-w-lg mx-auto">Join thousands of others and transform how you master new languages today.</p>
-                    <a href="/register" className="inline-block bg-light text-primary font-bold px-10 py-4 rounded-full hover:scale-105 transition-transform">
+                    <h2 className="text-3xl light:text-dark font-bold mb-6">Ready to start learning?</h2>
+                    <p className="mb-8 text-white/80 light:text-muted-foreground max-w-lg mx-auto">Join thousands of others and transform how you master new languages today.</p>
+                    <a href="/register" className="inline-block bg-light light:bg-dark text-primary font-bold px-10 py-4 rounded-full hover:scale-105 transition-transform">
                         Get Started for Free
                     </a>
                 </div>

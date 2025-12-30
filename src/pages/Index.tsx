@@ -126,7 +126,7 @@ const Index = () => {
             </motion.h1>
 
             <motion.div variants={itemVariants} className="mb-8">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary border backdrop-blur-md text-light text-sm font-medium shadow-lg shadow-primary/5">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary border backdrop-blur-md text-light light:text-muted-foreground text-sm font-medium shadow-lg shadow-primary/5">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>AI-Powered flashcards</span>
               </span>
@@ -151,7 +151,7 @@ const Index = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => navigate('/login')}
-                className="w-full sm:w-auto text-lg h-14 px-10 rounded-full border-2 border-dashed border-tertiary hover:border-tertiary hover:bg-secondary hover:text-light transition-all duration-300 relative bg-background backdrop-blur-sm"
+                className="w-full sm:w-auto text-lg h-14 px-10 rounded-full border-2 border-dashed border-tertiary hover:border-tertiary hover:bg-secondary light:hover:bg-dark hover:text-light transition-all duration-300 relative bg-background backdrop-blur-sm"
               >
                 Have an account?
               </Button>
@@ -194,10 +194,10 @@ const Index = () => {
                   key={index}
                   className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-dark hover:scale-105 transition-all duration-300 shadow-xl border border-white/5"
                 >
-                  <div className="mb-6 bg-white/10 p-4 rounded-2xl">
+                  <div className="mb-6 bg-white/10 light:bg-dark p-4 rounded-2xl">
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-4 text-white">
+                  <h3 className="text-xl font-bold mb-4 text-white light:text-dark">
                     {feature.title}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -342,9 +342,9 @@ const Index = () => {
                         />
                       </div>
                       <div className="flex items-center justify-center gap-3">
-                        <h3 className="text-2xl font-bold tracking-tight">{word.origin}</h3>
+                        <h3 className="text-2xl font-bold tracking-tight light:text-muted-foreground">{word.origin}</h3>
                         {word.gender && (
-                          <div className={`bg-gender-${word.gender} rounded-full text-dark scale-90`}>
+                          <div className={`bg-gender-${word.gender} rounded-full text-dark light:text-muted-foreground scale-90`}>
                             <GenderTag gender={word.gender as Gender} />
                           </div>
                         )}
@@ -354,7 +354,7 @@ const Index = () => {
                           {word.notes}
                         </div>
                       )}
-                      <div className="mt-6 text-[10px] text-muted-foreground/50 uppercase tracking-widest font-semibold">
+                      <div className="mt-6 text-[10px] text-muted-foreground/50 uppercase tracking-widest font-semibold light:text-muted-foreground">
                         Click to reveal
                       </div>
                     </div>
@@ -371,11 +371,11 @@ const Index = () => {
                           target={word.listTarget}
                         />
                       </div>
-                      <h4 className="text-2xl font-bold">{word.transl}</h4>
+                      <h4 className="text-2xl font-bold light:text-muted-foreground">{word.transl}</h4>
                     </div>
 
                     {/* Minimal Difficulty Buttons Mock */}
-                    <div className="w-full pt-4 border-t border-muted/20">
+                    <div className="w-full pt-4 border-t border-muted/20 light:border-dark">
                       <div className="text-[10px] text-muted-foreground mb-3 font-semibold uppercase tracking-wider">How well did you know this?</div>
                       <div className="flex gap-1.5 w-full">
                         {['Hard', 'OK', 'Good', 'Perfect'].map((diff) => (
@@ -422,7 +422,7 @@ const Index = () => {
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-black opacity-10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 mix-blend-overlay" />
 
             <div className="relative z-10 flex flex-col items-center">
-              <h2 className="text-3xl md:text-6xl font-bold mb-8 text-white tracking-tight">
+              <h2 className="text-3xl md:text-6xl font-bold mb-8 text-white tracking-tight light:text-dark">
                 Start your journey today
               </h2>
               <p className="text-muted-foreground text-xl mb-12 max-w-2xl mx-auto font-medium">
@@ -431,7 +431,7 @@ const Index = () => {
               <Button
                 size="lg"
                 onClick={() => navigate('/register')}
-                className="bg-light text-primary h-16 px-12 text-md md:text-xl rounded-full font-bold shadow-lg transition-transform hover:scale-105 w-full sm:w-auto"
+                className="bg-light light:bg-dark text-primary light:text-white h-16 px-12 text-md md:text-xl rounded-full font-bold shadow-lg transition-transform hover:scale-105 w-full sm:w-auto"
               >
                 Start Learning Now
               </Button>
