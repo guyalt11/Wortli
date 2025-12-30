@@ -20,7 +20,7 @@ const GenderTag: React.FC<GenderTagProps> = ({ gender, className, showTooltip = 
   };
 
   const tag = (
-    <span className={`gender-tag gender-tag-${gender} ${className || ''}`}>
+    <span className={`gender-tag gender-tag-${gender} ${className || ''} light:text-muted-foreground`}>
       {gender.toUpperCase()}
     </span>
   );

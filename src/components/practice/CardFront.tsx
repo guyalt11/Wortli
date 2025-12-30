@@ -73,7 +73,7 @@ const CardFront: React.FC<CardFrontProps> = ({ word, direction, flipped, onDelet
           <p>{word.notes}</p>
         </div>
       )}
-      <div className="mt-6 border-b border-white pb-4">
+      <div className="mt-6 border-b border-white pb-4 light:border-dark">
         <Button
           variant="ghost"
           size="icon"
