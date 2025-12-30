@@ -1,228 +1,267 @@
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import { BookOpen, Brain, Zap, Target, ArrowRight, Sparkles, ChevronDown } from "lucide-react";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useVocab } from '@/context/VocabContext';
+import { usePreferences } from '@/context/PreferencesContext';
+import { useVocabImportExport } from '@/hooks/useVocabImportExport';
+import { toast } from "@/components/ui/use-toast";
+import AddListForm from '@/components/AddListForm';
+import VocabListGrid from '@/components/VocabListGrid';
+import IndexHeader from '@/components/IndexHeader';
+import EmptyListsState from '@/components/EmptyListsState';
+import ImportListDialog from '@/components/ImportListDialog';
+import EditListDialog from '@/components/EditListDialog';
+import DeleteListDialog from '@/components/DeleteListDialog';
+import ChatButton from '@/components/ChatButton';
+import { VocabList } from '@/types/vocabulary';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 const Home = () => {
+    const { lists, exportList, importList, deleteList, updateList, getListById, addWord, isLoading, isLibraryOpen, setIsLibraryOpen } = useVocab();
+    const { preferences } = usePreferences();
     const navigate = useNavigate();
-    const { scrollY } = useScroll();
+    const { goToList, goToPracticeAll } = useAppNavigation();
+    const { importList: importListFunc } = useVocabImportExport({ lists, setLists: async () => { } });
+    const [showEmptyState, setShowEmptyState] = useState(false);
+    const listsRef = useRef(lists);
 
-    const scrollToFeatures = () => {
-        const featuresSection = document.getElementById('features-section');
-        if (featuresSection) {
-            featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    useEffect(() => {
+        listsRef.current = lists;
+        // Only show empty state if not loading and lists are empty
+        if (!isLoading && lists.length === 0) {
+            setShowEmptyState(true);
+        } else {
+            setShowEmptyState(false);
+        }
+    }, [lists, isLoading]);
+
+    // UI state
+    const [addListOpen, setAddListOpen] = useState(false);
+    const [importDialogOpen, setImportDialogOpen] = useState(false);
+    // Initialize showOnlyDue from preferences so the initial state is respected by controlled IndexHeader
+    const [showOnlyDue, setShowOnlyDue] = useState<boolean>(() => preferences?.hideEmptyLists ?? false);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    // Keep showOnlyDue in sync if preferences change later
+    useEffect(() => {
+        setShowOnlyDue(preferences?.hideEmptyLists ?? false);
+    }, [preferences?.hideEmptyLists]);
+
+    // Edit list state
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [selectedList, setSelectedList] = useState<VocabList | null>(null);
+
+    // Delete list state
+    const [deleteListId, setDeleteListId] = useState<string | null>(null);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+    // Chat state
+    const [chatOpen, setChatOpen] = useState(false);
+
+    // Handlers
+    const handleAddList = () => {
+        setAddListOpen(true);
+    };
+
+    const handleImportClick = () => {
+        setImportDialogOpen(true);
+    };
+
+    const handleLibraryClick = () => {
+        setIsLibraryOpen(true);
+    };
+
+    const handleImport = async (file: File, listName: string) => {
+        const list = await importList(file, listName);
+        const maxRetries = 3;
+        let retryCount = 0;
+        const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+        while (retryCount < maxRetries) {
+            const exists = listsRef.current.some(l => l.id === list.id);
+            if (exists) {
+                setImportDialogOpen(false);
+                navigate(`/list/${list.id}`);
+                return;
+            }
+            retryCount++;
+            await delay(300);
+        }
+
+        toast({
+            title: "Error",
+            description: "Failed to navigate to list after import. Please try again.",
+            variant: "destructive",
+        });
+    };
+
+    const handleEditList = (id: string) => {
+        const list = lists.find(l => l.id === id);
+        if (list) {
+            setSelectedList(list);
+            setEditDialogOpen(true);
         }
     };
 
-    // Parallax effect for background elements
-    const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-    const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+    const handleSaveEdit = (id: string, updates: Partial<VocabList>) => {
+        updateList(id, updates);
+    };
 
-    const features = [
-        {
-            icon: <Brain className="h-12 w-12 text-light" />,
-            title: "AI-Powered Learning",
-            description: "Generate vocabulary lists instantly with our AI assistant tailored to your customized learning goals."
-        },
-        {
-            icon: <Target className="h-12 w-12 text-light" />,
-            title: "Smart Practice System",
-            description: "Adaptive spaced repetition ensures you review words at the perfect time for maximum retention."
-        },
-        {
-            icon: <Zap className="h-12 w-12 text-light" />,
-            title: "Track Your Progress",
-            description: "Monitor your learning journey with detailed statistics tracking your progress."
-        },
-        {
-            icon: <BookOpen className="h-12 w-12 text-light" />,
-            title: "Shared Library",
-            description: "Access our community library with a wide range of vocabulary lists for over 50 languages."
-        }
-    ];
+    const handleDeleteList = (id: string) => {
+        setDeleteListId(id);
+        setDeleteDialogOpen(true);
+    };
 
-    const containerVariants: Variants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15,
-                delayChildren: 0.2
-            }
+    const confirmDeleteList = () => {
+        if (deleteListId) {
+            deleteList(deleteListId);
+            toast({
+                title: "List deleted",
+                description: "The vocabulary list has been deleted.",
+            });
+            setDeleteDialogOpen(false);
         }
     };
 
-    const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                type: "spring",
-                stiffness: 100,
-                damping: 10
+    const handlePracticeAll = () => {
+        goToPracticeAll('translateFrom');
+    };
+
+    const handleShareToggle = (id: string, share: boolean) => {
+        updateList(id, { share });
+    };
+
+    const handlePinToggle = (id: string, pinned: boolean) => {
+        updateList(id, { pinned });
+    };
+
+    const importWordsToList = async (file: File, listId: string) => {
+        try {
+            const importedList = await importListFunc(file, 'temp');
+
+            if (!importedList || !importedList.words.length) {
+                toast({
+                    title: "No words found",
+                    description: "The file doesn't contain any words to import.",
+                    variant: "destructive",
+                });
+                return;
             }
+
+            // Add each word to the list
+            for (const word of importedList.words) {
+                await addWord(listId, {
+                    origin: word.origin,
+                    transl: word.transl,
+                    gender: word.gender,
+                    notes: word.notes
+                });
+            }
+
+            toast({
+                title: "Import successful",
+                description: `Added ${importedList.words.length} word${importedList.words.length > 1 ? 's' : ''} to the list.`,
+            });
+        } catch (error) {
+            console.error('Error importing words to list:', error);
+            toast({
+                title: "Import error",
+                description: "Failed to import words to the list. Please try again.",
+                variant: "destructive",
+            });
         }
     };
 
     return (
-        <div className="min-h-screen bg-background overflow-x-hidden font-sans">
-            {/* Animated Background Gradients */}
-            <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-                <motion.div
-                    style={{ y: y1 }}
-                    className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-primary opacity-5 rounded-full blur-[120px]"
+        <div className="container py-6 max-w-3xl">
+            <ChatButton open={chatOpen} onOpenChange={setChatOpen} />
+            <IndexHeader
+                onAddList={handleAddList}
+                onImport={handleImportClick}
+                onLibrary={handleLibraryClick}
+                lists={lists}
+                onFilterChange={setShowOnlyDue}
+                showOnlyDue={showOnlyDue}
+                onSearchChange={setSearchQuery}
+                onPracticeAll={handlePracticeAll}
+                initialShowOnlyDue={preferences?.hideEmptyLists || false}
+            />
+
+
+            {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                    <LoadingSpinner size="lg" />
+                </div>
+            ) : showEmptyState ? (
+                <EmptyListsState onAddList={handleAddList} onLibrary={handleLibraryClick} onOpenChange={setChatOpen} />
+            ) : (
+                <VocabListGrid
+                    lists={lists.filter(list => list.name.toLowerCase().includes(searchQuery.toLowerCase()))}
+                    onSelectList={goToList}
+                    onEditList={handleEditList}
+                    onDeleteList={handleDeleteList}
+                    onExportList={exportList}
+                    onImportWords={async (file, listId) => {
+                        await importWordsToList(file, listId);
+                    }}
+                    onShareToggle={handleShareToggle}
+                    onPinToggle={handlePinToggle}
+                    showOnlyDue={showOnlyDue}
+                    onAddList={handleAddList}
+                    onLibrary={handleLibraryClick}
                 />
-                <motion.div
-                    style={{ y: y2 }}
-                    className="absolute top-[20%] -right-[10%] w-[40%] h-[60%] bg-secondary opacity-5 rounded-full blur-[140px]"
-                />
-                <div className="absolute bottom-[0%] left-[20%] w-[40%] h-[40%] bg-light opacity-5 rounded-full blur-[100px]" />
-            </div>
+            )}
 
-            {/* Hero Section */}
-            <section className="relative z-10 h-screen flex flex-col justify-center items-center px-4">
-                <div className="container mx-auto max-w-6xl text-center">
-                    <motion.div
-                        initial="hidden"
-                        animate="visible"
-                        variants={containerVariants}
-                        className="flex flex-col items-center"
-                    >
-                        {/* Logo & Badge */}
-                        <motion.div variants={itemVariants} className="mb-8 relative group">
-                            <div className="absolute inset-0 bg-primary opacity-20 blur-2xl rounded-full group-hover:opacity-30 transition-opacity duration-500" />
-                            <img
-                                src="/logo.webp"
-                                alt="Wörtli Logo"
-                                className="w-20 h-20 sm:w-28 sm:h-28 relative z-10 drop-shadow-2xl hover:scale-110 transition-transform duration-500"
-                            />
-                        </motion.div>
+            <AddListForm
+                open={addListOpen}
+                onOpenChange={setAddListOpen}
+                onOpenChat={() => setChatOpen(true)}
+                onSuccess={async (list) => {
 
-                        {/* Updated Typography - Cleaner 'Heathers' (Headers) */}
-                        <motion.h1 variants={itemVariants} className="flex flex-col items-center justify-center font-extrabold tracking-tight mb-6">
-                            <span className="text-6xl md:text-8xl mb-2 home-title tracking-tighter drop-shadow-sm">
-                                Wörtli
-                            </span>
-                        </motion.h1>
+                    const maxRetries = 3;
+                    let retryCount = 0;
 
-                        <motion.div variants={itemVariants} className="mb-8">
-                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary border backdrop-blur-md text-light text-sm font-medium shadow-lg shadow-primary/5">
-                                <Sparkles className="w-3.5 h-3.5" />
-                                <span>AI-Powered flashcards</span>
-                            </span>
-                        </motion.div>
+                    const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-                        <motion.p variants={itemVariants} className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-                            <span className="md:text-2xl lg:text-4xl text-tertiary font-bold max-w-4xl mx-auto leading-tight">
-                                Master Any Language Naturally & Effortlessly
-                            </span>
-                        </motion.p>
+                    while (retryCount < maxRetries) {
+                        const exists = listsRef.current.some(list => list.id === listsRef.current?.[0].id);
+                        if (exists) {
+                            navigate(`/list/${list.id}`);
+                            return;
+                        }
 
-                        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 justify-center items-center w-full sm:w-auto">
-                            <Button
-                                size="lg"
-                                onClick={() => navigate('/register')}
-                                className="w-full sm:w-auto text-lg h-14 px-10 rounded-full shadow-xl font-semibold transition-all duration-300 transform hover:-translate-y-1"
-                            >
-                                Get Started Free
-                                <ArrowRight className="ml-2 h-5 w-5" />
-                            </Button>
-                            <Button
-                                size="lg"
-                                variant="outline"
-                                onClick={() => navigate('/login')}
-                                className="w-full sm:w-auto text-lg h-14 px-10 rounded-full border-2 border-dashed border-tertiary hover:border-tertiary hover:bg-secondary hover:text-light transition-all duration-300 relative bg-background backdrop-blur-sm"
-                            >
-                                Have an account?
-                            </Button>
-                        </motion.div>
+                        retryCount++;
+                        await delay(300);
+                    }
 
-                        <motion.button
-                            variants={itemVariants}
-                            onClick={scrollToFeatures}
-                            className="mt-16 sm:mt-24 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
-                            aria-label="Scroll to features"
-                        >
-                            <ChevronDown className="w-8 h-8 text-muted-foreground" />
-                        </motion.button>
-                    </motion.div>
-                </div>
-            </section>
+                    console.error('Index: Failed to find list after retries');
+                    toast({
+                        title: "Error",
+                        description: "Failed to navigate to list. Please try again.",
+                        variant: "destructive",
+                    });
+                }}
+            />
 
-            {/* Features Section */}
-            <section id="features-section" className="relative z-10 py-10">
+            <ImportListDialog
+                open={importDialogOpen}
+                onOpenChange={setImportDialogOpen}
+                onImport={handleImport}
+            />
 
-                <div className="container mx-auto px-4">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                        className="text-center mb-16"
-                    >
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-                            Stop wasting time!
-                        </h2>
-                        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                            Here are some of the reasons why Wörtli is so effective.
-                        </p>
-                        <div className="container mx-auto px-4 py-20">
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                                {features.map((feature, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex flex-col items-center text-center p-6 rounded-lg bg-gradient-dark hover:scale-105 transition-transform duration-300"
-                                    >
-                                        <div className="mb-4">
-                                            {feature.icon}
-                                        </div>
-                                        <h3 className="text-xl font-semibold mb-3">
-                                            {feature.title}
-                                        </h3>
-                                        <p className="text-muted-foreground">
-                                            {feature.description}
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
+            <EditListDialog
+                open={editDialogOpen}
+                onOpenChange={setEditDialogOpen}
+                onSave={handleSaveEdit}
+                list={selectedList}
+            />
 
-                </div>
-            </section>
+            <DeleteListDialog
+                open={deleteDialogOpen}
+                onOpenChange={setDeleteDialogOpen}
+                onConfirm={confirmDeleteList}
+            />
 
-            {/* CTA Section - Refined */}
-            <section className="relative z-10 py-32 px-4 overflow-hidden">
-                <div className="container mx-auto max-w-5xl relative">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="bg-gradient-dark to-secondary rounded-[2.5rem] p-8 md:p-20 text-center text-white shadow-2xl relative overflow-hidden"
-                    >
-                        {/* Decorative background circles */}
-                        <div className="absolute top-0 left-0 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 mix-blend-overlay" />
-                        <div className="absolute bottom-0 right-0 w-96 h-96 bg-black opacity-10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 mix-blend-overlay" />
-
-                        <div className="relative z-10">
-                            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white tracking-tight">
-                                Start your journey today
-                            </h2>
-                            <p className="text-muted-foreground text-xl mb-12 max-w-2xl mx-auto font-medium">
-                                Join our growing community of language enthusiasts.
-                            </p>
-                            <Button
-                                size="lg"
-                                onClick={() => navigate('/register')}
-                                className="bg-light text-primary h-16 px-12 text-xl rounded-full font-bold shadow-lg transition-transform hover:scale-105"
-                            >
-                                Start Learning Now
-                            </Button>
-                        </div>
-                    </motion.div>
-                </div>
-            </section>
         </div>
     );
 };

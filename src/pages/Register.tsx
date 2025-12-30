@@ -126,7 +126,7 @@ const Register = () => {
           <CardFooter className="flex flex-col space-y-2">
             <Button
               className="w-full"
-              onClick={() => navigate('/home')}
+              onClick={() => navigate('/')}
             >
               Back to Home
             </Button>

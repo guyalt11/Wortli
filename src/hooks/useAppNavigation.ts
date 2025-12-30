@@ -7,7 +7,7 @@ export const useAppNavigation = () => {
   const { getListById, selectList } = useVocab();
 
   const goToHome = () => {
-    navigate('/');
+    navigate('/home');
   };
 
   const goToList = async (listId: string) => {

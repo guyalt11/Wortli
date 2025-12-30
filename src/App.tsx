@@ -55,10 +55,10 @@ const AppContent = () => {
     }
   }, [dailyCount, preferences?.dailyGoal, isAuthenticated, currentUser, isLoading]);
 
-  const isHomePath = location.pathname === "/home";
+  const isLandingPath = location.pathname === "/";
   const isAuthPath = ["/login", "/register"].includes(location.pathname);
 
-  const showHeader = !isHomePath && (isAuthPath || (isAuthenticated && !isLoading));
+  const showHeader = !isLandingPath && (isAuthPath || (isAuthenticated && !isLoading));
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -71,14 +71,14 @@ const AppContent = () => {
       />
       <main className="flex-grow pb-[calc(5rem+env(safe-area-inset-bottom)-1rem)] md:pb-0">
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/"
+            path="/home"
             element={
               <ProtectedRoute>
-                <Index />
+                <Home />
               </ProtectedRoute>
             }
           />

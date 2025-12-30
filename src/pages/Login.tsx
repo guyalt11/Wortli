@@ -49,7 +49,7 @@ const Login = () => {
     if (isAuthenticated && isSubmitting) {
       // Use setTimeout to ensure state updates are processed
       setTimeout(() => {
-        navigate('/', { replace: true });
+        navigate('/home', { replace: true });
       }, 100);
     }
   }, [isAuthenticated, isSubmitting, navigate]);

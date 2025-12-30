@@ -73,7 +73,7 @@ const Header = () => {
     };
 
     const getHomeLink = () => {
-        return isAuthenticated ? '/' : '/home';
+        return isAuthenticated ? '/home' : '/';
     };
 
     const handleLibraryClick = () => {
@@ -83,7 +83,7 @@ const Header = () => {
     const handleLibraryClose = (listsAdded: boolean) => {
         setIsLibraryOpen(false);
         if (listsAdded && isAuthenticated) {
-            navigate('/');
+            navigate('/home');
         }
     };
 
