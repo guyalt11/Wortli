@@ -11,6 +11,12 @@ const Footer = () => {
                         <span className="text-xs text-muted-foreground">©2025 Wörtli. All rights reserved</span>
                     </div>
                     <div className="flex gap-6 text-xs text-muted-foreground">
+                        <Link
+                            to="/about"
+                            className="hover:text-tertiary transition-colors duration-200"
+                        >
+                            About
+                        </Link>
                         <a
                             href="/privacy.html"
                             target="_blank"

@@ -19,6 +19,7 @@ import PracticeAll from "./pages/PracticeAll";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import About from "./pages/About";
 import ProtectedRoute from "./components/ProtectedRoute";
 import TokenExpiryChecker from "./components/TokenExpiryChecker";
 
@@ -74,6 +75,7 @@ const AppContent = () => {
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<About />} />
           <Route
             path="/home"
             element={

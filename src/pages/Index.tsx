@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, Brain, Zap, Target, ArrowRight, Sparkles, ChevronDown } from "lucide-react";
@@ -13,6 +14,19 @@ const Index = () => {
       featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  useEffect(() => {
+    document.title = "Wörtli | AI-Powered Vocabulary Learning & Flashcards";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Master any language naturally with Wörtli. Create AI-powered flashcards, track your progress, and practice with smart spaced repetition.");
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = "description";
+      meta.content = "Master any language naturally with Wörtli. Create AI-powered flashcards, track your progress, and practice with smart spaced repetition.";
+      document.head.appendChild(meta);
+    }
+  }, []);
 
   // Parallax effect for background elements
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
@@ -32,7 +46,7 @@ const Index = () => {
     {
       icon: <Zap className="h-12 w-12 text-light" />,
       title: "Track Your Progress",
-      description: "Monitor your learning journey with detailed statistics tracking your progress."
+      description: "Build a learning habit with daily goals and streaks to keep you motivated and win rewards."
     },
     {
       icon: <BookOpen className="h-12 w-12 text-light" />,
@@ -104,6 +118,7 @@ const Index = () => {
               <span className="text-6xl md:text-8xl mb-2 home-title tracking-tighter drop-shadow-sm">
                 Wörtli
               </span>
+              <span className="sr-only">AI-Powered Vocabulary Flashcards for Language Learning</span>
             </motion.h1>
 
             <motion.div variants={itemVariants} className="mb-8">
@@ -189,6 +204,45 @@ const Index = () => {
             </div>
           </motion.div>
 
+        </div>
+      </section>
+
+      {/* How it Works / About Section for SEO */}
+      <section className="relative z-10 py-20 bg-secondary/5">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="prose prose-lg dark:prose-invert mx-auto text-left"
+          >
+            <h2 className="text-4xl font-bold mb-8 text-center text-foreground font-sans">How Wörtli Transforms Your Language Journey</h2>
+            <div className="space-y-12">
+              <div>
+                <h3 className="text-2xl font-semibold mb-4 text-tertiary">Smart Flashcards, Faster Memory</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Traditional learning often feels like a chore. Wörtli changes that by using <strong>AI-driven technology</strong> to generate vocabulary lists that actually matter to you. Whether you're learning for travel, business, or personal growth, our system adapts to your specific goals.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-2xl font-semibold mb-4 text-tertiary">Science-Backed Spaced Repetition</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Our core practice engine utilizes <strong>Spaced Repetition System (SRS)</strong> principles. Instead of cramming, we remind you of words exactly when your brain is about to forget them. This maximizes long-term retention and makes learning feel natural and effortless.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-2xl font-semibold mb-4 text-tertiary">Learn More Than Just Words</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Wörtli doesn't just give you translations. Our AI provides <strong>context, gender indicators, and usage notes</strong> for over 50 languages. Understanding how a word is used is just as important as knowing what it means.
+                </p>
+              </div>
+              <div className="text-center pt-8">
+                <Button variant="link" onClick={() => navigate('/about')} className="text-tertiary font-bold text-lg">
+                  Read more about our mission →
+                </Button>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
