@@ -4,27 +4,38 @@ import ChatDialog from './ChatDialog';
 interface ChatButtonProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    initialListId?: string;
+    initialImportMode?: 'new' | 'existing';
+    className?: string;
+    showIcon?: boolean;
 }
 
-const ChatButton = ({ open, onOpenChange }: ChatButtonProps) => {
+const ChatButton = ({ open, onOpenChange, initialListId, initialImportMode, className, showIcon = true }: ChatButtonProps) => {
     return (
         <>
-            <Button
-                onClick={() => onOpenChange(true)}
-                size="icon"
-                className="fixed md:bottom-6 bottom-[calc(5rem+env(safe-area-inset-bottom))] right-6 h-14 w-14 rounded-full shadow-2xl hover:scale-110 transition-transform z-40"
-                aria-label="Open chat"
-            >
-                <svg
-                    className="!h-6 !w-6"
-                    viewBox="0 0 50 50"
-                    xmlns="http://www.w3.org/2000/svg"
+            {showIcon && (
+                <Button
+                    onClick={() => onOpenChange(true)}
+                    size="icon"
+                    className={className || "fixed md:bottom-6 bottom-[calc(5rem+env(safe-area-inset-bottom))] right-6 h-14 w-14 rounded-full shadow-2xl hover:scale-110 transition-transform z-40"}
+                    aria-label="Open chat"
                 >
-                    <path d="M22.462 11.035l2.88 7.097c1.204 2.968 3.558 5.322 6.526 6.526l7.097 2.88c1.312.533 1.312 2.391 0 2.923l-7.097 2.88c-2.968 1.204-5.322 3.558-6.526 6.526l-2.88 7.097c-.533 1.312-2.391 1.312-2.923 0l-2.88-7.097c-1.204-2.968-3.558-5.322-6.526-6.526l-7.097-2.88c-1.312-.533-1.312-2.391 0-2.923l7.097-2.88c2.968-1.204 5.322-3.558 6.526-6.526l2.88-7.097C20.071 9.723 21.929 9.723 22.462 11.035zM39.945 2.701l.842 2.428c.664 1.915 2.169 3.42 4.084 4.084l2.428.842c.896.311.896 1.578 0 1.889l-2.428.842c-1.915.664-3.42 2.169-4.084 4.084l-.842 2.428c-.311.896-1.578.896-1.889 0l-.842-2.428c-.664-1.915-2.169-3.42-4.084-4.084l-2.428-.842c-.896-.311-.896-1.578 0-1.889l2.428-.842c1.915-.664 3.42-2.169 4.084-4.084l.842-2.428C38.366 1.805 39.634 1.805 39.945 2.701z"></path>
-                </svg>
-            </Button>
+                    <svg
+                        className="!h-6 !w-6"
+                        viewBox="0 0 50 50"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M22.462 11.035l2.88 7.097c1.204 2.968 3.558 5.322 6.526 6.526l7.097 2.88c1.312.533 1.312 2.391 0 2.923l-7.097 2.88c-2.968 1.204-5.322 3.558-6.526 6.526l-2.88 7.097c-.533 1.312-2.391 1.312-2.923 0l-2.88-7.097c-1.204-2.968-3.558-5.322-6.526-6.526l-7.097-2.88c-1.312-.533-1.312-2.391 0-2.923l7.097-2.88c2.968-1.204 5.322-3.558 6.526-6.526l2.88-7.097C20.071 9.723 21.929 9.723 22.462 11.035zM39.945 2.701l.842 2.428c.664 1.915 2.169 3.42 4.084 4.084l2.428.842c.896.311.896 1.578 0 1.889l-2.428.842c-1.915.664-3.42 2.169-4.084 4.084l-.842 2.428c-.311.896-1.578.896-1.889 0l-.842-2.428c-.664-1.915-2.169-3.42-4.084-4.084l-2.428-.842c-.896-.311-.896-1.578 0-1.889l2.428-.842c1.915-.664 3.42-2.169 4.084-4.084l.842-2.428C38.366 1.805 39.634 1.805 39.945 2.701z"></path>
+                    </svg>
+                </Button>
+            )}
 
-            <ChatDialog open={open} onOpenChange={onOpenChange} />
+            <ChatDialog
+                open={open}
+                onOpenChange={onOpenChange}
+                initialListId={initialListId}
+                initialImportMode={initialImportMode}
+            />
         </>
     );
 };

@@ -37,6 +37,7 @@ import { RightArrow } from '@/components/Icon';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import ChatButton from '@/components/ChatButton';
 
 const VocabList = () => {
 
@@ -61,6 +62,9 @@ const VocabList = () => {
 
   // Delete list state
   const [deleteListDialogOpen, setDeleteListDialogOpen] = useState(false);
+
+  // Chat state
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     const initList = async () => {
@@ -246,6 +250,12 @@ const VocabList = () => {
 
   return (
     <div className="container py-6 max-w-3xl">
+      <ChatButton
+        open={chatOpen}
+        onOpenChange={setChatOpen}
+        initialListId={currentList.id}
+        initialImportMode="existing"
+      />
       <div className="mb-4 sm:flex sm:justify-between sm:items-center">
         <div className="w-full">
           <div className="flex flex-col">
@@ -325,7 +335,7 @@ const VocabList = () => {
         </div>
       </div>
       <div className="flex items-center mb-6">
-        <Button className="mr-4 light:shadow-xl" onClick={handleAddWord}>
+        <Button size="icon" className="mr-4 light:shadow-xl" onClick={handleAddWord}>
           <Plus className="h-4 w-4 text-black" />
         </Button>
         <div className="flex gap-2">
@@ -414,7 +424,13 @@ const VocabList = () => {
               />
             </div>
           ))}
+          <div key="add-list" className="flex flex-col sm:flex-row justify-center items-center background border-dashed rounded-lg border-2 border-light px-6 py-4">
+            <Button className="w-fit text-md px-4 rounded-full border-2 border-tertiary !bg-secondary light:!bg-primary !text-light light:!text-tertiary" onClick={handleAddWord}>
+              Add a new word
+            </Button>
+          </div>
         </div>
+
       )}
 
       <AddWordForm

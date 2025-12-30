@@ -30,9 +30,11 @@ import { Plus, ListPlus } from 'lucide-react';
 interface ChatDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    initialListId?: string;
+    initialImportMode?: 'new' | 'existing';
 }
 
-const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
+const ChatDialog = ({ open, onOpenChange, initialListId, initialImportMode }: ChatDialogProps) => {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +51,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     const [isRestoring, setIsRestoring] = useState(false);
 
     const [includeAllWords, setIncludeAllWords] = useState(false);
-    const [includeListWords, setIncludeListWords] = useState(true);
+    const [includeListWords, setIncludeListWords] = useState(false);
 
     // Mobile keyboard not to cover input
     useEffect(() => {
@@ -69,12 +71,12 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
     useEffect(() => {
         if (open) {
             setMessages([]);
-            setImportMode(null);
-            setSelectedListId('');
+            setImportMode(initialImportMode || null);
+            setSelectedListId(initialListId || '');
             setIncludeAllWords(false);
             setIncludeListWords(false);
         }
-    }, [open]);
+    }, [open, initialListId, initialImportMode]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
