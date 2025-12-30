@@ -329,7 +329,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                     <div className="flex-1 flex flex-col overflow-y-auto px-6 py-3 space-y-3 dark:bg-dark background">
                         {messages.length === 0 && !importMode ? (
                             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">
-                                <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center animate-pulse">
+                                <div className="w-16 h-16 rounded-full bg-secondary light:bg-dark flex items-center justify-center animate-pulse">
                                     <MessageCircle className="h-8 w-8 text-light" />
                                 </div>
                                 <div className="space-y-2">
@@ -376,7 +376,7 @@ const ChatDialog = ({ open, onOpenChange }: ChatDialogProps) => {
                         ) : messages.length === 0 && importMode === 'existing' && !selectedListId ? (
                             <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6">
                                 <div className="space-y-2 flex flex-col items-center">
-                                    <div className="w-16 h-16 mb-4 rounded-full bg-secondary flex items-center justify-center animate-pulse">
+                                    <div className="w-16 h-16 mb-4 rounded-full bg-primary flex items-center justify-center animate-pulse">
                                         <MessageCircle className="h-8 w-8 text-light" />
                                     </div>
                                     <p className="text-lg text-muted-foreground font-semibold">Which list should I add to?</p>

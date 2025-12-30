@@ -122,6 +122,7 @@
   /* Header buttons - Pure HEX */
   .btn-1 {
     background-color: var(--btn-1);
+    border-color: var(--btn-1);
   }
 
   .btn-2 {

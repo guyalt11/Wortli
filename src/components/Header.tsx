@@ -138,7 +138,7 @@ const Header = () => {
                                     <button className="flex items-center gap-1 px-2 py-1 rounded-full border border-border light:bg-[#b8f6f3]"
                                         title="Daily Progress"
                                         onClick={handleDailyProgressClick}>
-                                        <Target className="h-4 w-4 text-light" />
+                                        <Target className="h-4 w-4 daily-progress" />
                                         <span className="text-sm font-bold text-foreground">{dailyCount}{preferences?.dailyGoal ? `/${preferences?.dailyGoal}` : ''}</span>
                                     </button>
                                     <div className="flex items-center gap-1 px-2 py-1 rounded-full border border-border light:border-[#ffa262] light:bg-[#ffe5cb]" title="Current Streak">

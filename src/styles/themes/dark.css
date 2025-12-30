@@ -106,4 +106,8 @@
     .total-words {
         color: var(--primary-foreground);
     }
+
+    .daily-progress {
+        color: var(--light);
+    }
 }
