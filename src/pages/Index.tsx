@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, Brain, Zap, Target, ArrowRight, Sparkles, ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { DirectionFlag } from '@/components/FlagIcon';
+import GenderTag from '@/components/GenderTag';
+import { Card } from '@/components/ui/card';
+import { Gender } from '@/types/vocabulary';
 
 const Index = () => {
   const navigate = useNavigate();
   const { scrollY } = useScroll();
 
-  const scrollToFeatures = () => {
-    const featuresSection = document.getElementById('features-section');
-    if (featuresSection) {
-      featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -155,7 +159,7 @@ const Index = () => {
 
             <motion.button
               variants={itemVariants}
-              onClick={scrollToFeatures}
+              onClick={() => scrollToSection('features-section')}
               className="mt-16 sm:mt-24 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
               aria-label="Scroll to features"
             >
@@ -166,88 +170,246 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features-section" className="relative z-10 py-10">
-
+      <section id="features-section" className="relative z-10 min-h-screen flex flex-col justify-center items-center py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-16"
+            className="flex flex-col items-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-              Stop wasting time!
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Here are some of the reasons why Wörtli is so effective.
-            </p>
-            <div className="container mx-auto px-4 py-20">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center text-center p-6 rounded-lg bg-gradient-dark hover:scale-105 transition-transform duration-300"
-                  >
-                    <div className="mb-4">
-                      {feature.icon}
-                    </div>
-                    <h3 className="text-xl font-semibold mb-3">
-                      {feature.title}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {feature.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">
+                Stop wasting time!
+              </h2>
+              <p className="text-muted-foreground text-xl max-w-2xl mx-auto">
+                Here are some of the reasons why Wörtli is so effective.
+              </p>
             </div>
-          </motion.div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-6xl">
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center text-center p-8 rounded-2xl bg-gradient-dark hover:scale-105 transition-all duration-300 shadow-xl border border-white/5"
+                >
+                  <div className="mb-6 bg-white/10 p-4 rounded-2xl">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-white">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <motion.button
+              onClick={() => scrollToSection('how-it-works-section')}
+              className="mt-20 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+              aria-label="Scroll to how it works"
+            >
+              <ChevronDown className="w-8 h-8 text-muted-foreground" />
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
       {/* How it Works / About Section for SEO */}
-      <section className="relative z-10 py-20 bg-secondary/5">
-        <div className="container mx-auto px-4 max-w-4xl">
+      <section id="how-it-works-section" className="relative z-10 min-h-screen flex flex-col justify-center items-center py-20 bg-secondary/5">
+        <div className="container mx-auto px-4 max-w-4xl flex flex-col items-center">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="prose prose-lg dark:prose-invert mx-auto text-left"
+            className="prose prose-lg dark:prose-invert mx-auto text-left w-full"
           >
-            <h2 className="text-4xl font-bold mb-8 text-center text-foreground font-sans">How Wörtli Transforms Your Language Journey</h2>
-            <div className="space-y-12">
-              <div>
+            <h2 className="text-2xl md:text-4xl font-bold mb-12 text-center text-foreground font-sans tracking-tight">How Wörtli Transforms Your Language Journey</h2>
+            <div className="space-y-10">
+              <div className="p-2">
                 <h3 className="text-2xl font-semibold mb-4 text-tertiary">Smart Flashcards, Faster Memory</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Traditional learning often feels like a chore. Wörtli changes that by using <strong>AI-driven technology</strong> to generate vocabulary lists that actually matter to you. Whether you're learning for travel, business, or personal growth, our system adapts to your specific goals.
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  Traditional learning can feel like a chore - hours spent typing words, searching translations, and formatting lists drain motivation. Wörtli removes that friction. With our <strong>AI assistant</strong>, generate lists in second, while avoiding duplicates. Create your own or explore our <strong>community library</strong> to start learning instantly.
                 </p>
               </div>
-              <div>
+              <div className="p-2">
                 <h3 className="text-2xl font-semibold mb-4 text-tertiary">Science-Backed Spaced Repetition</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Our core practice engine utilizes <strong>Spaced Repetition System (SRS)</strong> principles. Instead of cramming, we remind you of words exactly when your brain is about to forget them. This maximizes long-term retention and makes learning feel natural and effortless.
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  Our practice engine uses the renowned <strong>SM2 algorithm</strong>, a top implementation of <strong>Spaced Repetition (SRS)</strong>. SM2 optimizes long-term retention by timing reviews perfectly. Instead of cramming, we remind you just as you’re about to forget, making language learning faster, more natural, and effortless.
                 </p>
               </div>
-              <div>
-                <h3 className="text-2xl font-semibold mb-4 text-tertiary">Learn More Than Just Words</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Wörtli doesn't just give you translations. Our AI provides <strong>context, gender indicators, and usage notes</strong> for over 50 languages. Understanding how a word is used is just as important as knowing what it means.
-                </p>
-              </div>
-              <div className="text-center pt-8">
-                <Button variant="link" onClick={() => navigate('/about')} className="text-tertiary font-bold text-lg">
-                  Read more about our mission →
+              <div className="text-center">
+                <Button variant="link" onClick={() => navigate('/about')} className="text-tertiary font-bold text-xl group">
+                  Read more about our mission
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
             </div>
           </motion.div>
+
+          <motion.button
+            onClick={() => scrollToSection('example-section')}
+            className="mt-20 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+            aria-label="Scroll to examples"
+          >
+            <ChevronDown className="w-8 h-8 text-muted-foreground" />
+          </motion.button>
+        </div>
+      </section>
+
+      {/* Example / Demo Section for SEO and Users */}
+      <section id="example-section" className="relative z-10 min-h-screen flex flex-col justify-center items-center py-10">
+        <div className="container mx-auto px-4 max-w-5xl text-center flex flex-col items-center">
+          <div className="mb-8">
+            <h2 className="text-2xl md:text-4xl font-bold mb-2 tracking-tight">See Wörtli in Action</h2>
+            <p className="hidden text-muted-foreground text-xl max-w-2xl mx-autoLeading-relaxed">
+              The heart of your daily habit. These cards aren't just static text—they are smart, context-rich tools designed to help you actually remember. Flip them to see how we bring every word to life.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            {[
+              {
+                origin: "der Frühling",
+                transl: "Spring",
+                listLanguage: "de",
+                listTarget: "en",
+                gender: "m",
+                notes: "Use 'im' for 'in spring'."
+              },
+              {
+                origin: "木洩れ日 (Komorebi)",
+                transl: "Sunlight through trees",
+                listLanguage: "ja",
+                listTarget: "en",
+                gender: null,
+                notes: "Sunrays through leaves."
+              },
+              {
+                origin: "la bibliothèque",
+                transl: "Library",
+                listLanguage: "fr",
+                listTarget: "en",
+                gender: "f",
+                notes: "Silent 'qu'."
+              },
+              {
+                origin: "سلام (Salām)",
+                transl: "Paz",
+                listLanguage: "ar",
+                listTarget: "es",
+                gender: "m",
+                notes: "Tanto paz como saludos"
+              },
+              {
+                origin: "Gleði (Glethi)",
+                transl: "שמְחָה",
+                listLanguage: "is",
+                listTarget: "he",
+                gender: "n",
+                notes: "Joy, happiness"
+              },
+              {
+                origin: "Tack",
+                transl: "Merci",
+                listLanguage: "sv",
+                listTarget: "fr",
+                gender: null,
+                notes: "eg. Tack för maten."
+              }
+            ].map((word, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1, duration: 0.5 }}
+                className="w-full group perspective-1000"
+              >
+                <div className="relative bg-gradient-dark w-full rounded-2xl min-h-[250px] transition-all duration-700 transform-style-3d group-hover:rotate-y-180">
+                  {/* Front Face */}
+                  <Card className="absolute inset-0 backface-hidden flex flex-col justify-center items-center p-8 bg-card border-none shadow-xl rounded-3xl">
+                    <div className="text-center w-full">
+                      <div className="mb-4 text-muted-foreground text-sm flex justify-center">
+                        <DirectionFlag
+                          direction="translateTo"
+                          size={18}
+                          language={word.listLanguage}
+                          target={word.listTarget}
+                        />
+                      </div>
+                      <div className="flex items-center justify-center gap-3">
+                        <h3 className="text-2xl font-bold tracking-tight">{word.origin}</h3>
+                        {word.gender && (
+                          <div className={`bg-gender-${word.gender} rounded-full text-dark scale-90`}>
+                            <GenderTag gender={word.gender as Gender} />
+                          </div>
+                        )}
+                      </div>
+                      {word.notes && (
+                        <div className="mt-4 text-xs p-3 rounded-xl italic text-muted-foreground bg-secondary/20">
+                          {word.notes}
+                        </div>
+                      )}
+                      <div className="mt-6 text-[10px] text-muted-foreground/50 uppercase tracking-widest font-semibold">
+                        Click to reveal
+                      </div>
+                    </div>
+                  </Card>
+
+                  {/* Back Face */}
+                  <Card className="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center p-8 bg-card border-none shadow-xl rounded-3xl border-2">
+                    <div className="text-center w-full flex-1 flex flex-col p-4">
+                      <div className="mb-2 text-muted-foreground text-sm flex justify-center">
+                        <DirectionFlag
+                          direction="translateFrom"
+                          size={18}
+                          language={word.listLanguage}
+                          target={word.listTarget}
+                        />
+                      </div>
+                      <h4 className="text-2xl font-bold">{word.transl}</h4>
+                    </div>
+
+                    {/* Minimal Difficulty Buttons Mock */}
+                    <div className="w-full pt-4 border-t border-muted/20">
+                      <div className="text-[10px] text-muted-foreground mb-3 font-semibold uppercase tracking-wider">How well did you know this?</div>
+                      <div className="flex gap-1.5 w-full">
+                        {['Hard', 'OK', 'Good', 'Perfect'].map((diff) => (
+                          <div
+                            key={diff}
+                            className={`flex-1 h-8 rounded-lg text-[10px] flex items-center justify-center font-bold text-black shadow-sm
+                              ${diff === 'Hard' ? 'bg-difficulty-hard' :
+                                diff === 'OK' ? 'bg-difficulty-ok' :
+                                  diff === 'Good' ? 'bg-difficulty-good' :
+                                    'bg-difficulty-perfect'}`}
+                          >
+                            {diff}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.button
+            onClick={() => scrollToSection('cta-section')}
+            className="mt-8 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+            aria-label="Scroll to call to action"
+          >
+            <ChevronDown className="w-8 h-8 text-muted-foreground" />
+          </motion.button>
         </div>
       </section>
 
       {/* CTA Section - Refined */}
-      <section className="relative z-10 py-32 px-4 overflow-hidden">
+      <section id="cta-section" className="relative z-10 min-h-screen flex flex-col justify-center items-center py-32 px-4 overflow-hidden">
         <div className="container mx-auto max-w-5xl relative">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -259,8 +421,8 @@ const Index = () => {
             <div className="absolute top-0 left-0 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 mix-blend-overlay" />
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-black opacity-10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 mix-blend-overlay" />
 
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white tracking-tight">
+            <div className="relative z-10 flex flex-col items-center">
+              <h2 className="text-3xl md:text-6xl font-bold mb-8 text-white tracking-tight">
                 Start your journey today
               </h2>
               <p className="text-muted-foreground text-xl mb-12 max-w-2xl mx-auto font-medium">
@@ -269,7 +431,7 @@ const Index = () => {
               <Button
                 size="lg"
                 onClick={() => navigate('/register')}
-                className="bg-light text-primary h-16 px-12 text-xl rounded-full font-bold shadow-lg transition-transform hover:scale-105"
+                className="bg-light text-primary h-16 px-12 text-md md:text-xl rounded-full font-bold shadow-lg transition-transform hover:scale-105 w-full sm:w-auto"
               >
                 Start Learning Now
               </Button>
