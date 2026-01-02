@@ -8,7 +8,7 @@
     --primary-foreground: #020b0b;
 
     /* Secondary - Light teal */
-    --secondary: #FFFFFF;
+    --secondary: #bfdbeb;
     --secondary-foreground: #020b0b;
 
     /* Tertiary - Pale teal */
@@ -29,7 +29,7 @@
 
     /* Utility colors */
     --border: #92d3e3;
-    --input: #ffffff;
+    --input: #bfdbeb;
     --ring: var(--light);
     --radius: 0.5rem;
     --toggle-bg: #033533;

@@ -1,109 +1,241 @@
-/* Neubrutalism Theme - Bold, high-contrast, flat design */
+/* Neubrutalism Theme - Bold, high-contrast, flat design with hard shadows - Matching Reference Image */
+/* Variables defined in the scope */
 [data-theme="neubrutalism"] {
     /* Background & Foreground */
-    --background: #8452ff;
+    --background: #E2E8F0;
+    /* Cool gray/blue light background */
     --foreground: #000000;
 
-    /* Primary - Bright yellow */
-    --primary: #fd6f57;
+    /* Primary - Vibrant Green */
+    --primary: #22c55e;
     --primary-foreground: #000000;
 
-    /* Secondary - Bold pink */
-    --secondary: #3d9028;
+    /* Secondary - Yellow */
+    --secondary: #FBbf24;
     --secondary-foreground: #000000;
 
-    /* Tertiary - Vibrant cyan */
-    --tertiary: #00BFFF;
-    --tertiary-foreground: #000000;
+    /* Tertiary - Purple */
+    --tertiary: #a855f7;
+    --tertiary-foreground: #ffffff;
 
-    /* Danger - Strong red */
-    --danger: #FF0000;
+    /* Danger - Red */
+    --danger: #ef4444;
     --danger-foreground: #FFFFFF;
 
-    /* Dark - Pure black */
-    --dark: #000000;
+    /* Dark - Pure Black */
+    --dark: #f43f5e;
     --dark-foreground: #FFFFFF;
 
-    /* Light - Electric blue */
-    --light: #ceff4e;
+    /* Light - White */
+    --light: #FFFFFF;
     --light-foreground: #000000;
 
     /* Utility colors */
     --border: #000000;
-    --input: #FF1493;
-    --ring: #FFD700;
-    --radius: 0.25rem;
-    --toggle-bg: #FF1493;
-    --muted-foreground: #B3B3B3;
+    --input: #FFFFFF;
+    --ring: #000000;
+    --radius: 0rem;
+    --toggle-bg: #000000;
+    --muted-foreground: #404040;
 
     /* Button colors */
-    --btn-1: #FFD700;
-    --btn-2: #FF1493;
-    --btn-3: #00FFFF;
-    --btn-4: #00FF00;
-    --btn-5: #FF00FF;
+    --btn-1: #22c55e;
+    --btn-2: #FBbf24;
+    --btn-3: #a855f7;
+    --btn-4: #3b82f6;
+    --btn-5: #f43f5e;
 
     /* Progress bar colors */
-    --r-start: 255;
-    --g-start: 0;
-    --b-start: 255;
+    --r-start: 34;
+    --g-start: 197;
+    --b-start: 94;
     --a-start: 1;
-    --r-end: 255;
-    --g-end: 215;
-    --b-end: 0;
+    --r-end: 251;
+    --g-end: 191;
+    --b-end: 36;
     --a-end: 1;
 
     /* Gradient colors */
-    --gradient-from: #FF1493;
-    --gradient-to: #000000;
+    --gradient-from: #22c55e;
+    --gradient-to: #FBbf24;
 
     /* Difficulty colors */
-    --difficulty-hard: #FF0000;
-    --difficulty-ok: #FFD700;
-    --difficulty-good: #00FFFF;
-    --difficulty-perfect: #00FF00;
+    --difficulty-hard: #ef4444;
+    --difficulty-ok: #FBbf24;
+    --difficulty-good: #3b82f6;
+    --difficulty-perfect: #22c55e;
 
     /* Gender colors */
-    --gender-male: #00BFFF;
+    --gender-male: #3b82f6;
     --gender-male-foreground: #000000;
-    --gender-female: #FF1493;
-    --gender-female-foreground: #FFFFFF;
-    --gender-neuter: #00FF00;
+    --gender-female: #f43f5e;
+    --gender-female-foreground: #000000;
+    --gender-neuter: #22c55e;
     --gender-neuter-foreground: #000000;
-    --gender-common: #FFD700;
+    --gender-common: #FBbf24;
     --gender-common-foreground: #000000;
 
-    --gradient-dark: var(--primary);
-    --gradient-tertiary: var(--light);
+    --gradient-dark: #FFFFFF;
+    --gradient-tertiary: #FFFFFF;
 
-    /* Specifications */
-    .list-card {
-        background-color: var(--primary);
-        color: var(--primary-foreground);
-    }
+    /* Hard shadow variable */
+    --neubrutal-shadow: 5px 5px 0px 0px #000000;
+}
 
-    .word-card,
-    .practice-card {
-        background: var(--gradient-dark);
-        color: var(--foreground);
-    }
+/* Component overrides - Un-nested */
 
-    .direction-button {
-        background-color: var(--secondary);
-        color: var(--secondary-foreground);
-    }
+[data-theme="neubrutalism"] .list-card,
+[data-theme="neubrutalism"] .library-list-item {
+    background-color: #FFFFFF;
+    color: #000000;
+    border: 3px solid #000000;
+    box-shadow: 5px 5px 0px 0px #000000;
+    border-radius: 0 !important;
+}
 
-    .view-list-button {
-        background: var(--gradient-tertiary);
-        color: var(--light-foreground);
-    }
+[data-theme="neubrutalism"] .list-card:hover,
+[data-theme="neubrutalism"] .library-list-item:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0px 0px #000000;
+    transition: all 0.2s ease;
+}
 
-    .header-hover {
-        background-color: var(--primary);
-        color: var(--primary-foreground);
-    }
+[data-theme="neubrutalism"] .word-card,
+[data-theme="neubrutalism"] .practice-card {
+    background: #FFFFFF;
+    color: #000000;
+    border: 3px solid #000000;
+    box-shadow: 5px 5px 0px 0px #000000;
+    border-radius: 0 !important;
+}
 
-    .total-words {
-        color: var(--primary-foreground);
-    }
+[data-theme="neubrutalism"] .direction-button {
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+    border: 3px solid #000000;
+    box-shadow: 3px 3px 0px 0px #000000;
+    border-radius: 0 !important;
+}
+
+[data-theme="neubrutalism"] .direction-button:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0px 0px #000000;
+}
+
+[data-theme="neubrutalism"] .view-list-button {
+    background: var(--dark);
+    color: var(--dark-foreground);
+    border: 3px solid #000000;
+    box-shadow: 3px 3px 0px 0px #000000;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    border-radius: 0 !important;
+}
+
+[data-theme="neubrutalism"] .header-hover {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    border: 3px solid #000000;
+    box-shadow: 4px 4px 0px 0px #000000;
+}
+
+[data-theme="neubrutalism"] .total-words {
+    color: #000000;
+    font-weight: 900;
+}
+
+/* Practice Progress Bar */
+[data-theme="neubrutalism"] .practice-progress-bar {
+    border: 3px solid #000000 !important;
+    border-radius: 0 !important;
+    background-color: #FFFFFF;
+    box-shadow: 4px 4px 0px 0px #000000;
+}
+
+/* Header Streak & Daily Progress */
+[data-theme="neubrutalism"] header button[title="Daily Progress"],
+[data-theme="neubrutalism"] header div[title="Current Streak"] {
+    border: 2px solid #000000 !important;
+    border-radius: 0 !important;
+    box-shadow: 3px 3px 0px 0px #000000;
+    background-color: #FFFFFF !important;
+}
+
+/* Global Component Overrides for Neubrutalism - Un-nested */
+
+/* Buttons */
+[data-theme="neubrutalism"] button.inline-flex,
+[data-theme="neubrutalism"] button[type="submit"],
+[data-theme="neubrutalism"] button[type="button"] {
+    border: 3px solid #000000;
+    box-shadow: 4px 4px 0px 0px #000000;
+    transition: all 0.2s ease;
+    border-radius: 0 !important;
+    font-weight: 700;
+}
+
+[data-theme="neubrutalism"] button:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 6px 6px 0px 0px #000000;
+}
+
+[data-theme="neubrutalism"] button:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px 0px #000000;
+}
+
+/* Mobile Nav Buttons - Reset borders */
+[data-theme="neubrutalism"] .mobile-nav-btn {
+    border: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+}
+
+[data-theme="neubrutalism"] .mobile-nav-btn:hover {
+    border: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+[data-theme="neubrutalism"] .mobile-nav-btn:active {
+    border: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Input fields */
+[data-theme="neubrutalism"] input,
+[data-theme="neubrutalism"] textarea,
+[data-theme="neubrutalism"] select {
+    border: 3px solid #000000 !important;
+    box-shadow: 4px 4px 0px 0px #000000;
+    border-radius: 0 !important;
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    font-weight: 600;
+}
+
+[data-theme="neubrutalism"] input:focus,
+[data-theme="neubrutalism"] textarea:focus {
+    box-shadow: 6px 6px 0px 0px #000000;
+    transform: translate(-2px, -2px);
+    outline: none;
+}
+
+/* Dialog/Modal content */
+[data-theme="neubrutalism"] [role="dialog"] {
+    border: 4px solid #000000 !important;
+    box-shadow: 10px 10px 0px 0px #000000 !important;
+    border-radius: 0 !important;
+}
+
+/* Badges/Tags */
+[data-theme="neubrutalism"] .badge,
+[data-theme="neubrutalism"] [class*="badge"] {
+    border: 2px solid #000000;
+    border-radius: 0 !important;
+    font-weight: bold;
 }
