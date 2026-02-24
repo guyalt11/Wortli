@@ -574,7 +574,7 @@ const Settings = () => {
                     <div className="border-t" />
 
                     {/* Danger Zone Section */}
-                    <div>
+                    <div id="delete-account">
                         <div className="flex items-center gap-2 mb-4">
                             <AlertTriangle className="h-5 w-5 text-destructive" />
                             <h2 className="text-xl font-semibold text-destructive">Danger Zone</h2>

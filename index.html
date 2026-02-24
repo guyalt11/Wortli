@@ -37,7 +37,35 @@
 </script>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <!-- This content is visually hidden to prevent the "flash" of text before React loads, 
+         but is fully readable by Google OAuth reviewers and Search Engine bots. -->
+    <div
+      style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;">
+      <h1>Wörtli - AI-Powered Vocabulary Flashcards for Language Learning</h1>
+      <p>Master Any Language Naturally & Effortlessly</p>
+
+      <h2>How Wörtli Transforms Your Language Journey</h2>
+
+      <h3>Smart Flashcards, Faster Memory</h3>
+      <p>Traditional learning can feel like a chore - hours spent typing words, searching translations, and formatting
+        lists drain motivation. Wörtli removes that friction. With our AI assistant, generate lists in second, while
+        avoiding duplicates. Create your own or explore our community library to start learning instantly.</p>
+
+      <h3>Science-Backed Spaced Repetition</h3>
+      <p>Our practice engine uses the renowned SM2 algorithm, a top implementation of Spaced Repetition (SRS). SM2
+        optimizes long-term retention by timing reviews perfectly. Instead of cramming, we remind you just as you're
+        about to forget, making language learning faster, more natural, and effortless.</p>
+
+      <p><a href="/about">Read more about our mission</a></p>
+
+      <h2>Google OAuth and Data Privacy</h2>
+      <p>Wörtli uses Google Sign-In to provide a secure and fast way for users to create an account and log in. This
+        allows us to securely sync your flashcards and progress across all your devices.</p>
+      <p>For more details, please review our <a href="/privacy.html">Privacy Policy</a>.</p>
+    </div>
+  </div>
+
   <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
   <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   <script type="module" src="/src/main.tsx"></script>

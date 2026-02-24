@@ -53,7 +53,6 @@ const VocabListGrid = ({
               list={list}
               onSelect={() => {
                 onSelectList(list.id);
-                goToList(list.id);
               }}
               onEdit={() => onEditList(list.id)}
               onDelete={() => onDeleteList(list.id)}
