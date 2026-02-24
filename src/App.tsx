@@ -72,7 +72,10 @@ const AppContent = () => {
       />
       <main className="flex-grow pb-[calc(5rem+env(safe-area-inset-bottom)-1rem)] md:pb-0">
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route
+            path="/"
+            element={isAuthenticated && !isLoading ? <Navigate to="/home" replace /> : <Index />}
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
