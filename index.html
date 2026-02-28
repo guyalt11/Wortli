@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wörtli</title>
   <meta name="description"
-    content="Master any language naturally with Wörtli. Create AI-powered flashcards, track your progress, and practice with smart sm2 spaced spaced repetition algorithm." />
+    content="Master any language naturally with Wörtli. Create AI-powered flashcards, track your progress, and practice with smart spaced repetition." />
   <meta name="keywords" content="vocabulary, flashcards, AI, language learning, spaced repetition, SRS, Wörtli" />
   <meta name="author" content="Guy Altmann" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://wortli.com/" />
-  <meta property="og:title" content="Wörtli | AI-Powered Vocabulary Flashcards" />
+  <meta property="og:title" content="Wörtli" />
   <meta property="og:description"
     content="Master any language naturally with AI-powered flashcards and smart SM2 spaced repetition." />
   <meta property="og:image" content="https://wortli.com/logo.png" />
@@ -21,10 +21,12 @@
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://wortli.com/" />
-  <meta property="twitter:title" content="Wörtli | AI-Powered Vocabulary Flashcards" />
+  <meta property="twitter:title" content="Wörtli" />
   <meta property="twitter:description"
     content="Master any language naturally with AI-powered flashcards and smart SM2 spaced repetition." />
   <meta property="twitter:image" content="https://wortli.com/logo.png" />
+
+  <link rel="stylesheet" href="/flashindex.css">
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SY793CMP18"></script>
@@ -38,34 +40,195 @@
 
 <body>
   <div id="root">
-    <!-- This content is visually hidden to prevent the "flash" of text before React loads, 
-         but is fully readable by Google OAuth reviewers and Search Engine bots. -->
-    <div style="position: absolute; clip: rect(1px, 5px, 5px, 1px);">
-      <h1>Wörtli</h1>
-      <h2>AI-Powered Vocabulary Flashcards for Language Learning</h2>
-      <p>Master Any Language Naturally & Effortlessly</p>
-
-      <h2>How Wörtli Transforms Your Language Journey</h2>
-
-      <h3>Smart Flashcards, Faster Memory</h3>
-      <p>Traditional learning can feel like a chore - hours spent typing words, searching translations, and formatting
-        lists drain motivation. Wörtli removes that friction. With our AI assistant, generate lists in second, while
-        avoiding duplicates. Create your own or explore our community library to start learning instantly.</p>
-
-      <h3>Science-Backed Spaced Repetition</h3>
-      <p>Our practice engine uses the renowned SM2 algorithm, a top implementation of Spaced Repetition (SRS). SM2
-        optimizes long-term retention by timing reviews perfectly. Instead of cramming, we remind you just as you're
-        about to forget, making language learning faster, more natural, and effortless.</p>
-
-      <p><a href="/about">Read more about our mission</a></p>
-
-      <h2>Google OAuth and Data Privacy</h2>
-      <p>Wörtli uses Google Sign-In to provide a secure and fast way for users to create an account and log in. This
-        allows us to securely sync your flashcards and progress across all your devices.</p>
-      <p>For more details, please review our <a href="/privacy.html">Privacy Policy</a>.</p>
+    <!-- Animated Background Gradients -->
+    <div class="animated-background">
+      <div class="bg-gradient-1"></div>
+      <div class="bg-gradient-2"></div>
+      <div class="bg-gradient-3"></div>
     </div>
-  </div>
 
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container hero-content">
+        <div class="hero-content-inner">
+          <!-- Logo & Badge -->
+          <div class="logo-container mb-8 relative group">
+            <img src="/logo.webp" alt="Wörtli Logo" class="logo relative z-10">
+          </div>
+
+          <!-- Title -->
+          <h1 class="title">Wörtli</h1>
+
+          <!-- Badge -->
+          <div class="badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m12 3 1.724 5.299L19 9l-4.138 3.001L16.624 17 12 14.5 7.376 17l1.762-4.999L5 9l5.276-.701z"/>
+            </svg>
+            <span>AI-Powered flashcards</span>
+          </div>
+
+          <!-- Subtitle -->
+          <p class="subtitle">
+            <span>Master Any Language Naturally & Effortlessly</span>
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="cta-buttons">
+            <a href="/register" class="btn btn-primary">
+              Get Started Free
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 0.5rem;">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="/login" class="btn btn-outline">
+              Have an account?
+            </a>
+          </div>
+
+          <!-- Scroll Indicator -->
+          <div class="scroll-indicator" onclick="scrollToSection('features-section')">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features-section" class="features">
+      <div class="container">
+        <div class="features-header">
+          <h2 class="features-title">Stop wasting time!</h2>
+          <p class="features-subtitle">
+            Here are some of the reasons why Wörtli is so effective.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">AI-Powered Learning</h3>
+            <p class="feature-description">
+              Generate vocabulary lists instantly with our AI assistant tailored to your customized learning goals.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">Smart Practice System</h3>
+            <p class="feature-description">
+              Adaptive spaced repetition ensures you review words at the perfect time for maximum retention.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">Track Your Progress</h3>
+            <p class="feature-description">
+              Build a learning habit with daily goals and streaks to keep you motivated and win rewards.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>
+              </svg>
+            </div>
+            <h3 class="feature-title">Shared Library</h3>
+            <p class="feature-description">
+              Access our community library with a wide range of vocabulary lists for over 50 languages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section id="how-it-works-section" class="how-it-works">
+      <div class="container">
+        <div class="how-it-works-content">
+          <h2 class="section-title">How Wörtli Transforms Your Language Journey</h2>
+          
+          <div class="content-block">
+            <h3>Smart Flashcards, Faster Memory</h3>
+            <p>
+              Traditional learning can feel like a chore - hours spent typing words, searching translations, and formatting lists drain motivation. Wörtli removes that friction. With our <strong>AI assistant</strong>, generate lists in seconds, while avoiding duplicates. Create your own or explore our <strong>community library</strong> to start learning instantly.
+            </p>
+          </div>
+
+          <div class="content-block">
+            <h3>Science-Backed Spaced Repetition</h3>
+            <p>
+              Our practice engine uses renowned <strong>SM2 algorithm</strong>, a top implementation of <strong>Spaced Repetition (SRS)</strong>. SM2 optimizes long-term retention by timing reviews perfectly. Instead of cramming, we remind you just as you're about to forget, making language learning faster, more natural, and effortless.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <a href="/about" class="link-button">
+              Read more about our mission
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 0.5rem;">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Smooth scrolling function
+      function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      // Remove parallax effect to avoid weird behavior
+      // Add fade-in animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      // Observe all feature cards and content blocks
+      document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.feature-card, .content-block');
+        cards.forEach(card => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          observer.observe(card);
+        });
+      });
+    </script>
+  </div>
   <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
   <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   <script type="module" src="/src/main.tsx"></script>
