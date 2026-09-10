@@ -1,8 +1,14 @@
 import { motion } from "framer-motion";
 import { BookOpen, Brain, Globe, Shield, Users } from "lucide-react";
 import { useEffect } from "react";
+import { usePreferences } from '@/context/PreferencesContext';
 
 const About = () => {
+    const { colorScheme } = usePreferences();
+    
+    // Default to dark theme if colorScheme not available
+    const themeLogo = colorScheme === 'light' ? '/light.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism.webp' : '/dark.webp';
+    
     useEffect(() => {
         document.title = "About Wörtli | Our Mission for Language Learning";
         window.scrollTo(0, 0);
@@ -47,7 +53,7 @@ const About = () => {
                     </div>
                     <div className="p-8">
                         <div className="aspect-square flex items-center justify-center">
-                            <img src="/logo.webp" alt="Wörtli Logo" className="w-48 h-48 drop-shadow-2xl" />
+                            <img src={themeLogo} alt="Wörtli Logo" className="w-48 h-48 drop-shadow-2xl" />
                         </div>
                     </div>
                 </section>

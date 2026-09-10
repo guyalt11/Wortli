@@ -7,10 +7,15 @@ import { DirectionFlag } from '@/components/FlagIcon';
 import GenderTag from '@/components/GenderTag';
 import { Card } from '@/components/ui/card';
 import { Gender } from '@/types/vocabulary';
+import { usePreferences } from '@/context/PreferencesContext';
 
 const Index = () => {
   const navigate = useNavigate();
   const { scrollY } = useScroll();
+  const { colorScheme } = usePreferences();
+  
+  // Default to dark theme if not authenticated or colorScheme not available
+  const themeLogo = colorScheme === 'light' ? '/light-welcome.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism-welcome.webp' : '/dark-welcome.webp';
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -111,7 +116,7 @@ const Index = () => {
             <motion.div variants={itemVariants} className="mb-8 relative group">
               <div className="absolute inset-0 bg-primary opacity-20 blur-2xl rounded-full group-hover:opacity-30 transition-opacity duration-500" />
               <img
-                src="/logo.webp"
+                src={themeLogo}
                 alt="Wörtli Logo"
                 className="w-20 h-20 sm:w-28 sm:h-28 relative z-10 drop-shadow-2xl hover:scale-110 transition-transform duration-500"
               />

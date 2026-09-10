@@ -32,15 +32,6 @@ const CardFront: React.FC<CardFrontProps> = ({ word, direction, flipped, onDelet
   // For translateFrom (English to Language), show English word
   const frontText = direction === 'translateTo' ? word.origin : word.transl;
 
-  const getLanguageCode = (lang: string) => {
-    switch (lang) {
-      case 'de': return 'de-DE';
-      case 'he': return 'he-IL';
-      case 'is': return 'is-IS';
-      default: return 'en-US';
-    }
-  };
-
   return (
     <div className="text-center w-full">
       <div className="mb-2 text-muted-foreground text-sm flex items-center justify-center">
@@ -55,14 +46,14 @@ const CardFront: React.FC<CardFrontProps> = ({ word, direction, flipped, onDelet
         )}</span>
       </div>
 
-      {direction === 'translateTo' && (currentList?.language === 'de' || currentList?.language === 'en') && (
+      {direction === 'translateTo' && currentList?.language && (
         <Button
           variant="ghost"
           size="sm"
           className="mt-4"
           onClick={(e) => {
             e.stopPropagation();
-            speak(word.origin, getLanguageCode(currentList?.language || 'en'));
+            speak(word.origin, currentList.language);
           }}
         >
           🔊 Listen

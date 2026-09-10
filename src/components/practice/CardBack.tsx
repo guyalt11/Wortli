@@ -30,15 +30,6 @@ const CardBack: React.FC<CardBackProps> = ({ word, direction, language, target }
   const backText = direction === 'translateTo' ? word.transl : word.origin;
   const showGender = direction === 'translateFrom' && word.gender;
 
-  const getLanguageCode = (lang: string) => {
-    switch (lang) {
-      case 'de': return 'de-DE';
-      case 'he': return 'he-IL';
-      case 'is': return 'is-IS';
-      default: return 'en-US';
-    }
-  };
-
   return (
     <div className="text-center mt-6 pt-4 w-full">
       <div className="mb-2 text-muted-foreground text-sm flex items-center justify-center">
@@ -53,15 +44,14 @@ const CardBack: React.FC<CardBackProps> = ({ word, direction, language, target }
         )}</span>
       </div>
 
-      {/* TODO: Add language-specific audio button */}
-      {direction === 'translateFrom' && (currentList?.language === 'de' || currentList?.language === 'en') && (
+      {direction === 'translateFrom' && currentList?.language && (
         <Button
           variant="ghost"
           size="sm"
           className="mt-2"
           onClick={(e) => {
             e.stopPropagation();
-            speak(word.origin, getLanguageCode(currentList?.language || 'en'));
+            speak(word.origin, currentList.language);
           }}
         >
           🔊 Listen

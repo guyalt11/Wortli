@@ -606,6 +606,7 @@ const Settings = () => {
                             <p>Version 1.0.0</p>
                             <p>2026 © Wörtli - All rights reserved</p>
                             <p className="pt-2">Contact: <a href="mailto:wortli.app@gmail.com" className="text-tertiary hover:underline">wortli.app@gmail.com</a></p>
+                            <p className="pt-2"><a href="/privacy.html" className="text-tertiary hover:underline">Privacy Policy</a></p>
                         </div>
                     </div>
                 </div>

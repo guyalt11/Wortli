@@ -20,9 +20,12 @@ const Header = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const { currentUser, logout, isAuthenticated, streak, dailyCount } = useAuth();
-    const { preferences } = usePreferences();
+    const { preferences, colorScheme } = usePreferences();
     const { isLibraryOpen, setIsLibraryOpen } = useVocab();
     const navigate = useNavigate();
+    
+    // Default to dark theme if colorScheme not available
+    const themeLogo = colorScheme === 'light' ? '/light.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism.webp' : '/dark.webp';
 
     // Handle scroll behavior
     useEffect(() => {
@@ -100,7 +103,7 @@ const Header = () => {
                             onClick={() => handleNavigation(getHomeLink())}
                             className="flex items-center focus:outline-none rounded"
                         >
-                            <img src="/logo.webp" alt="Wörtli Logo" className="h-10 w-10" />
+                            <img src={themeLogo} alt="Wörtli Logo" className="h-10 w-10" />
                         </button>
                         <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
                             {/* Desktop Navigation */}
