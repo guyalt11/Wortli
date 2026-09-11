@@ -6,8 +6,8 @@ import { usePreferences } from '@/context/PreferencesContext';
 const About = () => {
     const { colorScheme } = usePreferences();
     
-    // Default to dark theme if colorScheme not available
-    const themeLogo = colorScheme === 'light' ? '/light-welcome.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism-welcome.webp' : '/dark-welcome.webp';
+    // Default to light theme if colorScheme not available
+    const themeLogo = colorScheme === 'dark' ? '/dark-welcome.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism-welcome.webp' : '/light-welcome.webp';
     
     useEffect(() => {
         document.title = "About Wörtli | Our Mission for Language Learning";
@@ -170,9 +170,7 @@ const About = () => {
                         </a>
                         <div className="text-center text-sm text-white/60">
                             <div className="flex items-center mb-3">
-                                <div className="flex-1 border-t border-white/20"></div>
-                                <span className="px-4">Or use the web version:</span>
-                                <div className="flex-1 border-t border-white/20"></div>
+                                <span className="px-4 text-black">Or use the web version:</span>
                             </div>
                             <a href="/register" className="inline-block bg-light light:bg-dark text-primary font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
                                 Get Started for Free

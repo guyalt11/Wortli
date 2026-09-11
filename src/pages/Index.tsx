@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Smartphone, Bell, Zap, ArrowRight, Sparkles, ChevronDown, Download } from "lucide-react";
+import { BookOpen, Brain, Zap, Target, ArrowRight, Sparkles, ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { DirectionFlag } from '@/components/FlagIcon';
 import GenderTag from '@/components/GenderTag';
@@ -14,8 +14,8 @@ const Index = () => {
   const { scrollY } = useScroll();
   const { colorScheme } = usePreferences();
   
-  // Default to dark theme if not authenticated or colorScheme not available
-  const themeLogo = colorScheme === 'light' ? '/light-welcome.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism-welcome.webp' : '/dark-welcome.webp';
+  // Default to light theme if not authenticated or colorScheme not available
+  const themeLogo = colorScheme === 'dark' ? '/dark-welcome.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism-welcome.webp' : '/light-welcome.webp';
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -43,24 +43,24 @@ const Index = () => {
 
   const features = [
     {
-      icon: <Smartphone className="h-12 w-12 text-light" />,
-      title: "Learn Anywhere",
-      description: "Practice on the go with offline support. Perfect for commutes, waiting times, or quick learning sessions."
+      icon: <Brain className="h-12 w-12 text-light" />,
+      title: "AI-Powered Learning",
+      description: "Generate vocabulary lists instantly with our AI assistant tailored to your customized learning goals."
     },
     {
-      icon: <Bell className="h-12 w-12 text-light" />,
-      title: "Push Notifications",
-      description: "Never miss a practice session with smart reminders that keep you consistent and motivated."
+      icon: <Target className="h-12 w-12 text-light" />,
+      title: "Smart Practice System",
+      description: "Adaptive spaced repetition ensures you review words at the perfect time for maximum retention."
     },
     {
       icon: <Zap className="h-12 w-12 text-light" />,
-      title: "Native Performance",
-      description: "Lightning-fast app performance with native UI components for the smoothest learning experience."
+      title: "Track Your Progress",
+      description: "Build a learning habit with daily goals and streaks to keep you motivated and win rewards."
     },
     {
       icon: <BookOpen className="h-12 w-12 text-light" />,
-      title: "Better TTS Quality",
-      description: "Superior text-to-speech with native Android voices for more accurate pronunciations."
+      title: "Shared Library",
+      description: "Access our community library with a wide range of vocabulary lists for over 50 languages."
     }
   ];
 
@@ -133,7 +133,7 @@ const Index = () => {
             <motion.div variants={itemVariants} className="mb-6">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary border backdrop-blur-md text-light light:text-muted-foreground text-sm font-medium shadow-lg shadow-primary/5">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Available on Android</span>
+                <span>AI-Powered flashcards</span>
               </span>
             </motion.div>
 
@@ -207,10 +207,10 @@ const Index = () => {
           >
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">
-                Why the app is better
+                Stop wasting time!
               </h2>
               <p className="text-muted-foreground text-xl max-w-2xl mx-auto">
-                Get the full Wörtli experience with our Android app.
+                Here are some of the reasons why Wörtli is so effective.
               </p>
             </div>
 

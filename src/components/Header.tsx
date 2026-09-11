@@ -24,8 +24,8 @@ const Header = () => {
     const { isLibraryOpen, setIsLibraryOpen } = useVocab();
     const navigate = useNavigate();
     
-    // Default to dark theme if colorScheme not available
-    const themeLogo = colorScheme === 'light' ? '/light.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism.webp' : '/dark.webp';
+    // Default to light theme if colorScheme not available
+    const themeLogo = colorScheme === 'dark' ? '/dark.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism.webp' : '/light.webp';
 
     // Handle scroll behavior
     useEffect(() => {

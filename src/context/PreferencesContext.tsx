@@ -29,7 +29,7 @@ type PreferencesContextType = {
 };
 
 const defaultPreferences: UserPreferences = {
-    colorScheme: 'dark',
+    colorScheme: 'light',
     username: '',
     hideEmptyLists: false,
     defaultDirection: false,
@@ -139,7 +139,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
             setPreferences(null);
             setIsLoading(false);
             // Reset to default theme when logged out
-            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.setAttribute('data-theme', 'light');
         }
     }, [isAuthenticated, currentUser?.id]);
 
@@ -309,7 +309,7 @@ export const PreferencesProvider = ({ children }: { children: ReactNode }) => {
     return (
         <PreferencesContext.Provider value={{
             preferences,
-            colorScheme: preferences?.colorScheme || 'dark',
+            colorScheme: preferences?.colorScheme || 'light',
             updateColorScheme,
             updateUsername,
             updateHideEmptyLists,
