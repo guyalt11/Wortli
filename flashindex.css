@@ -256,6 +256,34 @@ body {
   margin-bottom: 6em !important;
 }
 
+.app-badge {
+  margin-bottom: 2rem;
+}
+
+.google-play-btn {
+  display: inline-block;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.google-play-btn:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.google-play-btn img {
+  max-width: 200px;
+  height: auto;
+}
+
+.website-options {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.website-options .cta-buttons {
+  margin-bottom: 2rem !important;
+}
+
 @media (min-width: 640px) {
   .cta-buttons {
     flex-direction: row;

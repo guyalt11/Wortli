@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Brain, Zap, Target, ArrowRight, Sparkles, ChevronDown } from "lucide-react";
+import { BookOpen, Smartphone, Bell, Zap, ArrowRight, Sparkles, ChevronDown, Download } from "lucide-react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { DirectionFlag } from '@/components/FlagIcon';
 import GenderTag from '@/components/GenderTag';
@@ -25,14 +25,14 @@ const Index = () => {
   };
 
   useEffect(() => {
-    document.title = "Wörtli | AI-Powered Vocabulary Learning & Flashcards";
+    document.title = "Wörtli - Language Learning App";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Master any language naturally with Wörtli. Create AI-powered flashcards, track your progress, and practice with smart spaced repetition.");
+      metaDescription.setAttribute("content", "Master any language naturally with the Wörtli Android app. AI-powered flashcards, offline practice, and smart spaced repetition.");
     } else {
       const meta = document.createElement('meta');
       meta.name = "description";
-      meta.content = "Master any language naturally with Wörtli. Create AI-powered flashcards, track your progress, and practice with smart spaced repetition.";
+      meta.content = "Master any language naturally with the Wörtli Android app. AI-powered flashcards, offline practice, and smart spaced repetition.";
       document.head.appendChild(meta);
     }
   }, []);
@@ -43,24 +43,24 @@ const Index = () => {
 
   const features = [
     {
-      icon: <Brain className="h-12 w-12 text-light" />,
-      title: "AI-Powered Learning",
-      description: "Generate vocabulary lists instantly with our AI assistant tailored to your customized learning goals."
+      icon: <Smartphone className="h-12 w-12 text-light" />,
+      title: "Learn Anywhere",
+      description: "Practice on the go with offline support. Perfect for commutes, waiting times, or quick learning sessions."
     },
     {
-      icon: <Target className="h-12 w-12 text-light" />,
-      title: "Smart Practice System",
-      description: "Adaptive spaced repetition ensures you review words at the perfect time for maximum retention."
+      icon: <Bell className="h-12 w-12 text-light" />,
+      title: "Push Notifications",
+      description: "Never miss a practice session with smart reminders that keep you consistent and motivated."
     },
     {
       icon: <Zap className="h-12 w-12 text-light" />,
-      title: "Track Your Progress",
-      description: "Build a learning habit with daily goals and streaks to keep you motivated and win rewards."
+      title: "Native Performance",
+      description: "Lightning-fast app performance with native UI components for the smoothest learning experience."
     },
     {
       icon: <BookOpen className="h-12 w-12 text-light" />,
-      title: "Shared Library",
-      description: "Access our community library with a wide range of vocabulary lists for over 50 languages."
+      title: "Better TTS Quality",
+      description: "Superior text-to-speech with native Android voices for more accurate pronunciations."
     }
   ];
 
@@ -105,7 +105,7 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative z-10 h-screen flex flex-col justify-center items-center px-4">
-        <div className="container mx-auto max-w-6xl text-center">
+        <div className="container mx-auto max-w-6xl text-center flex-1 flex flex-col justify-center">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -118,7 +118,7 @@ const Index = () => {
               <img
                 src={themeLogo}
                 alt="Wörtli Logo"
-                className="w-20 h-20 sm:w-28 sm:h-28 relative z-10 drop-shadow-2xl hover:scale-110 transition-transform duration-500"
+                className="w-20 h-20 sm:w-32 sm:h-32 relative z-10 drop-shadow-2xl hover:scale-110 transition-transform duration-500"
               />
             </motion.div>
 
@@ -130,42 +130,63 @@ const Index = () => {
               <span className="sr-only">AI-Powered Vocabulary Flashcards for Language Learning</span>
             </motion.h1>
 
-            <motion.div variants={itemVariants} className="mb-8">
+            <motion.div variants={itemVariants} className="mb-6">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-secondary border backdrop-blur-md text-light light:text-muted-foreground text-sm font-medium shadow-lg shadow-primary/5">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>AI-Powered flashcards</span>
+                <span>Available on Android</span>
               </span>
             </motion.div>
 
-            <motion.p variants={itemVariants} className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+            <motion.p variants={itemVariants} className="text-lg md:text-xl text-muted-foreground mb-6 max-w-2xl mx-auto leading-relaxed">
               <span className="md:text-2xl lg:text-4xl text-tertiary font-bold max-w-4xl mx-auto leading-tight">
                 Master Any Language Naturally & Effortlessly
               </span>
             </motion.p>
 
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 justify-center items-center w-full sm:w-auto">
-              <Button
-                size="lg"
-                onClick={() => navigate('/register')}
-                className="w-full sm:w-auto text-lg h-14 px-10 rounded-full shadow-xl font-semibold transition-all duration-300 transform hover:-translate-y-1"
+            <motion.div variants={itemVariants} className="flex flex-col gap-6 justify-center items-center w-full sm:w-auto">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.wortli.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
               >
-                Get Started Free
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => navigate('/login')}
-                className="w-full sm:w-auto text-lg h-14 px-10 rounded-full border-2 border-dashed border-tertiary hover:border-tertiary hover:bg-secondary light:hover:bg-dark hover:text-light transition-all duration-300 relative bg-background backdrop-blur-sm"
-              >
-                Have an account?
-              </Button>
+                <img 
+                  src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
+                  alt="Get it on Google Play" 
+                  className="h-16 sm:h-20 w-auto"
+                />
+              </a>
+              <div className="w-full max-w-md">
+                <div className="flex items-center text-sm">
+                  <div className="flex-1 border-t border-border/30"></div>
+                  <span className="px-4 text-muted-foreground">Or use the web version</span>
+                  <div className="flex-1 border-t border-border/30"></div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+                  <Button
+                    size="lg"
+                    onClick={() => navigate('/register')}
+                    className="w-full text-base h-12 px-8 rounded-full shadow-xl font-semibold transition-all duration-300 transform hover:-translate-y-1"
+                  >
+                    Get Started Free
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => navigate('/login')}
+                    className="w-full text-base h-12 px-8 rounded-full border-2 border-dashed border-tertiary hover:border-tertiary hover:bg-secondary light:hover:bg-dark hover:text-light transition-all duration-300 relative bg-background backdrop-blur-sm"
+                  >
+                    Have an account?
+                  </Button>
+                </div>
+              </div>
             </motion.div>
 
             <motion.button
               variants={itemVariants}
               onClick={() => scrollToSection('features-section')}
-              className="mt-16 sm:mt-24 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+              className="mt-8 sm:mt-16 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
               aria-label="Scroll to features"
             >
               <ChevronDown className="w-8 h-8 text-muted-foreground" />
@@ -186,10 +207,10 @@ const Index = () => {
           >
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">
-                Stop wasting time!
+                Why the app is better
               </h2>
               <p className="text-muted-foreground text-xl max-w-2xl mx-auto">
-                Here are some of the reasons why Wörtli is so effective.
+                Get the full Wörtli experience with our Android app.
               </p>
             </div>
 
@@ -403,45 +424,6 @@ const Index = () => {
             ))}
           </div>
 
-          <motion.button
-            onClick={() => scrollToSection('cta-section')}
-            className="mt-8 animate-bounce opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
-            aria-label="Scroll to call to action"
-          >
-            <ChevronDown className="w-8 h-8 text-muted-foreground" />
-          </motion.button>
-        </div>
-      </section>
-
-      {/* CTA Section - Refined */}
-      <section id="cta-section" className="relative z-10 min-h-screen flex flex-col justify-center items-center py-32 px-4 overflow-hidden">
-        <div className="container mx-auto max-w-5xl relative">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="bg-gradient-dark to-secondary rounded-[2.5rem] p-8 md:p-20 text-center text-white shadow-2xl relative overflow-hidden"
-          >
-            {/* Decorative background circles */}
-            <div className="absolute top-0 left-0 w-96 h-96 bg-white opacity-10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 mix-blend-overlay" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-black opacity-10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 mix-blend-overlay" />
-
-            <div className="relative z-10 flex flex-col items-center">
-              <h2 className="text-3xl md:text-6xl font-bold mb-8 text-white tracking-tight light:text-dark">
-                Start your journey today
-              </h2>
-              <p className="text-muted-foreground text-xl mb-12 max-w-2xl mx-auto font-medium">
-                Join our growing community of language enthusiasts.
-              </p>
-              <Button
-                size="lg"
-                onClick={() => navigate('/register')}
-                className="bg-light light:bg-dark text-primary light:text-white h-16 px-12 text-md md:text-xl rounded-full font-bold shadow-lg transition-transform hover:scale-105 w-full sm:w-auto"
-              >
-                Start Learning Now
-              </Button>
-            </div>
-          </motion.div>
         </div>
       </section>
     </div>

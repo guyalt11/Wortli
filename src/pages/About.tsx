@@ -7,7 +7,7 @@ const About = () => {
     const { colorScheme } = usePreferences();
     
     // Default to dark theme if colorScheme not available
-    const themeLogo = colorScheme === 'light' ? '/light.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism.webp' : '/dark.webp';
+    const themeLogo = colorScheme === 'light' ? '/light-welcome.webp' : colorScheme === 'neubrutalism' ? '/neubrutalism-welcome.webp' : '/dark-welcome.webp';
     
     useEffect(() => {
         document.title = "About Wörtli | Our Mission for Language Learning";
@@ -155,9 +155,30 @@ const About = () => {
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl light:text-dark font-bold mb-6">Ready to start learning?</h2>
                     <p className="mb-8 text-white/80 light:text-muted-foreground max-w-lg mx-auto">Join thousands of others and transform how you master new languages today.</p>
-                    <a href="/register" className="inline-block bg-light light:bg-dark text-primary font-bold px-10 py-4 rounded-full hover:scale-105 transition-transform">
-                        Get Started for Free
-                    </a>
+                    <div className="flex flex-col items-center gap-6">
+                        <a 
+                            href="https://play.google.com/store/apps/details?id=com.wortli.app" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-block transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
+                        >
+                            <img 
+                                src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
+                                alt="Get it on Google Play" 
+                                className="h-16 w-auto"
+                            />
+                        </a>
+                        <div className="text-center text-sm text-white/60">
+                            <div className="flex items-center mb-3">
+                                <div className="flex-1 border-t border-white/20"></div>
+                                <span className="px-4">Or use the web version:</span>
+                                <div className="flex-1 border-t border-white/20"></div>
+                            </div>
+                            <a href="/register" className="inline-block bg-light light:bg-dark text-primary font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
+                                Get Started for Free
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
