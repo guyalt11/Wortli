@@ -119,7 +119,7 @@ const Register = () => {
                 </p>
               </div>
             </div>
-            <div className="text-sm text-muted-foreground text-center">
+            <div className="text-sm text-tertiary text-center">
               <p>Didn't receive the email? Check your spam folder or try registering again.</p>
             </div>
           </CardContent>

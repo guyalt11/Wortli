@@ -5,52 +5,52 @@
 }
 
 :root {
-  /* Background & Foreground */
-  --background: #020b0b;
-  --foreground: #FFFFFF;
+  /* Background & Foreground - Light Theme */
+  --background: #e6f5f9;
+  --foreground: #020b0b;
 
   /* Primary - Bright cyan/turquoise */
-  --primary: #0A3D41;
-  --primary-foreground: #FFFFFF;
+  --primary: #A6E0DD;
+  --primary-foreground: #020b0b;
 
-  /* Secondary - Darker teal */
-  --secondary: #0a2c30;
-  --secondary-foreground: #FFFFFF;
+  /* Secondary - Light teal */
+  --secondary: #bfdbeb;
+  --secondary-foreground: #020b0b;
 
-  /* Tertiary - Medium teal */
-  --tertiary: #00A39C;
-  --tertiary-foreground: #061d1d;
+  /* Tertiary - Pale teal */
+  --tertiary: #234b45;
+  --tertiary-foreground: #ffffff;
 
   /* Danger - Red for destructive actions */
   --danger: #D92626;
   --danger-foreground: #FFFFFF;
 
-  /* Dark - Main dark background */
-  --dark: #020b0b;
+  /* Dark - Accents on text or elements */
+  --dark: #4d99ac;
   --dark-foreground: #FFFFFF;
 
-  /* Light - Muted/subtle elements */
-  --light: #00E5CC;
+  /* Light - Main background for subtle elements */
+  --light: #A6E0DD;
   --light-foreground: #020b0b;
 
   /* Utility colors */
-  --border: var(--secondary);
-  --input: var(--secondary);
+  --border: #92d3e3;
+  --input: #bfdbeb;
   --ring: var(--light);
   --radius: 0.5rem;
   --toggle-bg: #033533;
-  --muted-foreground: #B3B3B3;
+  --muted-foreground: #2b2b2b;
 
   /* Button colors - Pure HEX */
-  --btn-1: #00E5CC;
-  --btn-2: #00C4B4;
-  --btn-3: #00A39C;
-  --btn-4: #009390;
-  --btn-5: #008284;
+  --btn-1: #69bace;
+  --btn-2: #69bace;
+  --btn-3: #69bace;
+  --btn-4: #69bace;
+  --btn-5: #69bace;
 
   /* Gradient colors */
-  --gradient-from: #154C52;
-  --gradient-to: #082326;
+  --gradient-from: #b8f6f3;
+  --gradient-to: #82CCC5;
 
   /* Difficulty colors */
   --difficulty-hard: #F87171;
@@ -59,17 +59,17 @@
   --difficulty-perfect: #A3E635;
 
   /* Gender colors */
-  --gender-male: #a4cdff;
-  --gender-male-foreground: #414141ff;
-  --gender-female: #ffb6b6;
-  --gender-female-foreground: #414141ff;
-  --gender-neuter: #a1ffa1;
-  --gender-neuter-foreground: #414141ff;
-  --gender-common: #fdff9e;
-  --gender-common-foreground: #414141ff;
+  --gender-male: #5AAEFF;
+  --gender-male-foreground: #b20202;
+  --gender-female: #FF8C8C;
+  --gender-female-foreground: #414141;
+  --gender-neuter: #80FF80;
+  --gender-neuter-foreground: #414141;
+  --gender-common: #FFFF99;
+  --gender-common-foreground: #414141;
 
-  --gradient-dark: linear-gradient(135deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
-  --gradient-tertiary: linear-gradient(135deg, var(--btn-1) 0%, var(--btn-3) 100%);
+  --gradient-dark: var(--primary);
+  --gradient-tertiary: var(--light);
 }
 
 body {

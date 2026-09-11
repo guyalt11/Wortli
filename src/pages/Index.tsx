@@ -124,7 +124,7 @@ const Index = () => {
 
             {/* Updated Typography - Cleaner 'Heathers' (Headers) */}
             <motion.h1 variants={itemVariants} className="flex flex-col items-center justify-center font-extrabold tracking-tight mb-6">
-              <span className="text-6xl md:text-8xl mb-2 home-title tracking-tighter drop-shadow-sm">
+              <span className="text-6xl md:text-8xl mb-2 home-title tracking-tighter drop-shadow-sm text-tertiary">
                 Wörtli
               </span>
               <span className="sr-only">AI-Powered Vocabulary Flashcards for Language Learning</span>
@@ -148,7 +148,7 @@ const Index = () => {
                 href="https://play.google.com/store/apps/details?id=com.wortli.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
+                className="inline-block transition-all duration-300 transform hover:scale-105"
               >
                 <img 
                   src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
@@ -206,7 +206,7 @@ const Index = () => {
             className="flex flex-col items-center"
           >
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 text-tertiary tracking-tight">
                 Stop wasting time!
               </h2>
               <p className="text-muted-foreground text-xl max-w-2xl mx-auto">
@@ -223,7 +223,7 @@ const Index = () => {
                   <div className="mb-6 bg-white/10 light:bg-dark p-4 rounded-2xl">
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-4 text-white light:text-dark">
+                  <h3 className="text-xl font-bold mb-4 text-white light:text-tertiary">
                     {feature.title}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -253,7 +253,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="prose prose-lg dark:prose-invert mx-auto text-left w-full"
           >
-            <h2 className="text-2xl md:text-4xl font-bold mb-12 text-center text-foreground font-sans tracking-tight">How Wörtli Transforms Your Language Journey</h2>
+            <h2 className="text-2xl md:text-4xl font-bold mb-12 text-center text-tertiary font-sans tracking-tight">How Wörtli Transforms Your Language Journey</h2>
             <div className="space-y-10">
               <div className="p-2">
                 <h3 className="text-2xl font-semibold mb-4 text-tertiary">Smart Flashcards, Faster Memory</h3>
@@ -290,7 +290,7 @@ const Index = () => {
       <section id="example-section" className="relative z-10 min-h-screen flex flex-col justify-center items-center py-10">
         <div className="container mx-auto px-4 max-w-5xl text-center flex flex-col items-center">
           <div className="mb-8">
-            <h2 className="text-2xl md:text-4xl font-bold mb-2 tracking-tight">See Wörtli in Action</h2>
+            <h2 className="text-2xl md:text-4xl font-bold mb-2 text-tertiary tracking-tight">See Wörtli in Action</h2>
             <p className="hidden text-muted-foreground text-xl max-w-2xl mx-autoLeading-relaxed">
               The heart of your daily habit. These cards aren't just static text—they are smart, context-rich tools designed to help you actually remember. Flip them to see how we bring every word to life.
             </p>
@@ -370,7 +370,7 @@ const Index = () => {
                       <div className="flex items-center justify-center gap-3">
                         <h3 className="text-2xl font-bold tracking-tight light:text-muted-foreground">{word.origin}</h3>
                         {word.gender && (
-                          <div className={`bg-gender-${word.gender} rounded-full text-dark light:text-muted-foreground scale-90`}>
+                          <div className={`bg-gender-${word.gender} rounded-full text-tertiary light:text-muted-foreground scale-90`}>
                             <GenderTag gender={word.gender as Gender} />
                           </div>
                         )}
@@ -407,7 +407,7 @@ const Index = () => {
                         {['Hard', 'OK', 'Good', 'Perfect'].map((diff) => (
                           <div
                             key={diff}
-                            className={`flex-1 h-8 rounded-lg text-[10px] flex items-center justify-center font-bold text-black shadow-sm
+                            className={`flex-1 h-8 rounded-lg text-[10px] flex items-center justify-center font-bold text-tertiary shadow-sm
                               ${diff === 'Hard' ? 'bg-difficulty-hard' :
                                 diff === 'OK' ? 'bg-difficulty-ok' :
                                   diff === 'Good' ? 'bg-difficulty-good' :

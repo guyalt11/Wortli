@@ -24,7 +24,7 @@ const About = () => {
                         animate={{ opacity: 1, y: 0 }}
                         className="space-y-6"
                     >
-                        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight home-title">
+                        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight home-title text-tertiary">
                             About Wörtli
                         </h1>
                         <p className="text-xl text-muted-foreground max-w-2xl mx-auto italic">
@@ -42,7 +42,7 @@ const About = () => {
                             <Brain className="w-4 h-4" />
                             <span>The Concept</span>
                         </div>
-                        <h2 className="text-3xl font-bold">What is Wörtli?</h2>
+                        <h2 className="text-3xl font-bold text-tertiary">What is Wörtli?</h2>
                         <p className="text-muted-foreground leading-relaxed">
                             Wörtli is a next-generation vocabulary learning platform designed to bridge the gap between traditional flashcards and AI-powered personalization.
                             The word "Wörtli" comes from a Swiss German diminutive for "words," reflecting our focus on the small building blocks that make up a language.
@@ -61,7 +61,7 @@ const About = () => {
                 {/* Section: Who it's for */}
                 <section className="space-y-12">
                     <div className="text-center space-y-4">
-                        <h2 className="text-3xl font-bold">Who is it for?</h2>
+                        <h2 className="text-3xl font-bold text-tertiary">Who is it for?</h2>
                         <p className="text-muted-foreground max-w-2xl mx-auto">
                             Whether you're a casual traveler or building a new life in a different country, Wörtli scales with your needs.
                         </p>
@@ -86,7 +86,7 @@ const About = () => {
                         ].map((item, id) => (
                             <div key={id} className="p-6 rounded-xl border bg-card border-tertiary hover:shadow-lg transition-shadow">
                                 <div className="mb-4">{item.icon}</div>
-                                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                                <h3 className="text-xl font-bold mb-2 text-tertiary">{item.title}</h3>
                                 <p className="text-sm text-muted-foreground">{item.desc}</p>
                             </div>
                         ))}
@@ -96,7 +96,7 @@ const About = () => {
                 {/* Section: How it works */}
                 <section className="space-y-12 bg-secondary/10 p-12 rounded-3xl border border-tertiary">
                     <div className="max-w-3xl mx-auto space-y-8">
-                        <h2 className="text-3xl font-bold text-center">How it Works</h2>
+                        <h2 className="text-3xl font-bold text-center text-tertiary">How it Works</h2>
                         <div className="space-y-8">
                             {[
                                 {
@@ -118,7 +118,7 @@ const About = () => {
                                 <div key={id} className="flex gap-6">
                                     <div className="text-4xl font-black text-tertiary select-none">{step.step}</div>
                                     <div className="space-y-2">
-                                        <h3 className="text-xl font-bold">{step.title}</h3>
+                                        <h3 className="text-xl font-bold text-tertiary">{step.title}</h3>
                                         <p className="text-muted-foreground">{step.desc}</p>
                                     </div>
                                 </div>
@@ -129,7 +129,7 @@ const About = () => {
 
                 {/* SEO Friendly Content Block */}
                 <section className="prose prose-sm dark:prose-invert max-w-none border-t pt-12">
-                    <h2 className="text-2xl font-bold mb-4">Our Technology Stack</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-tertiary">Our Technology Stack</h2>
                     <p>
                         Wörtli leverages modern web technologies to provide a fast, secure, and intuitive experience.
                         We use advanced Large Language Models (LLMs) to ensure high-quality translations and contextual information Across 50+ languages including German, Spanish, French, Italian, and many others.
@@ -139,7 +139,7 @@ const About = () => {
                         Our spaced repetition algorithm is modeled after the SuperMemo SM-2 training methodology, adapted for modern language learning needs.
                     </p>
                     <div className="mt-12 pt-8 border-t">
-                        <h2 className="text-2xl font-bold mb-4">Get in Touch</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-tertiary">Get in Touch</h2>
                         <p>
                             Have questions, feedback, or need support? We'd love to hear from you.
                         </p>
@@ -153,7 +153,7 @@ const About = () => {
             {/* CTA Footer */}
             <section className="py-20 bg-gradient-dark text-white text-center">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl light:text-dark font-bold mb-6">Ready to start learning?</h2>
+                    <h2 className="text-3xl light:text-tertiary font-bold mb-6">Ready to start learning?</h2>
                     <p className="mb-8 text-white/80 light:text-muted-foreground max-w-lg mx-auto">Join thousands of others and transform how you master new languages today.</p>
                     <div className="flex flex-col items-center gap-6">
                         <a 
@@ -170,7 +170,7 @@ const About = () => {
                         </a>
                         <div className="text-center text-sm text-white/60">
                             <div className="flex items-center mb-3">
-                                <span className="px-4 text-black">Or use the web version:</span>
+                                <span className="px-4 text-tertiary">Or use the web version:</span>
                             </div>
                             <a href="/register" className="inline-block bg-light light:bg-dark text-primary font-bold px-8 py-3 rounded-full hover:scale-105 transition-transform">
                                 Get Started for Free
